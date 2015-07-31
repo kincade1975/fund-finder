@@ -1,0 +1,103 @@
+<div class="row border-bottom white-bg">
+	<div class="col-lg-12">
+		<h1>
+			<i class="fa fa-tachometer"></i> Kontrolna ploča
+		</h1>
+	</div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+	<div class="row">
+		<div class="col-lg-12">
+
+			<div class="ibox float-e-margins">
+				<div class="ibox-title gray-bg">
+					<h5>
+						<i class="fa fa-users"></i> Najnoviji korisnici
+					</h5>
+					<div class="ibox-tools">
+						<a class="dropdown-toggle m-r-xs" data-toggle="dropdown"><i class="fa fa-wrench"></i></a>
+						<ul class="dropdown-menu dropdown-user">
+							<li><a ng-click="layout = 'grid'"><i class="fa fa-th"></i> Grid layout</a></li>
+							<li><a ng-click="layout = 'table'"><i class="fa fa-table"></i> Table layout</a></li>
+						</ul>
+						<a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+					</div>
+				</div>
+				<div class="ibox-content">
+					<div class="row" ng-show="layout == 'grid'">
+						<div ng-repeat="user in users" class="col-lg-4">
+							<a class="grid-a" ng-click="showDetails(user)">
+								<div class="widget-head-color-box gray-bg p-lg text-center">
+		                            <div class="m-b-sm">
+		                            	<h3 class="font-bold no-margins">{{user.fullName}}</h3>
+		                                <small>{{user.company}}</small>
+		                            </div>
+		                            <i class="fa fa-user fa-4x img-circle circle-border m-b-sm"></i>
+		                            <div>
+		                                <small>{{user.oib}}</small>
+		                            </div>
+		                        </div>
+	                        </a>
+						</div>
+					</div>
+					<div class="row" ng-show="layout == 'table'">
+						
+					</div>
+				</div>
+			</div>
+			
+			<div class="ibox float-e-margins">
+				<div class="ibox-title gray-bg">
+					<h5>
+						<i class="fa fa-star"></i> Najnoviji natječaji
+					</h5>
+					<div class="ibox-tools">
+						<a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+					</div>
+				</div>
+				<div class="ibox-content">
+					<strong>Lorem ipsum dolor</strong> Aenean commodo ligula eget
+					dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis
+					parturient montes, nascetur ridiculus mus. Donec quam felis,
+					ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat
+					massa quis enim.
+				</div>
+			</div>
+			
+			<div class="ibox float-e-margins">
+				<div class="ibox-title gray-bg">
+					<h5>
+						<i class="fa fa-area-chart"></i> Statistika
+					</h5>
+					<div class="ibox-tools">
+						<a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+					</div>
+				</div>
+				<div class="ibox-content">
+					<strong>Lorem ipsum dolor</strong> Aenean commodo ligula eget
+					dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis
+					parturient montes, nascetur ridiculus mus. Donec quam felis,
+					ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat
+					massa quis enim.
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<script>
+	$('.collapse-link').click(function() {
+		var ibox = $(this).closest('div.ibox');
+		var button = $(this).find('i');
+		var content = ibox.find('div.ibox-content');
+		content.slideToggle(200);
+		button.toggleClass('fa-chevron-up').toggleClass('fa-chevron-down');
+		ibox.toggleClass('').toggleClass('border-bottom');
+		setTimeout(function() {
+			ibox.resize();
+			ibox.find('[id^=map-]').resize();
+		}, 50);
+	});
+</script>

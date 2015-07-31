@@ -1,69 +1,76 @@
-<!--
-* INSPINIA - Responsive Admin Theme
-* Version 2.2
-*
--->
-
 <!DOCTYPE html>
 <html ng-app="inspinia">
 
-<head>
+	<head>
+	    <meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	    <!-- Page title set in pageTitle directive -->
+	    <title page-title></title>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<!-- jQuery -->
+		<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+		<script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+		
+		<!-- Bootstrap -->
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">	
+		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	    
+	    <!-- Font Awesome -->
+	    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" />
+	    
+	    <!-- Toastr -->
+    	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    	
+	    <!-- Main Inspinia CSS files -->
+	    <link href="css/animate.css" rel="stylesheet">
+	    <link id="loadBefore" href="css/style.css" rel="stylesheet">
+	    
+	    <!-- Custom CSS -->
+	    <link href="css/custom.css" rel="stylesheet">
+	    
+	    <script type="text/ng-template" id="idle-warning-dialog.html">
+			<div class="modal-header">
+				<h3>Neaktivni ste 5 minuta...</h3>
+			</div>
+			<div idle-countdown="countdown" ng-init="countdown=9" class="modal-body">
+				<progressbar max="9" value="9" class="progress-striped active">Biti ćete automatski odjavljeni za {{countdown}}</progressbar>
+			</div>
+		</script>
+	</head>
 
-    <!-- Page title set in pageTitle directive -->
-    <title page-title></title>
-
-    <!-- Font awesome -->
-    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
-
-    <!-- Bootstrap and Fonts -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Main Inspinia CSS files -->
-    <link href="css/animate.css" rel="stylesheet">
-    <link id="loadBefore" href="css/style.css" rel="stylesheet">
-
-
-</head>
-
-<!-- ControllerAs syntax -->
-<!-- Main controller with serveral data used in Inspinia theme on diferent view -->
-<body ng-controller="MainCtrl as main">
-
-<!-- Main view  -->
-<div ui-view></div>
-
-<!-- jQuery and Bootstrap -->
-<script src="js/jquery/jquery-2.1.1.min.js"></script>
-<script src="js/plugins/jquery-ui/jquery-ui.js"></script>
-<script src="js/bootstrap/bootstrap.min.js"></script>
-
-<!-- MetsiMenu -->
-<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
-
-<!-- SlimScroll -->
-<script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-
-<!-- Peace JS -->
-<script src="js/plugins/pace/pace.min.js"></script>
-
-<!-- Custom and plugin javascript -->
-<script src="js/inspinia.js"></script>
-
-<!-- Main Angular scripts-->
-<script src="js/angular/angular.min.js"></script>
-<script src="js/plugins/oclazyload/dist/ocLazyLoad.min.js"></script>
-<script src="js/ui-router/angular-ui-router.min.js"></script>
-<script src="js/bootstrap/ui-bootstrap-tpls-0.12.0.min.js"></script>
-
-
-<!-- Anglar App Script -->
-<script src="js/app.js"></script>
-<script src="js/config.js"></script>
-<script src="js/directives.js"></script>
-<script src="js/controllers.js"></script>
-
-</body>
+	<body>
+	
+		<!-- Main view  -->
+		<div ui-view></div>
+		
+		<!-- MetsiMenu -->
+		<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+		
+		<!-- SlimScroll -->
+		<script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+		
+		<!-- Peace JS -->
+		<script src="js/plugins/pace/pace.min.js"></script>
+		
+    	<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    
+		<!-- Custom and plugin javascript -->
+		<script src="js/inspinia.js"></script>
+		
+		<!-- Main Angular scripts-->
+		<script src="js/angular/angular.min.js"></script>
+		<script src="js/plugins/oclazyload/dist/ocLazyLoad.min.js"></script>
+		<script src="js/plugins/angular-idle/angular-idle.js"></script>
+		<script src="js/ui-router/angular-ui-router.min.js"></script>
+		<script src="js/bootstrap/ui-bootstrap-tpls-0.12.0.min.js"></script>
+		
+		<!-- Anglar App Script -->
+		<script src="js/app.js"></script>
+		<script src="js/config.js"></script>
+		<script src="js/directives.js"></script>
+		<script src="js/controllers.js"></script>
+	
+	</body>
+	
 </html>

@@ -1,0 +1,11 @@
+.nav-header {
+	padding: 10px 10px 10px 20px;
+}
+
+.grid-a {
+	color: inherit;
+}
+
+.grid-a:hover {
+	color: black;
+}

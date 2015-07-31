@@ -1,40 +1,100 @@
-/**
- * INSPINIA - Responsive Admin Theme
- *
- * Inspinia theme use AngularUI Router to manage routing and views
- * Each view are defined as state.
- * Initial there are written state for all view in theme.
- *
- */
-function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
-    $urlRouterProvider.otherwise("/index/main");
+function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdleProvider) {
+    
+	IdleProvider.idle(300);
+	IdleProvider.timeout(9);
+	
+	$urlRouterProvider.when('/', '/login').otherwise('/');
 
-    $ocLazyLoadProvider.config({
-        // Set to true if you want to see what and when is dynamically loaded
-        debug: false
-    });
+    $ocLazyLoadProvider.config({ debug: false });
 
     $stateProvider
-
-        .state('index', {
+        .state('fund_finder', {
             abstract: true,
-            url: "/index",
+            url: "/fund_finder",
             templateUrl: "views/common/content.html",
         })
-        .state('index.main', {
-            url: "/main",
-            templateUrl: "views/main.html",
-            data: { pageTitle: 'Example view' }
+        .state('login', {
+			url: '/login',
+			templateUrl: 'views/login.html',
+			controller: 'SecurityCtrl'
+		})
+        .state('fund_finder.dashboard', {
+            url: "/dashboard",
+            templateUrl: "views/dashboard/dashboard.html",
+            controller: 'DashboardCtrl'
         })
-        .state('index.minor', {
-            url: "/minor",
-            templateUrl: "views/minor.html",
-            data: { pageTitle: 'Example view' }
+        .state('fund_finder.user_overview', {
+            url: "/user/overview",
+            templateUrl: "views/user/overview.html",
+            controller: 'UserOverviewCtrl'
+        })
+        .state('fund_finder.tender_overview', {
+            url: "/tender/overview",
+            templateUrl: "views/tender/overview.html",
+            controller: 'TenderOverviewCtrl'
+        })
+        .state('fund_finder.investment_overview', {
+            url: "/investment/overview",
+            templateUrl: "views/investment/overview.html",
+            controller: 'InvestmentOverviewCtrl'
+        })
+        .state('fund_finder.article_overview', {
+            url: "/article/overview",
+            templateUrl: "views/article/overview.html",
+            controller: 'ArticleOverviewCtrl'
+        })
+        .state('fund_finder.statistics', {
+            url: "/statistics",
+            templateUrl: "views/statistics/statistics.html",
+            controller: 'StatisticsOverviewCtrl'
         })
 }
+
 angular
     .module('inspinia')
     .config(config)
-    .run(function($rootScope, $state) {
+    .run(function($rootScope, $state, $modal, $http, Idle) {
         $rootScope.$state = $state;
+        
+        $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
+			if (toState.name == 'login') {
+				Idle.unwatch();
+			} else {
+				Idle.watch();
+			}
+		});
+        
+        $rootScope.$on('IdleStart', function() {
+			if ($rootScope.idleWarningDlg) {
+				$rootScope.idleWarningDlg.close();
+				$rootScope.idleWarningDlg = null;
+			}
+
+			$rootScope.idleWarningDlg = $modal.open({
+				templateUrl: 'idle-warning-dialog.html',
+				windowClass: 'modal-danger'
+			});
+		});
+
+		$rootScope.$on('IdleEnd', function() {
+			if ($rootScope.idleWarningDlg) {
+				$rootScope.idleWarningDlg.close();
+				$rootScope.idleWarningDlg = null;
+			}
+		});
+
+		$rootScope.$on('IdleTimeout', function() {
+			if ($rootScope.idleWarningDlg) {
+				$rootScope.idleWarningDlg.close();
+				$rootScope.idleWarningDlg = null;
+			}
+			
+			$http.post('logout', {}).success(function() {
+				$rootScope.authenticated = false;
+				$state.go('login');
+			}).error(function(data) {
+				$rootScope.authenticated = false;
+				$state.go('login');
+			});
+		});
     });

@@ -3,6 +3,7 @@ package hr.betaware.fundfinder.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,13 +15,14 @@ import hr.betaware.fundfinder.security.UserDetails;
 import hr.betaware.fundfinder.service.UserService;
 
 @RestController
-@RequestMapping("/api/v1/user")
+@RequestMapping(value = { "/api/v1/user", "/e/api/v1/user" })
 public class UserController {
 
 	@Autowired
 	private UserService userService;
 
 	@RequestMapping(method = RequestMethod.GET)
+	@PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR')")
 	public List<UserResource> findAll() {
 		return userService.findAll();
 	}

@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @Document(collection = "user")
 public class User {
 
-	public enum Role { Administrator, User }
+	public enum Role { ROLE_ADMINISTRATOR, ROLE_USER }
 
 	@Id
 	@Field("id")

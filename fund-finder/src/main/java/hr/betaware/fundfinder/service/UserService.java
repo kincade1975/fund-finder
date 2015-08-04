@@ -65,7 +65,7 @@ public class UserService {
 		user.setPassword(new MessageDigestPasswordEncoder("SHA-1").encodePassword("admin", null));
 		user.setFirstName(deafultFirstName);
 		user.setLastName(deafultLastName);
-		user.setRole(Role.Administrator);
+		user.setRole(Role.ROLE_ADMINISTRATOR);
 		mongoOperations.save(user);
 
 		LOGGER.info("Default user created...");

@@ -68,7 +68,7 @@ angular
     // ==============================================================================================================
     // 	Dashboard Controller
     // ==============================================================================================================
-    .controller('DashboardCtrl', function($rootScope, $scope) {
+    .controller('DashboardCtrl', function($rootScope, $scope, $http) {
     	$scope.layout = 'grid';
     	$scope.users = [
     	    { fullName: "User Name 1", company: "Company Name 1", oib: "324234234332" },
@@ -81,6 +81,16 @@ angular
     	$scope.showDetails = function(user) {
 			console.log(user);
 		};
+		
+		var findAll = function(callback) {
+			$http.get('/api/v1/user').success(function(data) {
+
+			}).error(function() {
+				
+			});
+		}
+		
+		findAll();
     })
     
     .controller('UserOverviewCtrl', function($rootScope, $scope, $http, $state) {

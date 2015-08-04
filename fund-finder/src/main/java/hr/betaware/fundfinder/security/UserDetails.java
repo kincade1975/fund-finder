@@ -1,9 +1,11 @@
 package hr.betaware.fundfinder.security;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import hr.betaware.fundfinder.domain.User;
 
@@ -20,7 +22,9 @@ public class UserDetails implements org.springframework.security.core.userdetail
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return new HashSet<GrantedAuthority>();
+		List<GrantedAuthority> result = new ArrayList<>();
+		result.add(new SimpleGrantedAuthority(user.getRole().toString()));
+		return result;
 	}
 
 	@Override

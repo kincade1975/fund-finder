@@ -20,6 +20,14 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
+
+		<jquery.version>2.1.4</jquery.version>
+		<jquery-ui.version>1.11.4</jquery-ui.version>
+		<bootstrap.version>3.3.5</bootstrap.version>
+		<font-awesome.version>4.4.0</font-awesome.version>
+		<toastr.version>2.1.1</toastr.version>
+		<angularjs.version>1.4.3</angularjs.version>
+		<ui-grid.version>3.0.1</ui-grid.version>
 	</properties>
 
 	<dependencies>
@@ -35,13 +43,111 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-mongodb</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-hateoas</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>jquery</artifactId>
+			<version>${jquery.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>jquery-ui</artifactId>
+			<version>${jquery-ui.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>bootstrap</artifactId>
+			<version>${bootstrap.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>font-awesome</artifactId>
+			<version>${font-awesome.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>toastr</artifactId>
+			<version>${toastr.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>angularjs</artifactId>
+			<version>${angularjs.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>ui-grid</artifactId>
+			<version>${ui-grid.version}</version>
+		</dependency>
 	</dependencies>
 
 	<build>
+		<finalName>${project.artifactId}-${project.version}</finalName>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>application.properties</include>
+				</includes>
+			</resource>
+			<resource>
+				<directory>src/main/webapp</directory>
+			</resource>
+			<resource>
+				<directory>src/main/webapp</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>**/*.html</include>
+				</includes>
+			</resource>
+		</resources>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+					<encoding>utf8</encoding>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<mainClass>org.nth.ms.admin.MicroServiceAdmin</mainClass>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+						</manifest>
+					</archive>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

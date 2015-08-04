@@ -1,6 +1,11 @@
 package hr.betaware.fundfinder.domain;
 
+import java.util.Date;
+
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -27,6 +32,18 @@ public class User {
 
 	@Field("role")
 	private Role role;
+
+	@Version
+	@Field("doc_version")
+	private Long docVersion;
+
+	@CreatedDate
+	@Field("time_created")
+	private Date timeCreated;
+
+	@LastModifiedDate
+	@Field("last_modified")
+	private Date lastModified;
 
 	public Integer getId() {
 		return id;
@@ -74,6 +91,30 @@ public class User {
 
 	public void setRole(Role role) {
 		this.role = role;
+	}
+
+	public Long getDocVersion() {
+		return docVersion;
+	}
+
+	public void setDocVersion(Long docVersion) {
+		this.docVersion = docVersion;
+	}
+
+	public Date getTimeCreated() {
+		return timeCreated;
+	}
+
+	public void setTimeCreated(Date timeCreated) {
+		this.timeCreated = timeCreated;
+	}
+
+	public Date getLastModified() {
+		return lastModified;
+	}
+
+	public void setLastModified(Date lastModified) {
+		this.lastModified = lastModified;
 	}
 
 }

@@ -9,26 +9,28 @@
 	    <title page-title></title>
 
 		<!-- jQuery -->
-		<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
-		<script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+		<link rel="stylesheet" href="/webjars/jquery-ui/${jquery-ui.version}/jquery-ui.min.css">
 		
 		<!-- Bootstrap -->
-		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">	
-		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-	    
+		<link rel="stylesheet" href="/webjars/bootstrap/${bootstrap.version}/css/bootstrap.min.css">
+		
 	    <!-- Font Awesome -->
-	    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" />
+	    <link rel="stylesheet" href="/webjars/font-awesome/${font-awesome.version}/css/font-awesome.min.css">
 	    
 	    <!-- Toastr -->
-    	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    	<link rel="stylesheet" href="/webjars/toastr/${toastr.version}/toastr.css">
     	
-	    <!-- Main Inspinia CSS files -->
-	    <link href="css/animate.css" rel="stylesheet">
-	    <link id="loadBefore" href="css/style.css" rel="stylesheet">
+    	<!-- Angular UI Grid -->
+    	<link rel="stylesheet" type="text/css" href="/webjars/ui-grid/${ui-grid.version}/ui-grid.min.css" />
+    	
+	    <!-- Inspinia -->
+	    <link rel="stylesheet" href="css/animate.css">
+	    <link rel="stylesheet" href="css/style.css" id="loadBefore">
 	    
-	    <!-- Custom CSS -->
+	    <!-- App -->
 	    <link href="css/custom.css" rel="stylesheet">
 	    
+	    <!-- Idle warning dialog -->
 	    <script type="text/ng-template" id="idle-warning-dialog.html">
 			<div class="modal-header">
 				<h3>Neaktivni ste 5 minuta...</h3>
@@ -44,7 +46,17 @@
 		<!-- Main view  -->
 		<div ui-view></div>
 		
-		<!-- MetsiMenu -->
+		<!-- jQuery -->
+		<script src="/webjars/jquery/${jquery.version}/jquery.min.js"></script>
+		<script src="/webjars/jquery-ui/${jquery-ui.version}/jquery-ui.min.js"></script>
+		
+		<!-- Bootstrap -->	
+		<script src="/webjars/bootstrap/${bootstrap.version}/js/bootstrap.min.js"></script>
+		
+		<!-- Toastr -->
+    	<script src="/webjars/toastr/${toastr.version}/toastr.js"></script>
+    	
+		<!-- MetisMenu -->
 		<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
 		
 		<!-- SlimScroll -->
@@ -53,19 +65,24 @@
 		<!-- Peace JS -->
 		<script src="js/plugins/pace/pace.min.js"></script>
 		
-    	<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-    
-		<!-- Custom and plugin javascript -->
+		<!-- Inspinia -->
 		<script src="js/inspinia.js"></script>
 		
-		<!-- Main Angular scripts-->
-		<script src="js/angular/angular.min.js"></script>
-		<script src="js/plugins/oclazyload/dist/ocLazyLoad.min.js"></script>
+		<!-- AngularJS -->
+		<script src="/webjars/angularjs/${angularjs.version}/angular.min.js"></script>
+		
+		<!-- Ng-Idle -->
 		<script src="js/plugins/angular-idle/angular-idle.js"></script>
+		
+		<!-- Main Angular scripts-->
+		<script src="js/plugins/oclazyload/dist/ocLazyLoad.min.js"></script>
 		<script src="js/ui-router/angular-ui-router.min.js"></script>
 		<script src="js/bootstrap/ui-bootstrap-tpls-0.12.0.min.js"></script>
 		
-		<!-- Anglar App Script -->
+		<!-- Angular UI Grid -->
+    	<script src="/webjars/ui-grid/${ui-grid.version}/ui-grid.min.js"></script>
+		
+		<!-- App -->
 		<script src="js/app.js"></script>
 		<script src="js/config.js"></script>
 		<script src="js/directives.js"></script>

@@ -1,5 +1,7 @@
 package hr.betaware.fundfinder.resource;
 
+import org.springframework.hateoas.ResourceSupport;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -7,13 +9,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import hr.betaware.fundfinder.domain.User.Role;
 
 @JsonInclude(Include.NON_NULL)
-public class UserResource {
+public class UserResource extends ResourceSupport {
 
 	@JsonProperty("username")
 	private String username;
 
-	@JsonProperty("fullName")
-	private String fullName;
+	@JsonProperty("firstName")
+	private String firstName;
+
+	@JsonProperty("lastName")
+	private String lastName;
 
 	@JsonProperty("role")
 	private Role role;
@@ -26,12 +31,20 @@ public class UserResource {
 		this.username = username;
 	}
 
-	public String getFullName() {
-		return fullName;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public Role getRole() {

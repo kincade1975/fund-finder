@@ -45,7 +45,7 @@ angular
 				if (data.username) {
 					$rootScope.authenticated = true;
 					$rootScope.username = data.username;
-					$rootScope.fullName = data.fullName;
+					$rootScope.fullName = data.firstName + " " + data.lastName;
 					$rootScope.role = data.role;
 					callback && callback();
 				} else {

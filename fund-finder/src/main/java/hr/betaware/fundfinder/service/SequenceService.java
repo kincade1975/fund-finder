@@ -36,7 +36,8 @@ public class SequenceService {
 	}
 
 	public Integer getNextSequence(String counter) {
-		return mongoOperations.findAndModify(query(where("_id").is(counter)), new Update().inc("seq", Integer.valueOf(1)), options().returnNew(true), Sequence.class).getSeq();
+		return mongoOperations.findAndModify(query(where("_id").is(counter)),
+				new Update().inc("seq", Integer.valueOf(1)), options().returnNew(true), Sequence.class).getSeq();
 	}
 
 }

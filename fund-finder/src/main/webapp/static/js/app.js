@@ -1,5 +1,5 @@
 (function () {
-    angular.module('inspinia', [
+    angular.module('fundFinder', [
         'ngIdle',
         'oc.lazyLoad',
         'ui.router',            

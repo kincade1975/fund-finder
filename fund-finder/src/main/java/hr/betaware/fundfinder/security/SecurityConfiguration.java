@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.authentication.configurers
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.ExceptionMappingAuthenticationFailureHandler;
 import org.springframework.security.web.csrf.CsrfFilter;
 
 import hr.betaware.fundfinder.security.csrf.CsrfHeaderFilter;
@@ -23,6 +24,40 @@ public class SecurityConfiguration extends GlobalAuthenticationConfigurerAdapter
 
 	@Configuration
 	@Order(1)
+	public static class ApiConfigurationAdapter extends WebSecurityConfigurerAdapter {
+
+		@Autowired
+		private UserDetailsService userDetailsService;
+
+		@Autowired
+		private CsrfRequestMatcher csrfRequestMatcher;
+
+		@Autowired
+		private CsrfTokenRepository csrfTokenRepository;
+
+		@Autowired
+		private CsrfHeaderFilter csrfHeaderFilter;
+
+		@Autowired
+		public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+			auth
+			.userDetailsService(userDetailsService)
+			.passwordEncoder(new ShaPasswordEncoder());
+		}
+
+		@Override
+		protected void configure(HttpSecurity http) throws Exception {
+			http.csrf().csrfTokenRepository(csrfTokenRepository.getRepository()).requireCsrfProtectionMatcher(csrfRequestMatcher)
+			.and().addFilterAfter(csrfHeaderFilter.getFilter(), CsrfFilter.class);
+
+			http
+			.antMatcher("/api/**")
+			.authorizeRequests().anyRequest().authenticated();
+		}
+	}
+
+	@Configuration
+	@Order(2)
 	public static class WebConfigurationAdapter extends WebSecurityConfigurerAdapter {
 
 		@Autowired
@@ -46,11 +81,8 @@ public class SecurityConfiguration extends GlobalAuthenticationConfigurerAdapter
 
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
-			http
-			.csrf().csrfTokenRepository(csrfTokenRepository.getRepository())
-			.requireCsrfProtectionMatcher(csrfRequestMatcher)
-			.and()
-			.addFilterAfter(csrfHeaderFilter.getFilter(), CsrfFilter.class);
+			http.csrf().csrfTokenRepository(csrfTokenRepository.getRepository()).requireCsrfProtectionMatcher(csrfRequestMatcher)
+			.and().addFilterAfter(csrfHeaderFilter.getFilter(), CsrfFilter.class);
 
 			http
 			.authorizeRequests()
@@ -58,7 +90,8 @@ public class SecurityConfiguration extends GlobalAuthenticationConfigurerAdapter
 			.anyRequest().authenticated();
 
 			http
-			.formLogin().loginPage("/index.html").loginProcessingUrl("/login").defaultSuccessUrl("/index.html", true);
+			.formLogin().loginPage("/index.html").loginProcessingUrl("/login").defaultSuccessUrl("/index.html", true)
+			.failureHandler(new ExceptionMappingAuthenticationFailureHandler());
 
 			http
 			.logout().permitAll();

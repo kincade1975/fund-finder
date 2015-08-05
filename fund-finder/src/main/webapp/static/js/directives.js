@@ -1,11 +1,5 @@
 /**
- * INSPINIA - Responsive Admin Theme
- *
- */
-
-
-/**
- * pageTitle - Directive for set Page title - mata title
+ * pageTitle - Directive for set Page title
  */
 function pageTitle($rootScope, $timeout) {
     return {
@@ -25,13 +19,12 @@ function pageTitle($rootScope, $timeout) {
 };
 
 /**
- * sideNavigation - Directive for run metsiMenu on sidebar navigation
+ * sideNavigation - Directive for run metisMenu on sidebar navigation
  */
 function sideNavigation($timeout) {
     return {
         restrict: 'A',
         link: function(scope, element) {
-            // Call the metsiMenu plugin and plug it to sidebar navigation
             $timeout(function(){
                 element.metisMenu();
             });
@@ -104,14 +97,11 @@ function minimalizaSidebar($timeout) {
     };
 };
 
-
-
 /**
- *
  * Pass all functions into module
  */
 angular
-    .module('inspinia')
+    .module('fundFinder')
     .directive('pageTitle', pageTitle)
     .directive('sideNavigation', sideNavigation)
     .directive('iboxTools', iboxTools)

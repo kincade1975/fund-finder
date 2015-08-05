@@ -1,5 +1,5 @@
 angular
-    .module('inspinia')
+    .module('fundFinder')
 
     // ==============================================================================================================
     // 	Security Controller
@@ -13,20 +13,12 @@ angular
 				}
 			}).success(function(data) {
 				authenticate(function() {
-					if ($rootScope.authenticated) {
-						$state.go('fund_finder.dashboard');
-					} else {
-						$state.go('login');
-						toastr.options.progressBar = true;
-						toastr.options.preventDuplicates = true;
-						toastr.options.showMethod = 'slideDown'; 
-						toastr.options.hideMethod = 'slideUp';
-						toastr.error('Unijeli ste netočne korisničke podatke');
-					}
+					$state.go(($rootScope.authenticated) ? 'fund_finder.dashboard' : 'login');
 				});
-			}).error(function(data) {
+			}).error(function(data, status) {
 				$state.go('login');
 				$rootScope.authenticated = false;
+				toastr.error('Unijeli ste netočne korisničke podatke');
 			})
 		};
 		
@@ -41,12 +33,19 @@ angular
 		};
 		
 		var authenticate = function(callback) {
-			$http.get('/api/v1/user/authenticate').success(function(data) {
+			$http.get('/user').success(function(data) {
 				if (data.username) {
 					$rootScope.authenticated = true;
 					$rootScope.username = data.username;
 					$rootScope.fullName = data.firstName + " " + data.lastName;
-					$rootScope.role = data.role;
+					if (data.role == 'ROLE_ADMINISTRATOR') {
+						$rootScope.role = 'ADMINISTRATOR';	
+					} else if (data.role == 'ROLE_USER') {
+						$rootScope.role = 'KORISNIK';
+					} else {
+						$rootScope.role = '';
+					}
+					
 					callback && callback();
 				} else {
 					$rootScope.authenticated = false;
@@ -68,7 +67,7 @@ angular
     // ==============================================================================================================
     // 	Dashboard Controller
     // ==============================================================================================================
-    .controller('DashboardCtrl', function($rootScope, $scope, $http) {
+    .controller('DashboardCtrl', function($rootScope, $scope, $state, UserService) {
     	$scope.layout = 'grid';
     	$scope.users = [
     	    { fullName: "User Name 1", company: "Company Name 1", oib: "324234234332" },
@@ -82,15 +81,15 @@ angular
 			console.log(user);
 		};
 		
-		var findAll = function(callback) {
-			$http.get('/api/v1/user').success(function(data) {
-
-			}).error(function() {
-				
+		UserService.findAll()
+			.success(function(data, status, headers, config) {
+				console.log(data);
+			})
+			.error(function(data, status, headers, config) {
+				if (status == 403) {
+					$state.go('login');
+				}
 			});
-		}
-		
-		findAll();
     })
     
     .controller('UserOverviewCtrl', function($rootScope, $scope, $http, $state) {

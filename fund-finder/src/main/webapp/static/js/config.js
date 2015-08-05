@@ -51,7 +51,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdlePro
 }
 
 angular
-    .module('inspinia')
+    .module('fundFinder')
     .config(config)
     .run(function($rootScope, $state, $modal, $http, Idle) {
         $rootScope.$state = $state;
@@ -97,4 +97,10 @@ angular
 				$state.go('login');
 			});
 		});
+		
+		// toastr default settings
+		toastr.options.progressBar = true;
+		toastr.options.preventDuplicates = true;
+		toastr.options.showMethod = 'slideDown'; 
+		toastr.options.hideMethod = 'slideUp';
     });

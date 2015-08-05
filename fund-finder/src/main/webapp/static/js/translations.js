@@ -66,5 +66,5 @@ function config($translateProvider) {
 }
 
 angular
-    .module('inspinia')
+    .module('fundFinder')
     .config(config)

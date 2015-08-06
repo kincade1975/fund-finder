@@ -1,8 +1,7 @@
 <nav class="navbar-default navbar-static-side" role="navigation">
-    <div class="sidebar-collapse">
+    <div class="sidebar-collapse" ng-controller="SecurityCtrl">
         <ul side-navigation class="nav metismenu" id="side-menu">
-            <li class="nav-header" ng-controller="SecurityCtrl">
-
+            <li class="nav-header">
                 <div class="dropdown profile-element" dropdown>
                     <a class="dropdown-toggle" dropdown-toggle href>
                     	<span class="clear">
@@ -24,21 +23,20 @@
                 <a ui-sref="fund_finder.dashboard"><i class="fa fa-tachometer"></i> <span class="nav-label">Kontrolna ploča</span> </a>
             </li>
             <li ui-sref-active="active">
-                <a ui-sref="fund_finder.user_overview"><i class="fa fa-users"></i> <span class="nav-label">Korisnici</span><span class="label label-default pull-right">8</span></a>
+                <a ui-sref="fund_finder.user_overview"><i class="fa fa-users"></i> <span class="nav-label">Korisnici</span><span class="label label-default pull-right">{{totalUsers}}</span></a>
             </li>
             <li ui-sref-active="active">
-                <a ui-sref="fund_finder.tender_overview"><i class="fa fa-star"></i> <span class="nav-label">Natječaji</span><span class="label label-default pull-right">4</span></a>
+                <a ui-sref="fund_finder.tender_overview"><i class="fa fa-star"></i> <span class="nav-label">Natječaji</span><span class="label label-default pull-right">{{totalTenders}}</span></a>
             </li>
             <li ui-sref-active="active">
-                <a ui-sref="fund_finder.investment_overview"><i class="fa fa-line-chart"></i> <span class="nav-label">Investicije</span><span class="label label-default pull-right">13</span></a>
+                <a ui-sref="fund_finder.investment_overview"><i class="fa fa-line-chart"></i> <span class="nav-label">Investicije</span><span class="label label-default pull-right">{{totalInvestments}}</span></a>
             </li>
             <li ui-sref-active="active">
-                <a ui-sref="fund_finder.article_overview"><i class="fa fa-university"></i> <span class="nav-label">Kako do sredstava</span><span class="label label-default pull-right">5</span></a>
+                <a ui-sref="fund_finder.article_overview"><i class="fa fa-university"></i> <span class="nav-label">Kako do sredstava</span><span class="label label-default pull-right">{{totalArticles}}</span></a>
             </li>
             <li ui-sref-active="active">
                 <a ui-sref="fund_finder.statistics"><i class="fa fa-area-chart"></i> <span class="nav-label">Statistika</span></a>
             </li>
         </ul>
-
     </div>
 </nav>

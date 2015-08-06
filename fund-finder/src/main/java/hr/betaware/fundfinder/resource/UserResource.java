@@ -11,6 +11,9 @@ import hr.betaware.fundfinder.domain.User.Role;
 @JsonInclude(Include.NON_NULL)
 public class UserResource extends ResourceSupport {
 
+	@JsonProperty("id")
+	private Integer identificator;
+
 	@JsonProperty("username")
 	private String username;
 
@@ -22,6 +25,14 @@ public class UserResource extends ResourceSupport {
 
 	@JsonProperty("role")
 	private Role role;
+
+	public Integer getIdentificator() {
+		return identificator;
+	}
+
+	public void setIdentificator(Integer identificator) {
+		this.identificator = identificator;
+	}
 
 	public String getUsername() {
 		return username;

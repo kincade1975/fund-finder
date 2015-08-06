@@ -1,0 +1,40 @@
+package hr.betaware.fundfinder.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.stereotype.Service;
+
+import hr.betaware.fundfinder.domain.Investment;
+import hr.betaware.fundfinder.domain.User;
+import hr.betaware.fundfinder.domain.User.Role;
+import hr.betaware.fundfinder.resource.TotalResource;
+
+@Service
+public class TotalService {
+
+	@Autowired
+	private MongoOperations mongoOperations;
+
+	public TotalResource getTotal() {
+		TotalResource resource = new TotalResource();
+
+		// users
+		Query query = new Query();
+		query.addCriteria(Criteria.where("role").ne(Role.ROLE_ADMINISTRATOR));
+		resource.setTotalUsers(mongoOperations.count(query, User.class));
+
+		// tenders
+		resource.setTotalTenders(0L);
+
+		// investments
+		resource.setTotalInvestments(mongoOperations.count(new Query(), Investment.class));
+
+		// articles
+		resource.setTotalArticles(0L);
+
+		return resource;
+	}
+
+}

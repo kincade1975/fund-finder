@@ -8,6 +8,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -18,6 +21,10 @@ import hr.betaware.fundfinder.domain.User;
 import hr.betaware.fundfinder.domain.User.Role;
 import hr.betaware.fundfinder.resource.UserResource;
 import hr.betaware.fundfinder.resource.UserResourceAssembler;
+import hr.betaware.fundfinder.resource.uigrid.PageableResource;
+import hr.betaware.fundfinder.resource.uigrid.UiGridFilterResource;
+import hr.betaware.fundfinder.resource.uigrid.UiGridResource;
+import hr.betaware.fundfinder.resource.uigrid.UiGridSortResource;
 
 @Service
 public class UserService {
@@ -45,6 +52,50 @@ public class UserService {
 	@PostConstruct
 	public void init() {
 		createDefaultUser();
+		//		createTestData();
+	}
+
+	public List<UserResource> findAll() {
+		return userResourceAssembler.toResources(mongoOperations.findAll(User.class));
+	}
+
+	public void deleteUser(Integer id) {
+		User entity = mongoOperations.findById(id, User.class);
+		mongoOperations.remove(entity);
+	}
+
+	public PageableResource<UserResource> getPage(UiGridResource resource) {
+		Query query = new Query();
+
+		query.addCriteria(Criteria.where("role").ne(Role.ROLE_ADMINISTRATOR));
+
+		// sorting
+		if (resource.getSort() == null || resource.getSort().isEmpty()) {
+			query.with(new Sort(Direction.ASC, "first_name"));
+		} else {
+			for (UiGridSortResource uiGridSortResource : resource.getSort()) {
+				query.with(new Sort(Direction.valueOf(uiGridSortResource.getDirection().toUpperCase()), uiGridSortResource.getName()));
+			}
+		}
+
+		// filtering
+		if (resource.getFilter() != null) {
+			for (UiGridFilterResource uiGridFilterResource : resource.getFilter()) {
+				query.addCriteria(Criteria.where(uiGridFilterResource.getName()).regex(uiGridFilterResource.getTerm(), "i"));
+			}
+		}
+
+		// get total number of records that match query
+		long total = mongoOperations.count(query, User.class);
+
+		// add paging to query
+		query.with(new PageRequest(resource.getPagination().getPage(), resource.getPagination().getSize()));
+
+		// get records that match query
+		LOGGER.debug("Querying database: {}", query);
+		List<User> entities = mongoOperations.find(query, User.class);
+
+		return new PageableResource<>(total, userResourceAssembler.toResources(entities));
 	}
 
 	/**
@@ -71,8 +122,17 @@ public class UserService {
 		LOGGER.info("Default user created...");
 	}
 
-	public List<UserResource> findAll() {
-		return userResourceAssembler.toResources(mongoOperations.findAll(User.class));
+	void createTestData() {
+		for (int i = 10; i < 100; i++) {
+			User user = new User();
+			user.setId(sequenceService.getNextSequence(SequenceService.SEQUENCE_USER));
+			user.setUsername(i + "@test.net");
+			user.setPassword(new MessageDigestPasswordEncoder("SHA-1").encodePassword("admin", null));
+			user.setFirstName("FirstName " + i);
+			user.setLastName("LastName " + i);
+			user.setRole(Role.ROLE_USER);
+			mongoOperations.save(user);
+		}
 	}
 
 }

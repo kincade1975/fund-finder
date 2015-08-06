@@ -2,8 +2,11 @@
     angular.module('fundFinder', [
         'ngIdle',
         'oc.lazyLoad',
-        'ui.router',            
         'ui.bootstrap',
+        'ui.grid',
+		'ui.grid.pagination',
+		'ui.grid.autoResize',
+        'ui.router',            
     ])
 })();
 

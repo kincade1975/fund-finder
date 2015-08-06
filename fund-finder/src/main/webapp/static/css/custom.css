@@ -9,3 +9,21 @@
 .grid-a:hover {
 	color: black;
 }
+
+.ui-grid-pager-panel {
+	background-color: #eaeaea;
+}
+
+.ui-grid-filter-container {
+	padding: 4px !important;
+}
+
+.ui-grid-filter-input {
+	padding-left: 4px !important; padding-right: 24px !important;
+}
+
+.custom-hr {
+	border-top: 1px solid #e0e0e0; 
+	margin-top: 0px; 
+	margin-bottom: 10px;
+}

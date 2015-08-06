@@ -38,6 +38,12 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdlePro
             templateUrl: "views/investment/overview.html",
             controller: 'InvestmentOverviewCtrl'
         })
+        .state('fund_finder.investment_edit', {
+            url: "/investment/:mode/:id",
+            templateUrl: "views/investment/edit.html",
+            controller: 'InvestmentEditCtrl',
+            params: { 'id' : null, 'mode' : null }
+        })
         .state('fund_finder.article_overview', {
             url: "/article/overview",
             templateUrl: "views/article/overview.html",
@@ -103,4 +109,15 @@ angular
 		toastr.options.preventDuplicates = true;
 		toastr.options.showMethod = 'slideDown'; 
 		toastr.options.hideMethod = 'slideUp';
+		
+		// keep track of previous and current state via root scope variables
+		$rootScope.previousState;
+		$rootScope.currentState;
+		$rootScope.$on('$stateChangeSuccess', function(ev, to, toParams, from, fromParams) {
+		    $rootScope.previousState = from.name;
+		    $rootScope.previousStateParams = fromParams;
+		    $rootScope.currentState = to.name;
+		    $rootScope.currentStateParams = toParams;
+		});
+		
     });

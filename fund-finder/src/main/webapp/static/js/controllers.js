@@ -4,8 +4,11 @@ angular
     // ==============================================================================================================
     // 	Security Controller
     // ==============================================================================================================
-    .controller('SecurityCtrl', function($rootScope, $scope, $http, $state) {
+    .controller('SecurityCtrl', function($rootScope, $scope, $http, $state, TotalService) {
     	
+    	/**
+    	 * Login function.
+    	 */
     	$scope.login = function() {
 			$http.post('login', $.param($scope.credentials), {
 				headers: {
@@ -22,6 +25,9 @@ angular
 			})
 		};
 		
+		/**
+		 * Logout function.
+		 */
 		$scope.logout = function() {
 			$http.post('logout', {}).success(function() {
 				$rootScope.authenticated = false;
@@ -58,16 +64,17 @@ angular
 				$state.go('login');
 			});
 		}
-		
-    	authenticate();
-    	
-    	$scope.credentials = { username: "kincade1975@gmail.com", password: "admin" };
+
+		// initial load
+		authenticate();
+		$scope.credentials = { username: "kincade1975@gmail.com", password: "admin" };
+		TotalService.updateTotal();
     })
     
     // ==============================================================================================================
     // 	Dashboard Controller
     // ==============================================================================================================
-    .controller('DashboardCtrl', function($rootScope, $scope, $state, UserService) {
+    .controller('DashboardCtrl', function($rootScope, $scope, $state) {
     	$scope.layout = 'grid';
     	$scope.users = [
     	    { fullName: "User Name 1", company: "Company Name 1", oib: "324234234332" },
@@ -78,29 +85,11 @@ angular
     	];  
     	
     	$scope.showDetails = function(user) {
-			console.log(user);
-		};
-		
-		UserService.findAll()
-			.success(function(data, status, headers, config) {
-				console.log(data);
-			})
-			.error(function(data, status, headers, config) {
-				if (status == 403) {
-					$state.go('login');
-				}
-			});
-    })
-    
-    .controller('UserOverviewCtrl', function($rootScope, $scope, $http, $state) {
-    	
+
+    	};
     })
     
     .controller('TenderOverviewCtrl', function($rootScope, $scope, $http, $state) {
-    	
-    })
-    
-    .controller('InvestmentOverviewCtrl', function($rootScope, $scope, $http, $state) {
     	
     })
     

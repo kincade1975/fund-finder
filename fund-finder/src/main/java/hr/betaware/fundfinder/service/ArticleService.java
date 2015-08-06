@@ -15,18 +15,18 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
-import hr.betaware.fundfinder.domain.Investment;
-import hr.betaware.fundfinder.resource.InvestmentResource;
-import hr.betaware.fundfinder.resource.InvestmentResourceAssembler;
+import hr.betaware.fundfinder.domain.Article;
+import hr.betaware.fundfinder.resource.ArticleResource;
+import hr.betaware.fundfinder.resource.ArticleResourceAssembler;
 import hr.betaware.fundfinder.resource.uigrid.PageableResource;
 import hr.betaware.fundfinder.resource.uigrid.UiGridFilterResource;
 import hr.betaware.fundfinder.resource.uigrid.UiGridResource;
 import hr.betaware.fundfinder.resource.uigrid.UiGridSortResource;
 
 @Service
-public class InvestmentService {
+public class ArticleService {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(InvestmentService.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(ArticleService.class);
 
 	@Autowired
 	private MongoOperations mongoOperations;
@@ -35,46 +35,46 @@ public class InvestmentService {
 	private SequenceService sequenceService;
 
 	@Autowired
-	private InvestmentResourceAssembler investmentResourceAssembler;
+	private ArticleResourceAssembler articleResourceAssembler;
 
 	@PostConstruct
 	public void init() {
 		//		createTestData();
 	}
 
-	public InvestmentResource findInvestment(Integer id) {
+	public ArticleResource findArticle(Integer id) {
 		if (id == 0) {
-			// new investment
-			return new InvestmentResource();
+			// new article
+			return new ArticleResource();
 		}
-		return investmentResourceAssembler.toResource(mongoOperations.findById(id, Investment.class));
+		return articleResourceAssembler.toResource(mongoOperations.findById(id, Article.class));
 	}
 
-	public InvestmentResource saveInvestment(InvestmentResource resource) {
-		Investment entity = null;
+	public ArticleResource saveArticle(ArticleResource resource) {
+		Article entity = null;
 		if (resource.getIdentificator() == null) {
-			entity = investmentResourceAssembler.createEntity(resource);
+			entity = articleResourceAssembler.createEntity(resource);
 		} else {
-			entity = mongoOperations.findById(resource.getIdentificator(), Investment.class);
-			entity = investmentResourceAssembler.updateEntity(entity, resource);
+			entity = mongoOperations.findById(resource.getIdentificator(), Article.class);
+			entity = articleResourceAssembler.updateEntity(entity, resource);
 		}
 
 		mongoOperations.save(entity);
 
-		return investmentResourceAssembler.toResource(entity);
+		return articleResourceAssembler.toResource(entity);
 	}
 
-	public void deleteInvestment(Integer id) {
-		Investment entity = mongoOperations.findById(id, Investment.class);
+	public void deleteArticle(Integer id) {
+		Article entity = mongoOperations.findById(id, Article.class);
 		mongoOperations.remove(entity);
 	}
 
-	public PageableResource<InvestmentResource> getPage(UiGridResource resource) {
+	public PageableResource<ArticleResource> getPage(UiGridResource resource) {
 		Query query = new Query();
 
 		// sorting
 		if (resource.getSort() == null || resource.getSort().isEmpty()) {
-			query.with(new Sort(Direction.ASC, "name"));
+			query.with(new Sort(Direction.ASC, "title"));
 		} else {
 			for (UiGridSortResource uiGridSortResource : resource.getSort()) {
 				query.with(new Sort(Direction.valueOf(uiGridSortResource.getDirection().toUpperCase()), uiGridSortResource.getName()));
@@ -89,24 +89,24 @@ public class InvestmentService {
 		}
 
 		// get total number of records that match query
-		long total = mongoOperations.count(query, Investment.class);
+		long total = mongoOperations.count(query, Article.class);
 
 		// add paging to query
 		LOGGER.debug("Querying database: {}", query);
 		query.with(new PageRequest(resource.getPagination().getPage(), resource.getPagination().getSize()));
 
 		// get records that match query
-		List<Investment> entities = mongoOperations.find(query, Investment.class);
+		List<Article> entities = mongoOperations.find(query, Article.class);
 
-		return new PageableResource<>(total, investmentResourceAssembler.toResources(entities));
+		return new PageableResource<>(total, articleResourceAssembler.toResources(entities));
 	}
 
 	void createTestData() {
 		for (int i = 10; i < 100; i++) {
-			Investment entity = new Investment();
-			entity.setId(sequenceService.getNextSequence(SequenceService.SEQUENCE_INVESTMENT));
-			entity.setName("Name " + i);
-			entity.setDescription("Description " + i);
+			Article entity = new Article();
+			entity.setId(sequenceService.getNextSequence(SequenceService.SEQUENCE_ARTICLE));
+			entity.setTitle("Title " + i);
+			entity.setText("Text " + i);
 			mongoOperations.save(entity);
 		}
 	}

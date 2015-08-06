@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
+    
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
-    <logger name="org.springframework.web" level="INFO"/>
+    
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<encoder>
+			<pattern>${FILE_LOG_PATTERN}</pattern>
+		</encoder>
+		<file>${LOG_FILE}</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_PATH}/${LOG_FILE}.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
+			<maxHistory>7</maxHistory>
+			<cleanHistoryOnStart>true</cleanHistoryOnStart>
+		</rollingPolicy>
+	</appender>
+	
+    <logger name="org.springframework" level="INFO"/>
+    <logger name="hr.betaware.fundfinder" level="DEBUG"/>
+    
 </configuration>

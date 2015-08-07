@@ -93,10 +93,6 @@ angular
     	
     })
     
-    .controller('ArticleOverviewCtrl', function($rootScope, $scope, $http, $state) {
-    	
-    })
-    
     .controller('StatisticsOverviewCtrl', function($rootScope, $scope, $http, $state) {
     	
     })

@@ -49,6 +49,12 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdlePro
             templateUrl: "views/article/overview.html",
             controller: 'ArticleOverviewCtrl'
         })
+        .state('fund_finder.article_edit', {
+            url: "/article/:mode/:id",
+            templateUrl: "views/article/edit.html",
+            controller: 'ArticleEditCtrl',
+            params: { 'id' : null, 'mode' : null }
+        })
         .state('fund_finder.statistics', {
             url: "/statistics",
             templateUrl: "views/statistics/statistics.html",

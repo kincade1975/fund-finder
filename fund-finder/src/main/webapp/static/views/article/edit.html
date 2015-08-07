@@ -1,0 +1,59 @@
+<div class="row border-bottom white-bg">
+	<div class="col-lg-12">
+		<h1 ng-show="mode == 'show'"><i class="fa fa-eye"></i> Detalji članka</h1>
+		<h1 ng-show="mode == 'edit' && article.id != null"><i class="fa fa-edit"></i>  Uredi članak</h1>
+		<h1 ng-show="mode == 'edit' && article.id == null"><i class="fa fa-plus"></i>  Dodaj članak</h1>
+	</div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+	
+	<div class="row" ng-show="mode == 'show'">
+		<div class="col-lg-12">
+			<div class="panel panel-default">
+				<div class="panel-heading"><strong>{{article.title}}</strong></div>
+				<div class="panel-body">
+					{{article.text}}
+				</div>
+				<div class="panel-footer" style="text-align: right;">
+					<small>Zadnja izmjena: {{article.lastModified | date : 'yyyy-MM-dd HH:mm:ss'}}</small>
+				</div>
+			</div>
+			<hr class="custom-hr">
+			<div class="col-lg-12" style="text-align: right;">
+				<button ng-click="back()" class="btn btn-white m-r-sm">Nazad</button>
+				<button ng-click="edit()" class="btn btn-primary"><i class="fa fa-edit"></i> Uredi</button>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row" ng-show="mode == 'edit'">
+		<div class="col-lg-12">
+			<form name="form" class="form-horizontal ng-pristine ng-valid" novalidate>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Naslov</label>
+					<div class="col-sm-10" ng-class="{ 'has-error' : form.articleTitle.$touched && form.articleTitle.$invalid }">
+						<input ng-model="article.title" type="text" class="form-control" name="articleTitle" ng-required="true" />
+						<small ng-show="form.articleTitle.$touched && form.articleTitle.$invalid" class="m-l-xs help-block" style="margin-top: 2px">Molimo unesite naslov članka</small>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Tekst</label>
+					<!-- <div class="col-sm-10" ng-class="{ 'has-error' : form.articleText.$touched && form.articleText.$invalid }">
+						<textarea ng-model="article.text" rows="10" class="form-control" name="articleText" ng-required="true"></textarea>
+						<small ng-show="form.articleText.$touched && form.articleText.$invalid" class="m-l-xs help-block" style="margin-top: 2px">Molimo unesite text članka</small>
+					</div> -->
+					<div class="col-sm-10">
+						<summernote ng-model="article.text"></summernote>	
+					</div>
+				</div>
+			</form>
+			<hr class="custom-hr">
+			<div class="col-lg-12" style="text-align: right;">
+				<button ng-click="cancel()" class="btn btn-white m-r-sm">Otkaži</button>
+				<button ng-click="save()" ng-disabled="form.$invalid" class="btn btn-primary"><i class="fa fa-save"></i> Spremi</button>
+			</div>
+		</div>
+	</div>
+	
+</div>

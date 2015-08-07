@@ -50,4 +50,22 @@ angular.module('fundFinder')
 		this.deleteInvestment = function(id) {
 			return $http.delete('/api/v1/investment/' + id);
 		};
+	})
+	
+	// ==============================================================================================================
+	// 	Article Service
+	// ==============================================================================================================
+	.service('ArticleService', function($http) {
+		this.getPage = function(resource) {
+			return $http.post('/api/v1/article/page', resource);
+		};
+		this.getArticle = function(id) {
+			return $http.get('/api/v1/article/' + id);
+		};
+		this.saveArticle = function(resource) {
+			return $http.post('/api/v1/article', resource);
+		};
+		this.deleteArticle = function(id) {
+			return $http.delete('/api/v1/article/' + id);
+		};
 	});

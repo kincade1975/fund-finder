@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
+import hr.betaware.fundfinder.domain.Article;
 import hr.betaware.fundfinder.domain.Investment;
 import hr.betaware.fundfinder.domain.User;
 import hr.betaware.fundfinder.domain.User.Role;
@@ -32,7 +33,7 @@ public class TotalService {
 		resource.setTotalInvestments(mongoOperations.count(new Query(), Investment.class));
 
 		// articles
-		resource.setTotalArticles(0L);
+		resource.setTotalArticles(mongoOperations.count(new Query(), Article.class));
 
 		return resource;
 	}

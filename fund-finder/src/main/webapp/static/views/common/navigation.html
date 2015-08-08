@@ -14,10 +14,10 @@
             <li ui-sref-active="active" ng-show="role == 'ROLE_ADMINISTRATOR'">
                 <a ui-sref="fund_finder.tender_overview"><i class="fa fa-star"></i> <span class="nav-label">Natječaji</span><span class="label label-default pull-right">{{totalTenders}}</span></a>
             </li>
-            <li ui-sref-active="active" ng-show="role == 'ROLE_ADMINISTRATOR'">
+            <li ng-show="role == 'ROLE_ADMINISTRATOR'" ng-class="{active: $state.is('fund_finder.investment_overview') || $state.is('fund_finder.investment_edit')}">
                 <a ui-sref="fund_finder.investment_overview"><i class="fa fa-line-chart"></i> <span class="nav-label">Investicije</span><span class="label label-default pull-right">{{totalInvestments}}</span></a>
             </li>
-            <li ui-sref-active="active" ng-show="role == 'ROLE_ADMINISTRATOR'">
+            <li ng-show="role == 'ROLE_ADMINISTRATOR'" ng-class="{active: $state.is('fund_finder.article_overview') || $state.is('fund_finder.article_edit')}">
                 <a ui-sref="fund_finder.article_overview"><i class="fa fa-university"></i> <span class="nav-label">Kako do sredstava</span><span class="label label-default pull-right">{{totalArticles}}</span></a>
             </li>
             <li ui-sref-active="active" ng-show="role == 'ROLE_ADMINISTRATOR'">

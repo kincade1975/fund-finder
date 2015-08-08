@@ -230,7 +230,7 @@ angular.module('fundFinder')
 	
 	$scope.options = {
 	    height: 300,
-	    focus: true,
+	    focus: false,
 	    airMode: false,
 	    toolbar: [
 	            ['style', ['bold', 'italic', 'underline']],

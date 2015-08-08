@@ -6,14 +6,14 @@
 	</div>
 </div>
 
-<div class="wrapper wrapper-content animated fadeInRight">
+<div class="wrapper wrapper-content">
 	
 	<div class="row" ng-show="mode == 'show'">
 		<div class="col-lg-12">
 			<div class="panel panel-default">
 				<div class="panel-heading"><strong>{{article.title}}</strong></div>
 				<div class="panel-body">
-					{{article.text}}
+					<div ng-bind-html="article.text" />
 				</div>
 				<div class="panel-footer" style="text-align: right;">
 					<small>Zadnja izmjena: {{article.lastModified | date : 'yyyy-MM-dd HH:mm:ss'}}</small>
@@ -31,7 +31,7 @@
 		<div class="col-lg-12">
 			<form name="form" class="form-horizontal ng-pristine ng-valid" novalidate>
 				<div class="form-group">
-					<label class="col-sm-2 control-label">Naslov</label>
+					<label class="col-sm-2 control-label">Naziv</label>
 					<div class="col-sm-10" ng-class="{ 'has-error' : form.articleTitle.$touched && form.articleTitle.$invalid }">
 						<input ng-model="article.title" type="text" class="form-control" name="articleTitle" ng-required="true" />
 						<small ng-show="form.articleTitle.$touched && form.articleTitle.$invalid" class="m-l-xs help-block" style="margin-top: 2px">Molimo unesite naslov članka</small>
@@ -44,7 +44,7 @@
 						<small ng-show="form.articleText.$touched && form.articleText.$invalid" class="m-l-xs help-block" style="margin-top: 2px">Molimo unesite text članka</small>
 					</div> -->
 					<div class="col-sm-10">
-						<summernote ng-model="article.text"></summernote>	
+						<summernote id="summernote" config="options" ng-model="article.text" />	
 					</div>
 				</div>
 			</form>

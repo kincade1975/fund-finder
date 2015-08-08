@@ -27,3 +27,12 @@
 	margin-top: 0px; 
 	margin-bottom: 10px;
 }
+
+.custom-a {
+	color: #676a6c
+}
+
+.custom-a:hover {
+	color: #000000;
+	text-decoration: underline;
+}

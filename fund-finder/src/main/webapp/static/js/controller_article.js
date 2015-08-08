@@ -19,13 +19,13 @@ angular.module('fundFinder')
 			enableGridMenu: false,
 			columnDefs: [
 				{
-					name: 'Naziv članka',
-					field: 'title',
+					name: 'Naziv',
 					type: 'string',
 					cellTooltip: false, 
 					enableSorting: true,
 					enableFiltering: true,
-					enableHiding: false
+					enableHiding: false,
+					cellTemplate:'<div class="ui-grid-cell-contents"><a class="custom-a" ng-click="grid.appScope.showArticle(row.entity)">{{row.entity.title}}</a></div>'
 				},
 				{
 					name: 'Kreiran',
@@ -45,8 +45,8 @@ angular.module('fundFinder')
 					enableSorting: false,
 					enableFiltering: false,
 					enableHiding: false,
-					width: 210,
-					cellTemplate:'<div style="margin:3px;"><button ng-click="grid.appScope.showArticle(row.entity)" class="btn-xs btn-success"><i class="fa fa-eye"></i> Detalji</button><button ng-click="grid.appScope.editArticle(row.entity)" class="btn-xs btn-success m-l-xs"><i class="fa fa-edit"></i> Uredi</button><button ng-click="grid.appScope.deleteArticle(row.entity)" class="btn-xs btn-danger m-l-xs"><i class="fa fa-times"></i> Obriši</button></div>'
+					width: 150,
+					cellTemplate:'<div class="ui-grid-cell-contents"><button ng-click="grid.appScope.editArticle(row.entity)" class="btn-xs btn-success m-l-xs"><i class="fa fa-edit"></i> Uredi</button><button ng-click="grid.appScope.deleteArticle(row.entity)" class="btn-xs btn-danger m-l-xs"><i class="fa fa-times"></i> Obriši</button></div>'
 				}
 			],
 			onRegisterApi: function(gridApi) {
@@ -226,5 +226,20 @@ angular.module('fundFinder')
 				toastr.error('Došlo je do pogreške prilikom dohvaćanja članka');
 			}
 		});
+	
+	$scope.options = {
+	    height: 300,
+	    focus: true,
+	    airMode: false,
+	    toolbar: [
+	            ['style', ['bold', 'italic', 'underline']],
+	            ['alignment', ['ul', 'ol', 'paragraph']],
+	            ['insert', ['link','picture','hr']]
+	        ]
+	  };
+	
+	$('#summernote').on('summernote.image.upload', function(customEvent, files) {
+		console.log('image upload:', files);
+	});
 	
 });

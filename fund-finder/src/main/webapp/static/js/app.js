@@ -1,6 +1,7 @@
 (function () {
     angular.module('fundFinder', [
         'ngIdle',
+        'ngSanitize',
         'oc.lazyLoad',
         'summernote',
         'ui.bootstrap',

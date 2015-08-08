@@ -19,13 +19,13 @@ angular.module('fundFinder')
 			enableGridMenu: false,
 			columnDefs: [
 				{
-					name: 'Naziv investicije',
-					field: 'name',
+					name: 'Naziv',
 					type: 'string',
 					cellTooltip: false, 
 					enableSorting: true,
 					enableFiltering: true,
-					enableHiding: false
+					enableHiding: false,
+					cellTemplate:'<div class="ui-grid-cell-contents"><a class="custom-a" ng-click="grid.appScope.showInvestment(row.entity)">{{row.entity.name}}</a></div>'
 				},
 				{
 					name: 'Kreirana',
@@ -45,8 +45,8 @@ angular.module('fundFinder')
 					enableSorting: false,
 					enableFiltering: false,
 					enableHiding: false,
-					width: 210,
-					cellTemplate:'<div style="margin:3px;"><button ng-click="grid.appScope.showInvestment(row.entity)" class="btn-xs btn-success"><i class="fa fa-eye"></i> Detalji</button><button ng-click="grid.appScope.editInvestment(row.entity)" class="btn-xs btn-success m-l-xs"><i class="fa fa-edit"></i> Uredi</button><button ng-click="grid.appScope.deleteInvestment(row.entity)" class="btn-xs btn-danger m-l-xs"><i class="fa fa-times"></i> Obriši</button></div>'
+					width: 150,
+					cellTemplate:'<div class="ui-grid-cell-contents"><button ng-click="grid.appScope.editInvestment(row.entity)" class="btn-xs btn-success m-l-xs"><i class="fa fa-edit"></i> Uredi</button><button ng-click="grid.appScope.deleteInvestment(row.entity)" class="btn-xs btn-danger m-l-xs"><i class="fa fa-times"></i> Obriši</button></div>'
 				}
 			],
 			onRegisterApi: function(gridApi) {

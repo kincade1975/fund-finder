@@ -44,13 +44,7 @@ angular
 					$rootScope.authenticated = true;
 					$rootScope.username = data.username;
 					$rootScope.fullName = data.firstName + " " + data.lastName;
-					if (data.role == 'ROLE_ADMINISTRATOR') {
-						$rootScope.role = 'ADMINISTRATOR';	
-					} else if (data.role == 'ROLE_USER') {
-						$rootScope.role = 'KORISNIK';
-					} else {
-						$rootScope.role = '';
-					}
+					$rootScope.role = data.role;	
 					
 					callback && callback();
 				} else {

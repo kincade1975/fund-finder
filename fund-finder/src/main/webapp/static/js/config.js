@@ -20,44 +20,44 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdlePro
 		})
         .state('fund_finder.dashboard', {
             url: "/dashboard",
-            templateUrl: "views/dashboard/dashboard.html",
+            templateUrl: "views/administrator/dashboard/dashboard.html",
             controller: 'DashboardCtrl'
         })
         .state('fund_finder.user_overview', {
             url: "/user/overview",
-            templateUrl: "views/user/overview.html",
+            templateUrl: "views/administrator/user/overview.html",
             controller: 'UserOverviewCtrl'
         })
         .state('fund_finder.tender_overview', {
             url: "/tender/overview",
-            templateUrl: "views/tender/overview.html",
+            templateUrl: "views/administrator/tender/overview.html",
             controller: 'TenderOverviewCtrl'
         })
         .state('fund_finder.investment_overview', {
             url: "/investment/overview",
-            templateUrl: "views/investment/overview.html",
+            templateUrl: "views/administrator/investment/overview.html",
             controller: 'InvestmentOverviewCtrl'
         })
         .state('fund_finder.investment_edit', {
             url: "/investment/:mode/:id",
-            templateUrl: "views/investment/edit.html",
+            templateUrl: "views/administrator/investment/edit.html",
             controller: 'InvestmentEditCtrl',
             params: { 'id' : null, 'mode' : null }
         })
         .state('fund_finder.article_overview', {
             url: "/article/overview",
-            templateUrl: "views/article/overview.html",
+            templateUrl: "views/administrator/article/overview.html",
             controller: 'ArticleOverviewCtrl'
         })
         .state('fund_finder.article_edit', {
             url: "/article/:mode/:id",
-            templateUrl: "views/article/edit.html",
+            templateUrl: "views/administrator/article/edit.html",
             controller: 'ArticleEditCtrl',
             params: { 'id' : null, 'mode' : null }
         })
         .state('fund_finder.statistics', {
             url: "/statistics",
-            templateUrl: "views/statistics/statistics.html",
+            templateUrl: "views/administrator/statistics/statistics.html",
             controller: 'StatisticsOverviewCtrl'
         })
 }

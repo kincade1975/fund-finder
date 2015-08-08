@@ -20,6 +20,7 @@ angular.module('fundFinder')
 			columnDefs: [
 				{
 					name: 'Naziv',
+					field: 'name',
 					type: 'string',
 					cellTooltip: false, 
 					enableSorting: true,

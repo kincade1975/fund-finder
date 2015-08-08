@@ -1,22 +1,9 @@
 <nav class="navbar-default navbar-static-side" role="navigation">
     <div class="sidebar-collapse" ng-controller="SecurityCtrl">
         <ul side-navigation class="nav metismenu" id="side-menu">
-            <li class="nav-header">
-                <div class="dropdown profile-element" dropdown>
-                    <a class="dropdown-toggle" dropdown-toggle href>
-                    	<span class="clear">
-                    		<span class="block m-t-xs">
-								<h4 class="font-bold"><i class="fa fa-user"></i> {{fullName}}</h4>
-                    		</span>
-                    		<span class="text-muted text-xs block m-t-xs"><small>{{role}}<b class="caret"></b></small></span>
-                    	</span>
-                    </a>
-                    <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                    	<li><a href="#" ng-click="logout()"><i class="fa fa-wrench"></i> Izmjeni podatke</a></li>
-                    	<li class="divider"></li>
-                        <li><a href="#" ng-click="logout()"><i class="fa fa-sign-out"></i> Odjavi se</a></li>
-                    </ul>
-                </div>
+            <li style="height: 50px; padding-top: 10px; padding-left: 10px;">
+                <img alt="Fund Finder" src="/img/fund_finder_logo.png" width="50">
+                <label class="nav-label m-l-xs" style="color: white">FUND FINDER</label>
             </li>
 
             <li ui-sref-active="active">

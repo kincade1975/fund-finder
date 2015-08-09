@@ -8,57 +8,68 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdlePro
     $ocLazyLoadProvider.config({ debug: false });
 
     $stateProvider
-        .state('fund_finder', {
+        .state('administrator', {
             abstract: true,
             url: "/fund_finder",
             templateUrl: "views/common/content.html",
         })
         .state('login', {
 			url: '/login',
-			templateUrl: 'views/login.html',
+			templateUrl: 'views/common/login.html',
 			controller: 'SecurityCtrl'
 		})
-        .state('fund_finder.dashboard', {
-            url: "/dashboard",
+        .state('administrator.dashboard', {
+            url: "/administrator/dashboard",
             templateUrl: "views/administrator/dashboard/dashboard.html",
             controller: 'DashboardCtrl'
         })
-        .state('fund_finder.user_overview', {
-            url: "/user/overview",
+        .state('administrator.user_overview', {
+            url: "/administrator/user/overview",
             templateUrl: "views/administrator/user/overview.html",
             controller: 'Administrator_UserOverviewCtrl'
         })
-        .state('fund_finder.tender_overview', {
-            url: "/tender/overview",
+        .state('administrator.tender_overview', {
+            url: "/administrator/tender/overview",
             templateUrl: "views/administrator/tender/overview.html",
             controller: 'TenderOverviewCtrl'
         })
-        .state('fund_finder.investment_overview', {
-            url: "/investment/overview",
+        .state('administrator.investment_overview', {
+            url: "/administrator/investment/overview",
             templateUrl: "views/administrator/investment/overview.html",
             controller: 'Administrator_InvestmentOverviewCtrl'
         })
-        .state('fund_finder.investment_edit', {
-            url: "/investment/:mode/:id",
+        .state('administrator.investment_edit', {
+            url: "/administrator/investment/:mode/:id",
             templateUrl: "views/administrator/investment/edit.html",
             controller: 'Administrator_InvestmentEditCtrl',
             params: { 'id' : null, 'mode' : null }
         })
-        .state('fund_finder.article_overview', {
-            url: "/article/overview",
+        .state('administrator.article_overview', {
+            url: "/administrator/article/overview",
             templateUrl: "views/administrator/article/overview.html",
             controller: 'Administrator_ArticleOverviewCtrl'
         })
-        .state('fund_finder.article_edit', {
-            url: "/article/:mode/:id",
+        .state('administrator.article_edit', {
+            url: "/administrator/article/:mode/:id",
             templateUrl: "views/administrator/article/edit.html",
             controller: 'Administrator_ArticleEditCtrl',
             params: { 'id' : null, 'mode' : null }
         })
-        .state('fund_finder.statistics', {
-            url: "/statistics",
+        .state('administrator.statistics', {
+            url: "/administrator/statistics",
             templateUrl: "views/administrator/statistics/statistics.html",
             controller: 'StatisticsOverviewCtrl'
+        })
+        
+        .state('user', {
+            abstract: true,
+            url: "/fund_finder",
+            templateUrl: "views/common/content.html",
+        })
+        .state('user.article_overview', {
+            url: "/user/article/overview",
+            templateUrl: "views/user/article/overview.html",
+            controller: 'User_ArticleOverviewCtrl'
         })
 }
 

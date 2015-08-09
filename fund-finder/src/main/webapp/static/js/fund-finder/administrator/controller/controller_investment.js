@@ -124,15 +124,15 @@ angular.module('fundFinder')
 		};
 		
 		$scope.showInvestment = function(entity) {
-			$state.go('fund_finder.investment_edit', { 'id' : entity.id, 'mode' : 'show' });
+			$state.go('administrator.investment_edit', { 'id' : entity.id, 'mode' : 'show' });
 		};
 
 		$scope.newInvestment = function(entity) {
-			$state.go('fund_finder.investment_edit', { 'id' : 0, 'mode' : 'edit' });
+			$state.go('administrator.investment_edit', { 'id' : 0, 'mode' : 'edit' });
 		};
 		
 		$scope.editInvestment = function(entity) {
-			$state.go('fund_finder.investment_edit', { 'id' : entity.id, 'mode' : 'edit' });
+			$state.go('administrator.investment_edit', { 'id' : entity.id, 'mode' : 'edit' });
 		};
 		
 		$scope.deleteInvestment = function(entity) {
@@ -185,7 +185,7 @@ angular.module('fundFinder')
 	$scope.mode = $stateParams.mode;
 	
 	$scope.back = function() {
-		$state.go('fund_finder.investment_overview');
+		$state.go('administrator.investment_overview');
 	};
 	
 	$scope.cancel = function() {
@@ -197,7 +197,7 @@ angular.module('fundFinder')
 	};
 	
 	$scope.edit = function() {
-		$state.go('fund_finder.investment_edit', { 'id' : $scope.investment.id, 'mode' : 'edit' });
+		$state.go('administrator.investment_edit', { 'id' : $scope.investment.id, 'mode' : 'edit' });
 	};
 	
 	$scope.save = function() {

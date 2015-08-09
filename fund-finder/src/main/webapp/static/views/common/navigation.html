@@ -3,25 +3,29 @@
         <ul side-navigation class="nav metismenu" id="side-menu">
             <li style="height: 50px; padding-top: 10px; padding-left: 10px;">
                 <img alt="Fund Finder" src="/img/fund_finder_logo.png" width="50">
-                <label class="nav-label m-l-xs" style="color: white">FUND FINDER</label>
+                <label class="nav-label m-l-xs" style="color: white; font-weight: 400;">FUND FINDER</label>
             </li>
             <li ui-sref-active="active" ng-show="role == 'ROLE_ADMINISTRATOR'">
-                <a ui-sref="fund_finder.dashboard"><i class="fa fa-tachometer"></i> <span class="nav-label">Kontrolna ploča</span> </a>
+                <a ui-sref="administrator.dashboard"><i class="fa fa-tachometer"></i> <span class="nav-label">Kontrolna ploča</span> </a>
             </li>
             <li ui-sref-active="active" ng-show="role == 'ROLE_ADMINISTRATOR'">
-                <a ui-sref="fund_finder.user_overview"><i class="fa fa-users"></i> <span class="nav-label">Korisnici</span><span class="label label-default pull-right">{{totalUsers}}</span></a>
+                <a ui-sref="administrator.user_overview"><i class="fa fa-users"></i> <span class="nav-label">Korisnici</span><span class="label label-default pull-right">{{totalUsers}}</span></a>
             </li>
             <li ui-sref-active="active" ng-show="role == 'ROLE_ADMINISTRATOR'">
-                <a ui-sref="fund_finder.tender_overview"><i class="fa fa-star"></i> <span class="nav-label">Natječaji</span><span class="label label-default pull-right">{{totalTenders}}</span></a>
+                <a ui-sref="administrator.tender_overview"><i class="fa fa-star"></i> <span class="nav-label">Natječaji</span><span class="label label-default pull-right">{{totalTenders}}</span></a>
             </li>
-            <li ng-show="role == 'ROLE_ADMINISTRATOR'" ng-class="{active: $state.is('fund_finder.investment_overview') || $state.is('fund_finder.investment_edit')}">
-                <a ui-sref="fund_finder.investment_overview"><i class="fa fa-line-chart"></i> <span class="nav-label">Investicije</span><span class="label label-default pull-right">{{totalInvestments}}</span></a>
+            <li ng-show="role == 'ROLE_ADMINISTRATOR'" ng-class="{active: $state.is('administrator.investment_overview') || $state.is('administrator.investment_edit')}">
+                <a ui-sref="administrator.investment_overview"><i class="fa fa-line-chart"></i> <span class="nav-label">Investicije</span><span class="label label-default pull-right">{{totalInvestments}}</span></a>
             </li>
-            <li ng-show="role == 'ROLE_ADMINISTRATOR'" ng-class="{active: $state.is('fund_finder.article_overview') || $state.is('fund_finder.article_edit')}">
-                <a ui-sref="fund_finder.article_overview"><i class="fa fa-university"></i> <span class="nav-label">Kako do sredstava</span><span class="label label-default pull-right">{{totalArticles}}</span></a>
+            <li ng-show="role == 'ROLE_ADMINISTRATOR'" ng-class="{active: $state.is('administrator.article_overview') || $state.is('administrator.article_edit')}">
+                <a ui-sref="administrator.article_overview"><i class="fa fa-university"></i> <span class="nav-label">Kako do sredstava</span><span class="label label-default pull-right">{{totalArticles}}</span></a>
             </li>
             <li ui-sref-active="active" ng-show="role == 'ROLE_ADMINISTRATOR'">
-                <a ui-sref="fund_finder.statistics"><i class="fa fa-area-chart"></i> <span class="nav-label">Statistika</span></a>
+                <a ui-sref="administrator.statistics"><i class="fa fa-area-chart"></i> <span class="nav-label">Statistika</span></a>
+            </li>
+            
+            <li ng-show="role == 'ROLE_USER'" ng-class="{active: $state.is('user.article_overview')}">
+                <a ui-sref="user.article_overview"><i class="fa fa-university"></i> <span class="nav-label">Kako do sredstava</span></a>
             </li>
         </ul>
     </div>

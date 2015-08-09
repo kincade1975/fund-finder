@@ -16,7 +16,11 @@ angular
 				}
 			}).success(function(data) {
 				authenticate(function() {
-					$state.go(($rootScope.authenticated) ? 'fund_finder.dashboard' : 'login');
+					if ($rootScope.role == 'ROLE_ADMINISTRATOR') {
+						$state.go(($rootScope.authenticated) ? 'administrator.dashboard' : 'login');
+					} else {
+						$state.go(($rootScope.authenticated) ? 'user.article_overview' : 'login');
+					}
 				});
 			}).error(function(data, status) {
 				$state.go('login');

@@ -3,7 +3,7 @@ angular.module('fundFinder')
 // ==============================================================================================================
 // 	OVERVIEW
 // ==============================================================================================================
-.controller('ArticleOverviewCtrl', function($rootScope, $scope, $state, TotalService, ArticleService) {
+.controller('Administrator_InvestmentOverviewCtrl', function($rootScope, $scope, $state, Administrator_TotalService, Administrator_InvestmentService) {
 	$scope.gridOptions = {
 			enableScrollbars: false,
 			paginationPageSizes: [10, 20, 30, 50, 100],
@@ -20,16 +20,16 @@ angular.module('fundFinder')
 			columnDefs: [
 				{
 					name: 'Naziv',
-					field: 'title',
+					field: 'name',
 					type: 'string',
 					cellTooltip: false, 
 					enableSorting: true,
 					enableFiltering: true,
 					enableHiding: false,
-					cellTemplate:'<div class="ui-grid-cell-contents"><a class="custom-a" ng-click="grid.appScope.showArticle(row.entity)">{{row.entity.title}}</a></div>'
+					cellTemplate:'<div class="ui-grid-cell-contents"><a class="custom-a" ng-click="grid.appScope.showInvestment(row.entity)">{{row.entity.name}}</a></div>'
 				},
 				{
-					name: 'Kreiran',
+					name: 'Kreirana',
 					field: 'timeCreated',
 					type: 'date',
 					cellFilter: 'date:"yyyy-MM-dd HH:mm:ss"',
@@ -47,7 +47,7 @@ angular.module('fundFinder')
 					enableFiltering: false,
 					enableHiding: false,
 					width: 150,
-					cellTemplate:'<div class="ui-grid-cell-contents"><button ng-click="grid.appScope.editArticle(row.entity)" class="btn-xs btn-success m-l-xs"><i class="fa fa-edit"></i> Uredi</button><button ng-click="grid.appScope.deleteArticle(row.entity)" class="btn-xs btn-danger m-l-xs"><i class="fa fa-times"></i> Obriši</button></div>'
+					cellTemplate:'<div class="ui-grid-cell-contents"><button ng-click="grid.appScope.editInvestment(row.entity)" class="btn-xs btn-success m-l-xs"><i class="fa fa-edit"></i> Uredi</button><button ng-click="grid.appScope.deleteInvestment(row.entity)" class="btn-xs btn-danger m-l-xs"><i class="fa fa-times"></i> Obriši</button></div>'
 				}
 			],
 			onRegisterApi: function(gridApi) {
@@ -93,7 +93,7 @@ angular.module('fundFinder')
 				"filter" : $scope.filterArray
 			};
 			
-			ArticleService.getPage(uiGridResource).
+			Administrator_InvestmentService.getPage(uiGridResource).
 				success(function(data, status, headers, config) {
 					$scope.gridOptions.data = data.data;
 					$scope.gridOptions.totalItems = data.total;
@@ -123,23 +123,23 @@ angular.module('fundFinder')
 			$scope.getPage($scope.gridApi.pagination.getPage(), $scope.gridOptions.paginationPageSize);
 		};
 		
-		$scope.showArticle = function(entity) {
-			$state.go('fund_finder.article_edit', { 'id' : entity.id, 'mode' : 'show' });
+		$scope.showInvestment = function(entity) {
+			$state.go('fund_finder.investment_edit', { 'id' : entity.id, 'mode' : 'show' });
 		};
 
-		$scope.newArticle = function(entity) {
-			$state.go('fund_finder.article_edit', { 'id' : 0, 'mode' : 'edit' });
+		$scope.newInvestment = function(entity) {
+			$state.go('fund_finder.investment_edit', { 'id' : 0, 'mode' : 'edit' });
 		};
 		
-		$scope.editArticle = function(entity) {
-			$state.go('fund_finder.article_edit', { 'id' : entity.id, 'mode' : 'edit' });
+		$scope.editInvestment = function(entity) {
+			$state.go('fund_finder.investment_edit', { 'id' : entity.id, 'mode' : 'edit' });
 		};
 		
-		$scope.deleteArticle = function(entity) {
+		$scope.deleteInvestment = function(entity) {
 			BootstrapDialog.show({
 				type: BootstrapDialog.TYPE_DEFAULT,
-	            title: 'Obriši članak',
-	            message: 'Da li doista želite obrisati članak \'' + entity.title + '\'?',
+	            title: 'Obriši investiciju',
+	            message: 'Da li doista želite obrisati investiciju \'' + entity.name + '\'?',
 	            buttons: [
 					{
 						label: 'No',
@@ -154,17 +154,17 @@ angular.module('fundFinder')
 		            	icon: 'fa fa-check',
 		                cssClass: 'btn-primary',
 		                action: function(dialog) {
-		                	ArticleService.deleteArticle(entity.id)
+		                	Administrator_InvestmentService.deleteInvestment(entity.id)
 			    				.success(function(data, status) {
 			    					$scope.getPage($scope.gridApi.pagination.getPage(), $scope.gridOptions.paginationPageSize);
-			    					toastr.success('Članak je uspješno obrisan');
-			    					TotalService.updateTotal();
+			    					toastr.success('Investicija je uspješno obrisana');
+			    					Administrator_TotalService.updateTotal();
 			    				})
 			    				.error(function(data, status) {
 			    					if (status == 403) {
 			    						$state.go('login');
 			    					} else {
-			    						toastr.error('Došlo je do pogreške prilikom brisanja članka');
+			    						toastr.error('Došlo je do pogreške prilikom brisanja investicije');
 			    					}
 			    				});
 		        			dialog.close();
@@ -181,11 +181,11 @@ angular.module('fundFinder')
 // ==============================================================================================================
 // 	EDIT
 // ==============================================================================================================
-.controller('ArticleEditCtrl', function($rootScope, $scope, $state, $stateParams, TotalService, ArticleService) {
+.controller('Administrator_InvestmentEditCtrl', function($rootScope, $scope, $state, $stateParams, Administrator_TotalService, Administrator_InvestmentService) {
 	$scope.mode = $stateParams.mode;
 	
 	$scope.back = function() {
-		$state.go('fund_finder.article_overview');
+		$state.go('fund_finder.investment_overview');
 	};
 	
 	$scope.cancel = function() {
@@ -197,50 +197,35 @@ angular.module('fundFinder')
 	};
 	
 	$scope.edit = function() {
-		$state.go('fund_finder.article_edit', { 'id' : $scope.article.id, 'mode' : 'edit' });
+		$state.go('fund_finder.investment_edit', { 'id' : $scope.investment.id, 'mode' : 'edit' });
 	};
 	
 	$scope.save = function() {
-		ArticleService.saveArticle($scope.article)
+		Administrator_InvestmentService.saveInvestment($scope.investment)
 			.success(function(data, status) {
-				$scope.article = data;
-				toastr.success('Članak je uspješno spremljen');
-				TotalService.updateTotal();
+				$scope.investment = data;
+				toastr.success('Investicija je uspješno spremljena');
+				Administrator_TotalService.updateTotal();
 			})
 			.error(function(data, status) {
 				if (status == 403) {
 					$state.go('login');
 				} else {
-					toastr.error('Došlo je do pogreške prilikom spremanja članka');
+					toastr.error('Došlo je do pogreške prilikom spremanja investicije');
 				}
 			});
 	}
 	
-	ArticleService.getArticle($stateParams.id)
+	Administrator_InvestmentService.getInvestment($stateParams.id)
 		.success(function(data, status) {
-			$scope.article = data;
+			$scope.investment = data;
 		})
 		.error(function(data, status) {
 			if (status == 403) {
 				$state.go('login');
 			} else {
-				toastr.error('Došlo je do pogreške prilikom dohvaćanja članka');
+				toastr.error('Došlo je do pogreške prilikom dohvaćanja investicije');
 			}
 		});
-	
-	$scope.options = {
-	    height: 300,
-	    focus: false,
-	    airMode: false,
-	    toolbar: [
-	            ['style', ['bold', 'italic', 'underline']],
-	            ['alignment', ['ul', 'ol', 'paragraph']],
-	            ['insert', ['link','picture','hr']]
-	        ]
-	  };
-	
-	$('#summernote').on('summernote.image.upload', function(customEvent, files) {
-		console.log('image upload:', files);
-	});
 	
 });

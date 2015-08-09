@@ -26,7 +26,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdlePro
         .state('fund_finder.user_overview', {
             url: "/user/overview",
             templateUrl: "views/administrator/user/overview.html",
-            controller: 'UserOverviewCtrl'
+            controller: 'Administrator_UserOverviewCtrl'
         })
         .state('fund_finder.tender_overview', {
             url: "/tender/overview",
@@ -36,23 +36,23 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdlePro
         .state('fund_finder.investment_overview', {
             url: "/investment/overview",
             templateUrl: "views/administrator/investment/overview.html",
-            controller: 'InvestmentOverviewCtrl'
+            controller: 'Administrator_InvestmentOverviewCtrl'
         })
         .state('fund_finder.investment_edit', {
             url: "/investment/:mode/:id",
             templateUrl: "views/administrator/investment/edit.html",
-            controller: 'InvestmentEditCtrl',
+            controller: 'Administrator_InvestmentEditCtrl',
             params: { 'id' : null, 'mode' : null }
         })
         .state('fund_finder.article_overview', {
             url: "/article/overview",
             templateUrl: "views/administrator/article/overview.html",
-            controller: 'ArticleOverviewCtrl'
+            controller: 'Administrator_ArticleOverviewCtrl'
         })
         .state('fund_finder.article_edit', {
             url: "/article/:mode/:id",
             templateUrl: "views/administrator/article/edit.html",
-            controller: 'ArticleEditCtrl',
+            controller: 'Administrator_ArticleEditCtrl',
             params: { 'id' : null, 'mode' : null }
         })
         .state('fund_finder.statistics', {

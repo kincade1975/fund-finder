@@ -3,7 +3,7 @@ angular.module('fundFinder')
 //==============================================================================================================
 //	OVERVIEW
 //==============================================================================================================
-.controller('UserOverviewCtrl', function($rootScope, $scope, $state, UserService) {
+.controller('Administrator_UserOverviewCtrl', function($rootScope, $scope, $state, Administrator_TotalService, Administrator_UserService) {
 	$scope.gridOptions = {
 		enableScrollbars: false,
 		paginationPageSizes: [10, 20, 30, 50, 100],
@@ -90,7 +90,7 @@ angular.module('fundFinder')
 			"filter" : $scope.filterArray
 		};
 		
-		UserService.getPage(uiGridResource).
+		Administrator_UserService.getPage(uiGridResource).
 			success(function(data, status, headers, config) {
 				$scope.gridOptions.data = data.data;
 				$scope.gridOptions.totalItems = data.total;
@@ -139,10 +139,11 @@ angular.module('fundFinder')
 	            	icon: 'fa fa-check',
 	                cssClass: 'btn-primary',
 	                action: function(dialog) {
-	                	UserService.deleteUser(entity.id)
+	                	Administrator_UserService.deleteUser(entity.id)
 		    				.success(function(data, status) {
 		    					$scope.getPage($scope.gridApi.pagination.getPage(), $scope.gridOptions.paginationPageSize);
 		    					toastr.success('Korisnik je uspješno obrisan');
+		    					Administrator_TotalService.updateTotal();
 		    				})
 		    				.error(function(data, status) {
 		    					if (status == 403) {

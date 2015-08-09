@@ -1,14 +1,6 @@
-/**
- * INSPINIA - Responsive Admin Theme
- * 2.2
- *
- * Custom scripts
- */
-
 $(document).ready(function () {
 
-
-    // Full height of sidebar
+    // full height of side-bar
     function fix_height() {
         var heightWithoutNavbar = $("body > #wrapper").height() - 61;
         $(".sidebard-panel").css("min-height", heightWithoutNavbar + "px");
@@ -36,7 +28,7 @@ $(document).ready(function () {
         }
     })
 
-    // Move right sidebar top after scroll
+    // move right side-bar top after scroll
     $(window).scroll(function(){
         if ($(window).scrollTop() > 0 && !$('body').hasClass('fixed-nav') ) {
             $('#right-sidebar').addClass('sidebar-top');
@@ -51,7 +43,7 @@ $(document).ready(function () {
 
 });
 
-// Minimalize menu when screen is less than 768px
+// minimize menu when screen is less than 768px
 $(function() {
     $(window).bind("load resize", function() {
         if ($(this).width() < 769) {

@@ -75,6 +75,20 @@
 			<groupId>org.webjars.bower</groupId>
 			<artifactId>bootstrap3-dialog</artifactId>
 			<version>${bootstrap3-dialog.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.webjars</groupId>
+					<artifactId>bootstrap</artifactId>
+				</exclusion>
+				<exclusion>
+					<artifactId>bootstrap</artifactId>
+					<groupId>org.webjars.bower</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>jquery</artifactId>
+					<groupId>org.webjars.bower</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.webjars</groupId>
@@ -100,6 +114,20 @@
 			<groupId>org.webjars.bower</groupId>
 			<artifactId>summernote</artifactId>
 			<version>${summernote.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>bootstrap</artifactId>
+					<groupId>org.webjars.bower</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>font-awesome</artifactId>
+					<groupId>org.webjars.bower</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>jquery</artifactId>
+					<groupId>org.webjars.bower</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.webjars.bower</groupId>

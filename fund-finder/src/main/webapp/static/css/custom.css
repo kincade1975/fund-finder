@@ -40,6 +40,11 @@
 	margin: 0px;
 }
 
+.img-thumbnail {
+	padding: 0px;
+	border: none;
+}
+
 .custom-hr {
 	border-top: 1px solid #e0e0e0; 
 	margin-top: 0px; 
@@ -53,4 +58,20 @@
 .custom-a:hover {
 	color: #000000;
 	text-decoration: underline;
+}
+
+.custom-panel {
+	box-shadow: 0 0 10px #a0a0a0;
+	padding-bottom: 5px;
+	margin-bottom: 0px;
+}
+
+.custom-panel-body {
+	height: 450px;
+	overflow: hidden;
+}
+
+.custom-label-date {
+	padding: 2px 10px 2px 10px;
+	border-radius: 5px;
 }

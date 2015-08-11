@@ -1,5 +1,6 @@
 package hr.betaware.fundfinder.resource;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 import org.springframework.stereotype.Component;
@@ -23,7 +24,7 @@ public class ArticleResourceAssembler extends ResourceAssemblerSupport<Article, 
 		ArticleResource resource = new ArticleResource();
 		resource.setIdentificator(entity.getId());
 		resource.setTitle(entity.getTitle());
-		resource.setText(entity.getText());
+		resource.setText(StringEscapeUtils.unescapeHtml4(entity.getText()));
 		resource.setImage(entity.getImage());
 		resource.setTimeCreated(entity.getTimeCreated());
 		resource.setLastModified(entity.getLastModified());
@@ -34,14 +35,14 @@ public class ArticleResourceAssembler extends ResourceAssemblerSupport<Article, 
 		Article entity = new Article();
 		entity.setId(sequenceService.getNextSequence(SequenceService.SEQUENCE_ARTICLE));
 		entity.setTitle(resource.getTitle());
-		entity.setText(resource.getText());
+		entity.setText(StringEscapeUtils.escapeHtml4(resource.getText()));
 		entity.setImage(resource.getImage());
 		return entity;
 	}
 
 	public Article updateEntity(Article entity, ArticleResource resource) {
 		entity.setTitle(resource.getTitle());
-		entity.setText(resource.getText());
+		entity.setText(StringEscapeUtils.escapeHtml4(resource.getText()));
 		entity.setImage(resource.getImage());
 		return entity;
 	}

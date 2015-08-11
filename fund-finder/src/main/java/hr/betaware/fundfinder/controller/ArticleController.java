@@ -1,5 +1,7 @@
 package hr.betaware.fundfinder.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,8 +22,14 @@ public class ArticleController {
 	@Autowired
 	private ArticleService articleService;
 
+	@RequestMapping(method = RequestMethod.GET)
+	@PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR','ROLE_USER')")
+	public List<ArticleResource> findAll() {
+		return articleService.findAll();
+	}
+
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
-	@PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR')")
+	@PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR','ROLE_USER')")
 	public ArticleResource findArticle(@PathVariable Integer id) {
 		return articleService.findArticle(id);
 	}

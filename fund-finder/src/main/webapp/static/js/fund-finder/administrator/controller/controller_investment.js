@@ -142,7 +142,7 @@ angular.module('fundFinder')
 	            message: 'Da li doista želite obrisati investiciju \'' + entity.name + '\'?',
 	            buttons: [
 					{
-						label: 'No',
+						label: 'Ne',
 						icon: 'fa fa-times',
 					    cssClass: 'btn-white',
 					    action: function(dialog) {
@@ -150,7 +150,7 @@ angular.module('fundFinder')
 					    }
 					},
 	            	{
-	            		label: 'Yes',
+	            		label: 'Da',
 		            	icon: 'fa fa-check',
 		                cssClass: 'btn-primary',
 		                action: function(dialog) {

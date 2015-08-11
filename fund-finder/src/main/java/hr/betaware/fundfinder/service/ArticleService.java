@@ -42,6 +42,10 @@ public class ArticleService {
 		//		createTestData();
 	}
 
+	public List<ArticleResource> findAll() {
+		return articleResourceAssembler.toResources(mongoOperations.findAll(Article.class));
+	}
+
 	public ArticleResource findArticle(Integer id) {
 		if (id == 0) {
 			// new article

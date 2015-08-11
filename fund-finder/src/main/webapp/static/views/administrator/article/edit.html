@@ -13,7 +13,7 @@
 			<div class="panel panel-default">
 				<div class="panel-heading"><strong>{{article.title}}</strong></div>
 				<div class="panel-body">
-					<div ng-bind-html="article.text" />
+					<div ng-bind-html="toTrusted(article.text)"></div>
 				</div>
 				<div class="panel-footer" style="text-align: right;">
 					<small>Zadnja izmjena: {{article.lastModified | date : 'yyyy-MM-dd HH:mm:ss'}}</small>
@@ -21,7 +21,7 @@
 			</div>
 			<hr class="custom-hr">
 			<div class="col-lg-12" style="text-align: right;">
-				<button ng-click="back()" class="btn btn-white m-r-sm">Nazad</button>
+				<button ng-click="back()" class="btn btn-white m-r-sm"><i class="fa fa-angle-double-left"></i> Natrag</button>
 				<button ng-click="edit()" class="btn btn-primary"><i class="fa fa-edit"></i> Uredi</button>
 			</div>
 		</div>
@@ -50,7 +50,7 @@
 			</form>
 			<hr class="custom-hr">
 			<div class="col-lg-12" style="text-align: right;">
-				<button ng-click="cancel()" class="btn btn-white m-r-sm">Otkaži</button>
+				<button ng-click="cancel()" class="btn btn-white m-r-sm"><i class="fa fa-angle-double-left"></i> Natrag</button>
 				<button ng-click="save()" ng-disabled="form.$invalid" class="btn btn-primary"><i class="fa fa-save"></i> Spremi</button>
 			</div>
 		</div>

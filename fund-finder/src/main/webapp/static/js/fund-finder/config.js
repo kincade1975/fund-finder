@@ -71,6 +71,12 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdlePro
             templateUrl: "views/user/article/overview.html",
             controller: 'User_ArticleOverviewCtrl'
         })
+        .state('user.article_show', {
+            url: "/user/article/:id",
+            templateUrl: "views/user/article/show.html",
+            controller: 'User_ArticleShowCtrl',
+            params: { 'id' : null }
+        })
 }
 
 angular

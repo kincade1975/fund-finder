@@ -24,7 +24,7 @@
                 <a ui-sref="administrator.statistics"><i class="fa fa-area-chart"></i> <span class="nav-label">Statistika</span></a>
             </li>
             
-            <li ng-show="role == 'ROLE_USER'" ng-class="{active: $state.is('user.article_overview')}">
+            <li ng-show="role == 'ROLE_USER'" ng-class="{active: $state.is('user.article_overview') || $state.is('user.article_show')}">
                 <a ui-sref="user.article_overview"><i class="fa fa-university"></i> <span class="nav-label">Kako do sredstava</span></a>
             </li>
         </ul>

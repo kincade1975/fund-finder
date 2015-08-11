@@ -142,7 +142,7 @@ angular.module('fundFinder')
 	            message: 'Da li doista želite obrisati članak \'' + entity.title + '\'?',
 	            buttons: [
 					{
-						label: 'No',
+						label: 'Ne',
 						icon: 'fa fa-times',
 					    cssClass: 'btn-white',
 					    action: function(dialog) {
@@ -150,7 +150,7 @@ angular.module('fundFinder')
 					    }
 					},
 	            	{
-	            		label: 'Yes',
+	            		label: 'Da',
 		            	icon: 'fa fa-check',
 		                cssClass: 'btn-primary',
 		                action: function(dialog) {
@@ -181,7 +181,7 @@ angular.module('fundFinder')
 // ==============================================================================================================
 // 	EDIT
 // ==============================================================================================================
-.controller('Administrator_ArticleEditCtrl', function($rootScope, $scope, $state, $stateParams, Administrator_TotalService, Administrator_ArticleService) {
+.controller('Administrator_ArticleEditCtrl', function($rootScope, $scope, $state, $sce, $stateParams, Administrator_TotalService, Administrator_ArticleService) {
 	$scope.mode = $stateParams.mode;
 	
 	$scope.back = function() {
@@ -216,6 +216,10 @@ angular.module('fundFinder')
 			});
 	}
 	
+	$scope.toTrusted = function(html) {
+	    return $sce.trustAsHtml(html);
+	}
+	
 	Administrator_ArticleService.getArticle($stateParams.id)
 		.success(function(data, status) {
 			$scope.article = data;
@@ -229,7 +233,7 @@ angular.module('fundFinder')
 		});
 	
 	$scope.options = {
-	    height: 300,
+	    height: 500,
 	    focus: false,
 	    airMode: false,
 	    toolbar: [
@@ -238,9 +242,5 @@ angular.module('fundFinder')
 	            ['insert', ['link','picture','hr']]
 	        ]
 	  };
-	
-	$('#summernote').on('summernote.image.upload', function(customEvent, files) {
-		console.log('image upload:', files);
-	});
 	
 });

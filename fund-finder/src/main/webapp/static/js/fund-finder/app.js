@@ -1,5 +1,6 @@
 (function () {
     angular.module('fundFinder', [
+        'dndLists',
         'ngIdle',
         'ngSanitize',
         'oc.lazyLoad',

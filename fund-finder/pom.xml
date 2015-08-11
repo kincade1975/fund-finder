@@ -32,6 +32,7 @@
 		<summernote.version>0.6.16</summernote.version>
 		<angular-summernote.version>0.3.2</angular-summernote.version>
 		<animate.version>3.3.0</animate.version>
+		<angular-drag-and-drop-lists.version>1.2.0</angular-drag-and-drop-lists.version>
 	</properties>
 
 	<dependencies>
@@ -144,6 +145,11 @@
 			<groupId>org.webjars</groupId>
 			<artifactId>animate.css</artifactId>
 			<version>${animate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars.bower</groupId>
+			<artifactId>angular-drag-and-drop-lists</artifactId>
+			<version>${angular-drag-and-drop-lists.version}</version>
 		</dependency>
 	</dependencies>
 

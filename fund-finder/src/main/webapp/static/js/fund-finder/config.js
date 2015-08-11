@@ -60,6 +60,16 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdlePro
             templateUrl: "views/administrator/statistics/statistics.html",
             controller: 'StatisticsOverviewCtrl'
         })
+        .state('administrator.configuration_company', {
+            url: "/administrator/configuration/company",
+            templateUrl: "views/administrator/configuration/company.html",
+            controller: 'Administrator_ConfigurationCompanyCtrl'
+        })
+        .state('administrator.configuration_tender', {
+            url: "/administrator/configuration/tender",
+            templateUrl: "views/administrator/configuration/tender.html",
+            controller: 'Administrator_ConfigurationTenderCtrl'
+        })
         
         .state('user', {
             abstract: true,

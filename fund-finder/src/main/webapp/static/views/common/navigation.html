@@ -24,6 +24,19 @@
                 <a ui-sref="administrator.statistics"><i class="fa fa-area-chart"></i> <span class="nav-label">Statistika</span></a>
             </li>
             
+            <li ng-show="role == 'ROLE_ADMINISTRATOR'" ng-class="{active: $state.is('administrator.configuration_company') || $state.is('administrator.configuration_tender')}">
+				<a href="">
+					<i class="fa fa-wrench"></i>
+					<span class="nav-label">Konfiguracija</span>
+					<span class="fa arrow"></span>
+				</a>
+
+				<ul class="nav nav-second-level" ng-class="{in: $state.is('administrator.configuration_company') || $state.is('administrator.configuration_tender')}">
+					<li ui-sref-active="active"><a ui-sref="administrator.configuration_company">Tvrtka</a></li>
+					<li ui-sref-active="active"><a ui-sref="administrator.configuration_tender">Natječaj</a></li>
+				</ul>
+			</li>
+			
             <li ng-show="role == 'ROLE_USER'" ng-class="{active: $state.is('user.article_overview') || $state.is('user.article_show')}">
                 <a ui-sref="user.article_overview"><i class="fa fa-university"></i> <span class="nav-label">Kako do sredstava</span></a>
             </li>

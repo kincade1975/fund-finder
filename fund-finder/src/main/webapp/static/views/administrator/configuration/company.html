@@ -1,0 +1,27 @@
+<div class="row border-bottom white-bg">
+	<div class="col-lg-12">
+		<h1>
+			<i class="fa fa-wrench"></i> Konfiguracija pitanja za tvrtku
+		</h1>
+	</div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+	<div class="row custom-dnd">
+		<div class="col-md-12">
+			<button ng-click="addQuestion()" class="pull-right btn btn-primary m-b-xs"><i class="fa fa-plus"></i> Dodaj pitanje</button>
+		</div>
+		<div class="col-md-12">
+			<ul dnd-list="questions">
+				<li ng-repeat="question in questions" dnd-draggable="question" dnd-moved="questions.splice($index, 1)" 
+						dnd-effect-allowed="move" dnd-selected="selected = question" ng-class="{'selected': selected === question}">
+					<div style="display: block;">
+						{{$index + 1}}. {{question.text}}
+						<button ng-click="deleteQuestion(question)" class="pull-right btn-xs btn-white" tooltip="Obriši"><i class="fa fa-times"></i></button>
+						<button ng-click="editQuestion(question)" class="pull-right btn-xs btn-white m-r-xs" tooltip="Uredi"><i class="fa fa-edit"></i></button>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>

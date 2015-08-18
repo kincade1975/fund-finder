@@ -10,7 +10,13 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
+import hr.betaware.fundfinder.domain.City;
+import hr.betaware.fundfinder.domain.Nkd;
 import hr.betaware.fundfinder.domain.Question;
+import hr.betaware.fundfinder.resource.CityResource;
+import hr.betaware.fundfinder.resource.CityResourceAssembler;
+import hr.betaware.fundfinder.resource.NkdResource;
+import hr.betaware.fundfinder.resource.NkdResourceAssembler;
 import hr.betaware.fundfinder.resource.QuestionResource;
 import hr.betaware.fundfinder.resource.QuestionResourceAssembler;
 
@@ -23,6 +29,12 @@ public class ConfigurationService {
 	@Autowired
 	private QuestionResourceAssembler questionResourceAssembler;
 
+	@Autowired
+	private CityResourceAssembler cityResourceAssembler;
+
+	@Autowired
+	private NkdResourceAssembler nkdResourceAssembler;
+
 	public List<QuestionResource> getCompanyQuestions() {
 		Query query = new Query();
 		query.with(new Sort(Direction.ASC, "index"));
@@ -33,7 +45,30 @@ public class ConfigurationService {
 		return questionResourceAssembler.toResources(entities);
 	}
 
-	public QuestionResource saveCompanyQuestions(QuestionResource resource) {
+	public QuestionResource getCompanyQuestion(Integer id) {
+		Question entity = mongoOperations.findById(id, Question.class);
+		if (entity == null) {
+			entity = new Question();
+			entity.setEntityType(Question.EntityType.COMPANY);
+			entity.setIndex(getNextIndex());
+		}
+		return questionResourceAssembler.toResource(entity);
+	}
+
+	private Integer getNextIndex() {
+		Query query = new Query();
+		query.with(new Sort(Direction.DESC, "index"));
+		query.limit(1);
+
+		List<Question> lstQuestion = mongoOperations.find(query, Question.class);
+		if (lstQuestion.isEmpty()) {
+			return 0;
+		} else {
+			return lstQuestion.get(0).getIndex() + 1;
+		}
+	}
+
+	public QuestionResource saveCompanyQuestion(QuestionResource resource) {
 		Question entity = null;
 		if (resource.getIdentificator() == null) {
 			entity = questionResourceAssembler.createEntity(resource);
@@ -47,9 +82,23 @@ public class ConfigurationService {
 		return questionResourceAssembler.toResource(entity);
 	}
 
-	public void deleteCompanyQuestions(Integer id) {
+	public void deleteCompanyQuestion(Integer id) {
 		Question entity = mongoOperations.findById(id, Question.class);
 		mongoOperations.remove(entity);
+	}
+
+	public List<CityResource> getCities() {
+		Query query = new Query();
+		query.with(new Sort(Direction.ASC, "name"));
+		return cityResourceAssembler.toResources(mongoOperations.find(query, City.class));
+	}
+
+	public List<NkdResource> getNkds() {
+		Query query = new Query();
+		query.with(new Sort(Direction.ASC, "sector"));
+		query.with(new Sort(Direction.ASC, "area"));
+		query.with(new Sort(Direction.ASC, "activity"));
+		return nkdResourceAssembler.toResources(mongoOperations.find(query, Nkd.class));
 	}
 
 }

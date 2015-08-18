@@ -31,13 +31,16 @@ public class QuestionResource extends ResourceSupport {
 	private Type type;
 
 	@JsonProperty("options")
-	private List<String> options;
+	private List<OptionResource> options;
 
 	@JsonProperty("timeCreated")
 	private Date timeCreated;
 
 	@JsonProperty("lastModified")
 	private Date lastModified;
+
+	@JsonProperty("answer")
+	private Object answer;
 
 	public Integer getIdentificator() {
 		return identificator;
@@ -79,11 +82,11 @@ public class QuestionResource extends ResourceSupport {
 		this.type = type;
 	}
 
-	public List<String> getOptions() {
+	public List<OptionResource> getOptions() {
 		return options;
 	}
 
-	public void setOptions(List<String> options) {
+	public void setOptions(List<OptionResource> options) {
 		this.options = options;
 	}
 
@@ -101,6 +104,14 @@ public class QuestionResource extends ResourceSupport {
 
 	public void setLastModified(Date lastModified) {
 		this.lastModified = lastModified;
+	}
+
+	public Object getAnswer() {
+		return answer;
+	}
+
+	public void setAnswer(Object answer) {
+		this.answer = answer;
 	}
 
 }

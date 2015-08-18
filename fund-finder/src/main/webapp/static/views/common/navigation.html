@@ -24,15 +24,15 @@
                 <a ui-sref="administrator.statistics"><i class="fa fa-area-chart"></i> <span class="nav-label">Statistika</span></a>
             </li>
             
-            <li ng-show="role == 'ROLE_ADMINISTRATOR'" ng-class="{active: $state.is('administrator.configuration_company') || $state.is('administrator.configuration_tender')}">
+            <li ng-show="role == 'ROLE_ADMINISTRATOR'" ng-class="{active: $state.is('administrator.configuration_company') || $state.is('administrator.configuration_company_preview') || $state.is('administrator.configuration_tender')}">
 				<a href="">
 					<i class="fa fa-wrench"></i>
 					<span class="nav-label">Konfiguracija</span>
 					<span class="fa arrow"></span>
 				</a>
 
-				<ul class="nav nav-second-level" ng-class="{in: $state.is('administrator.configuration_company') || $state.is('administrator.configuration_tender')}">
-					<li ui-sref-active="active"><a ui-sref="administrator.configuration_company">Tvrtka</a></li>
+				<ul class="nav nav-second-level" ng-class="{in: $state.is('administrator.configuration_company') || $state.is('administrator.configuration_company_preview') || $state.is('administrator.configuration_tender')}">
+					<li ng-class="{active: $state.is('administrator.configuration_company') || $state.is('administrator.configuration_company_preview')}"><a ui-sref="administrator.configuration_company">Profil tvrtke</a></li>
 					<li ui-sref-active="active"><a ui-sref="administrator.configuration_tender">Natječaj</a></li>
 				</ul>
 			</li>

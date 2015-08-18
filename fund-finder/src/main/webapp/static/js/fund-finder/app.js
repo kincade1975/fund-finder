@@ -1,5 +1,8 @@
 (function () {
     angular.module('fundFinder', [
+        'angular.chosen',
+	    'angularModalService',
+	    'datePicker',
         'dndLists',
         'ngIdle',
         'ngSanitize',

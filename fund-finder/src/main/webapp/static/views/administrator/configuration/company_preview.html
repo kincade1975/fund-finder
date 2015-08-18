@@ -1,0 +1,74 @@
+<div class="row border-bottom white-bg">
+	<div class="col-lg-12">
+		<h1><i class="fa fa-file-o"></i> Preview</h1>
+	</div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+	<div class="row">
+		<div class="col-lg-12">
+			<form name="form" class="form">
+				<div class="form-group" ng-repeat="question in questions">
+					<div class="form-group">
+						<label>{{question.text}}</label>
+						
+						<input ng-if="question.type == 'TEXT'" class="form-control" type="text" />
+						
+						<textarea ng-if="question.type == 'TEXT_AREA'" class="form-control" rows="5"></textarea>
+						
+						<div ng-if="question.type == 'TEXT_EDITOR'">
+							<summernote id="summernote" config="summernoteOptions" />
+						</div>
+						
+						<input ng-if="question.type == 'NUMBER'" class="form-control" type="number" min="0">
+						
+						<div ng-if="question.type == 'DATE'" class="input-group date">
+		                	<input type="datetime" class="form-control" date-time 
+		                		ng-model="question.answer" view="date" min-view="date" format="dd.MM.yyyy" auto-close="true">
+		                	<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+		            	</div>
+		            	
+						<div ng-if="question.type == 'DATE_TIME'" class="input-group date">
+		                	<input type="datetime" class="form-control" date-time 
+		                		ng-model="question.answer" view="date" format="dd.MM.yyyy HH:mm" auto-close="true">
+		                	<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+		            	</div>
+		            	
+		            	<div ng-if="question.type == 'RADIO'">
+		            		<div ng-repeat="option in question.options">
+		            			<label><input icheck ng-model="question.answer" value="{{option.id}}" type="radio" 
+		            				name="radioGroup{{question.id}}">&nbsp;&nbsp;&nbsp;{{option.value}}</label>
+		            		</div>
+		            	</div>
+		            	
+		            	<div ng-if="question.type == 'SELECT'">
+		            		<select class="form-control" chosen option="question.options" ng-model="question.answer" 
+		            			ng-options="option.value for option in question.options track by option.id" data-placeholder="Molimo odaberite..."></select>
+		            	</div>
+		            	
+		            	<div ng-if="question.type == 'MULTI_SELECT'">
+		            		<select chosen multiple class="form-control" option="question.options" ng-model="question.answer" 
+		            			ng-options="option.value for option in question.options track by option.id" data-placeholder="Molimo odaberite..."></select>
+		            	</div>
+		            	
+		            	<div ng-if="question.type == 'CITY'">
+		            		<select class="form-control" chosen option="cities" ng-model="question.answer" 
+		            			ng-options="city.name for city in cities track by city.id" data-placeholder="Molimo odaberite..."></select>
+		            	</div>
+		            	
+		            	<div ng-if="question.type == 'NKD'">
+		            		<select class="form-control" chosen option="nkds" ng-model="question.answer" 
+		            			ng-options="nkd.id as (nkd.area + '.' + nkd.activity + ' - ' + nkd.activityName) group by (nkd.sector + ' - ' + nkd.sectorName) for nkd in nkds" data-placeholder="Molimo odaberite..."></select>
+		            	</div>
+		            	
+		            	<div ng-if="question.type == 'NKD_AUX'">
+		            		<select chosen multiple class="form-control" option="nkds" ng-model="question.answer" 
+		            			ng-options="nkd.id as (nkd.area + '.' + nkd.activity + ' - ' + nkd.activityName) group by (nkd.sector + ' - ' + nkd.sectorName) for nkd in nkds" data-placeholder="Molimo odaberite..."></select>
+		            	</div>
+		            	
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

@@ -30,9 +30,11 @@
 		<angularjs.version>1.4.3</angularjs.version>
 		<ui-grid.version>3.0.1</ui-grid.version>
 		<summernote.version>0.6.16</summernote.version>
+		<angular-modal-service.version>0.6.6</angular-modal-service.version>
 		<angular-summernote.version>0.3.2</angular-summernote.version>
 		<animate.version>3.3.0</animate.version>
 		<angular-drag-and-drop-lists.version>1.2.0</angular-drag-and-drop-lists.version>
+		<angular-datepicker.version>1.0.12</angular-datepicker.version>
 	</properties>
 
 	<dependencies>
@@ -55,6 +57,10 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-batch</artifactId>
 		</dependency>
 
 		<dependency>
@@ -150,6 +156,16 @@
 			<groupId>org.webjars.bower</groupId>
 			<artifactId>angular-drag-and-drop-lists</artifactId>
 			<version>${angular-drag-and-drop-lists.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars.bower</groupId>
+			<artifactId>angular-modal-service</artifactId>
+			<version>${angular-modal-service.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars.bower</groupId>
+			<artifactId>angular-datepicker</artifactId>
+			<version>${angular-datepicker.version}</version>
 		</dependency>
 	</dependencies>
 

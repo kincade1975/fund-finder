@@ -65,6 +65,11 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdlePro
             templateUrl: "views/administrator/configuration/company.html",
             controller: 'Administrator_ConfigurationCompanyCtrl'
         })
+        .state('administrator.configuration_company_preview', {
+            url: "/administrator/configuration/company/preview",
+            templateUrl: "views/administrator/configuration/company_preview.html",
+            controller: 'Administrator_ConfigurationCompanyCtrl'
+        })
         .state('administrator.configuration_tender', {
             url: "/administrator/configuration/tender",
             templateUrl: "views/administrator/configuration/tender.html",

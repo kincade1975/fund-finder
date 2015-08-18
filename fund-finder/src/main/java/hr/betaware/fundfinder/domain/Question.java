@@ -16,7 +16,7 @@ public class Question {
 	public enum EntityType { COMPANY, TENDER }
 
 	public enum Type { TEXT, TEXT_AREA, TEXT_EDITOR, NUMBER, DATE, DATE_TIME,
-		RADIO, SELECT, MULTI_SELECT, NKD, CITY }
+		RADIO, SELECT, MULTI_SELECT, NKD, NKD_AUX, CITY }
 
 	@Id
 	@Field("id")
@@ -35,7 +35,7 @@ public class Question {
 	private Type type;
 
 	@Field("options")
-	private List<String> options;
+	private List<Option> options;
 
 	@Version
 	@Field("doc_version")
@@ -89,11 +89,11 @@ public class Question {
 		this.type = type;
 	}
 
-	public List<String> getOptions() {
+	public List<Option> getOptions() {
 		return options;
 	}
 
-	public void setOptions(List<String> options) {
+	public void setOptions(List<Option> options) {
 		this.options = options;
 	}
 

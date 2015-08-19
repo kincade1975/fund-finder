@@ -12,7 +12,7 @@ angular.module('fundFinder')
 		enableFiltering: true,
 		useExternalFiltering: true,
 		totalItems: 10,
-		rowHeight: 30,
+		rowHeight: 32,
 		enableHorizontalScrollbar: 0,
 		enableVerticalScrollbar: 0,
 		enableColumnMenus: false,
@@ -43,8 +43,8 @@ angular.module('fundFinder')
 				enableSorting: false,
 				enableFiltering: false,
 				enableHiding: false,
-				width: 150,
-				cellTemplate:'<div style="margin:3px;"><button ng-click="grid.appScope.showUser(row.entity)" class="btn-xs btn-success"><i class="fa fa-eye"></i> Detalji</button><button ng-click="grid.appScope.deleteUser(row.entity)" class="btn-xs btn-danger m-l-xs"><i class="fa fa-times"></i> Obriši</button></div>'
+				width: 82,
+				cellTemplate:'<div style="padding-top: 1px"><button ng-click="grid.appScope.showUser(row.entity)" tooltip="Prikaži" class="btn-xs btn-white m-l-xs"><i class="fa fa-2x fa-eye"></i></button><button ng-click="grid.appScope.deleteUser(row.entity)" tooltip="Obriši" class="btn-xs btn-white m-l-xs"><i class="fa fa-2x fa-times"></i></button></div>'
 			}
 		],
 		onRegisterApi: function(gridApi) {
@@ -95,7 +95,7 @@ angular.module('fundFinder')
 				$scope.gridOptions.data = data.data;
 				$scope.gridOptions.totalItems = data.total;
 
-				var newHeight = data.data.length * 30 + (($scope.gridOptions.totalItems == 0) ? 90 : 92);
+				var newHeight = data.data.length * 32 + (($scope.gridOptions.totalItems == 0) ? 90 : 90);
 				angular.element(document.getElementsByClassName('grid')[0]).css('height', newHeight + 'px');
 			}).
 			error(function(data, status, headers, config) {

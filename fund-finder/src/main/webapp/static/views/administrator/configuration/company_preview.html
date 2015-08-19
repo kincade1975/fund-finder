@@ -12,15 +12,15 @@
 					<div class="form-group">
 						<label>{{question.text}}</label>
 						
-						<input ng-if="question.type == 'TEXT'" class="form-control" type="text" />
+						<input ng-if="question.type == 'TEXT'" class="form-control" type="text" ng-model="question.answer" />
 						
-						<textarea ng-if="question.type == 'TEXT_AREA'" class="form-control" rows="5"></textarea>
+						<textarea ng-if="question.type == 'TEXT_AREA'" class="form-control" rows="5" ng-model="question.answer"></textarea>
 						
 						<div ng-if="question.type == 'TEXT_EDITOR'">
-							<summernote id="summernote" config="summernoteOptions" />
+							<summernote id="summernote" config="summernoteOptions" ng-model="question.answer" />
 						</div>
 						
-						<input ng-if="question.type == 'NUMBER'" class="form-control" type="number" min="0">
+						<input ng-if="question.type == 'NUMBER'" class="form-control" type="number" min="0" ng-model="question.answer">
 						
 						<div ng-if="question.type == 'DATE'" class="input-group date">
 		                	<input type="datetime" class="form-control" date-time 
@@ -43,17 +43,17 @@
 		            	
 		            	<div ng-if="question.type == 'SELECT'">
 		            		<select class="form-control" chosen option="question.options" ng-model="question.answer" 
-		            			ng-options="option.value for option in question.options track by option.id" data-placeholder="Molimo odaberite..."></select>
+		            			ng-options="option.id as option.value for option in question.options track by option.id" data-placeholder="Molimo odaberite..."></select>
 		            	</div>
 		            	
 		            	<div ng-if="question.type == 'MULTI_SELECT'">
 		            		<select chosen multiple class="form-control" option="question.options" ng-model="question.answer" 
-		            			ng-options="option.value for option in question.options track by option.id" data-placeholder="Molimo odaberite..."></select>
+		            			ng-options="option.id as option.value for option in question.options track by option.id" data-placeholder="Molimo odaberite..."></select>
 		            	</div>
 		            	
 		            	<div ng-if="question.type == 'CITY'">
 		            		<select class="form-control" chosen option="cities" ng-model="question.answer" 
-		            			ng-options="city.name for city in cities track by city.id" data-placeholder="Molimo odaberite..."></select>
+		            			ng-options="city.id as city.name for city in cities track by city.id" data-placeholder="Molimo odaberite..."></select>
 		            	</div>
 		            	
 		            	<div ng-if="question.type == 'NKD'">
@@ -69,6 +69,10 @@
 					</div>
 				</div>
 			</form>
+			<hr class="custom-hr">
+			<div class="col-lg-12" style="text-align: right;">
+				<button ng-click="back()" class="btn btn-white"><i class="fa fa-angle-double-left"></i> Natrag</button>
+			</div>
 		</div>
 	</div>
 </div>

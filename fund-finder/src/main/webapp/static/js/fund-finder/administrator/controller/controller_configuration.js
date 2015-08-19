@@ -2,6 +2,10 @@ angular.module('fundFinder')
 
 .controller('Administrator_ConfigurationCompanyCtrl', function($rootScope, $scope, $state, ModalService, Administrator_ConfigurationService) {
 	
+	$scope.back = function() {
+		$state.go('administrator.configuration_company');
+	};
+	
 	$scope.getCompanyQuestions = function() {
 		Administrator_ConfigurationService.getCompanyQuestions()
 			.success(function(data, status, headers, config) {

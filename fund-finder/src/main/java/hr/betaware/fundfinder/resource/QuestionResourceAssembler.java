@@ -34,8 +34,10 @@ public class QuestionResourceAssembler extends ResourceAssemblerSupport<Question
 		resource.setText(entity.getText());
 		resource.setType(entity.getType());
 		List<OptionResource> options = new ArrayList<>();
-		for (Option option : entity.getOptions()) {
-			options.add(new OptionResource(option.getId(), option.getValue()));
+		if (entity.getOptions() != null) {
+			for (Option option : entity.getOptions()) {
+				options.add(new OptionResource(option.getId(), option.getValue()));
+			}
 		}
 		resource.setOptions(options);
 		resource.setTimeCreated(entity.getTimeCreated());

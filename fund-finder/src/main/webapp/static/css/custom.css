@@ -45,6 +45,10 @@
 	border: none;
 }
 
+:focus {
+    outline: none;
+}
+
 .chosen-container-multi .chosen-choices {
 	background: #ffffff;
 	box-shadow: none;

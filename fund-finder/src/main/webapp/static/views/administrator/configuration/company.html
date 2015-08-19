@@ -25,7 +25,7 @@
 						dnd-effect-allowed="move" dnd-selected="selected = question" ng-class="{'selected': selected === question}">
 					<div class="row">
 						<div class="col-md-9">
-							<span>{{$index + 1}}. {{question.text}}</span>
+							{{$index + 1}}. {{question.text}}
 						</div>
 						<div class="col-md-3" style="text-align: right;">
 							<span class="badge badge-default"><small style="padding-left: 3px; padding-right: 3px;">{{question.type}}</small></span>

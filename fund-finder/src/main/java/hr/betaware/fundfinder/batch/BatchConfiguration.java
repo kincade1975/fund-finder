@@ -34,16 +34,16 @@ public class BatchConfiguration {
 
 	@Bean
 	@Qualifier("readerCity")
-	public ItemReader<City> readerCity() {
-		FlatFileItemReader<City> reader = new FlatFileItemReader<City>();
+	public ItemReader<CityItem> readerCity() {
+		FlatFileItemReader<CityItem> reader = new FlatFileItemReader<CityItem>();
 		reader.setResource(new ClassPathResource("cities.csv"));
 		reader.setLinesToSkip(1);
-		reader.setLineMapper(new DefaultLineMapper<City>() {{
+		reader.setLineMapper(new DefaultLineMapper<CityItem>() {{
 			setLineTokenizer(new DelimitedLineTokenizer() {{
 				setNames(new String[] { "id", "name", "county", "group" });
 			}});
-			setFieldSetMapper(new BeanWrapperFieldSetMapper<City>() {{
-				setTargetType(City.class);
+			setFieldSetMapper(new BeanWrapperFieldSetMapper<CityItem>() {{
+				setTargetType(CityItem.class);
 			}});
 		}});
 		return reader;
@@ -51,16 +51,16 @@ public class BatchConfiguration {
 
 	@Bean
 	@Qualifier("readerNkd")
-	public ItemReader<Nkd> readerNkd() {
-		FlatFileItemReader<Nkd> reader = new FlatFileItemReader<Nkd>();
+	public ItemReader<NkdItem> readerNkd() {
+		FlatFileItemReader<NkdItem> reader = new FlatFileItemReader<NkdItem>();
 		reader.setResource(new ClassPathResource("nkd.csv"));
 		reader.setLinesToSkip(1);
-		reader.setLineMapper(new DefaultLineMapper<Nkd>() {{
+		reader.setLineMapper(new DefaultLineMapper<NkdItem>() {{
 			setLineTokenizer(new DelimitedLineTokenizer() {{
 				setNames(new String[] { "id", "sector", "sectorName", "area", "activity", "activityName" });
 			}});
-			setFieldSetMapper(new BeanWrapperFieldSetMapper<Nkd>() {{
-				setTargetType(Nkd.class);
+			setFieldSetMapper(new BeanWrapperFieldSetMapper<NkdItem>() {{
+				setTargetType(NkdItem.class);
 			}});
 		}});
 		return reader;
@@ -68,13 +68,13 @@ public class BatchConfiguration {
 
 	@Bean
 	@Qualifier("processorCity")
-	public ItemProcessor<City, City> processorCity() {
+	public ItemProcessor<CityItem, City> processorCity() {
 		return new CityItemProcessor();
 	}
 
 	@Bean
 	@Qualifier("processorNkd")
-	public ItemProcessor<Nkd, Nkd> processorNkd() {
+	public ItemProcessor<NkdItem, Nkd> processorNkd() {
 		return new NkdItemProcessor();
 	}
 
@@ -96,9 +96,9 @@ public class BatchConfiguration {
 
 	@Bean
 	@Qualifier("step1")
-	public Step step1(StepBuilderFactory stepBuilderFactory, ItemReader<City> readerCity, ItemWriter<City> writerCity, ItemProcessor<City, City> processorCity) {
+	public Step step1(StepBuilderFactory stepBuilderFactory, ItemReader<CityItem> readerCity, ItemWriter<City> writerCity, ItemProcessor<CityItem, City> processorCity) {
 		return stepBuilderFactory.get("step1")
-				.<City, City> chunk(10)
+				.<CityItem, City> chunk(10)
 				.reader(readerCity)
 				.processor(processorCity)
 				.writer(writerCity)
@@ -107,9 +107,9 @@ public class BatchConfiguration {
 
 	@Bean
 	@Qualifier("step2")
-	public Step step2(StepBuilderFactory stepBuilderFactory, ItemReader<Nkd> readerNkd, ItemWriter<Nkd> writerNkd, ItemProcessor<Nkd, Nkd> processorNkd) {
+	public Step step2(StepBuilderFactory stepBuilderFactory, ItemReader<NkdItem> readerNkd, ItemWriter<Nkd> writerNkd, ItemProcessor<NkdItem, Nkd> processorNkd) {
 		return stepBuilderFactory.get("step2")
-				.<Nkd, Nkd> chunk(10)
+				.<NkdItem, Nkd> chunk(10)
 				.reader(readerNkd)
 				.processor(processorNkd)
 				.writer(writerNkd)

@@ -16,7 +16,7 @@ public class Question {
 	public enum EntityType { COMPANY, TENDER }
 
 	public enum Type { TEXT, TEXT_AREA, TEXT_EDITOR, NUMBER, DATE, DATE_TIME,
-		RADIO, SELECT, MULTI_SELECT, NKD, NKD_AUX, CITY }
+		RADIO, SELECT, MULTI_SELECT, NKD, NKD_AUX, CITY, COUNTY, INVESTMENT }
 
 	@Id
 	@Field("id")

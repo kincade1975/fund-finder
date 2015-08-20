@@ -62,18 +62,20 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdlePro
         })
         .state('administrator.configuration_company', {
             url: "/administrator/configuration/company",
-            templateUrl: "views/administrator/configuration/company.html",
-            controller: 'Administrator_ConfigurationCompanyCtrl'
-        })
-        .state('administrator.configuration_company_preview', {
-            url: "/administrator/configuration/company/preview",
-            templateUrl: "views/administrator/configuration/company_preview.html",
-            controller: 'Administrator_ConfigurationCompanyCtrl'
+            templateUrl: "views/administrator/configuration/configuration.html",
+            controller: 'Administrator_ConfigurationCtrl',
+            data: { entityType : 'company' } 
         })
         .state('administrator.configuration_tender', {
             url: "/administrator/configuration/tender",
-            templateUrl: "views/administrator/configuration/tender.html",
-            controller: 'Administrator_ConfigurationTenderCtrl'
+            templateUrl: "views/administrator/configuration/configuration.html",
+            controller: 'Administrator_ConfigurationCtrl',
+            data: { entityType : 'tender' }
+        })
+        .state('administrator.configuration_preview', {
+            url: "/administrator/configuration/:entityType/preview",
+            templateUrl: "views/administrator/configuration/preview.html",
+            controller: 'Administrator_ConfigurationCtrl'
         })
         
         .state('user', {

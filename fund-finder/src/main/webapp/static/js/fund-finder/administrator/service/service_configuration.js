@@ -4,20 +4,23 @@ angular.module('fundFinder')
 		this.getQuestionTypes = function() {
 			return $http.get('/api/v1/configuration/question/types');
 		};
-		this.getCompanyQuestions = function() {
-			return $http.get('/api/v1/configuration/company');
+		this.getQuestions = function(entityType) {
+			return $http.get('/api/v1/configuration/question?entityType=' + entityType);
 		};
-		this.getCompanyQuestion = function(id) {
-			return $http.get('/api/v1/configuration/company/' + id);
+		this.getQuestion = function(entityType, id) {
+			return $http.get('/api/v1/configuration/question/' + id + '?entityType=' + entityType);
 		};
-		this.saveCompanyQuestion = function(resource) {
-			return $http.post('/api/v1/configuration/company', resource);
+		this.saveQuestion = function(resource) {
+			return $http.post('/api/v1/configuration/question', resource);
 		};
-		this.deleteCompanyQuestion = function(id) {
-			return $http.delete('/api/v1/configuration/company/' + id);
+		this.deleteQuestion = function(id) {
+			return $http.delete('/api/v1/configuration/question/' + id);
 		};
 		this.getCities = function() {
 			return $http.get('/api/v1/configuration/cities');
+		};
+		this.getCounties = function() {
+			return $http.get('/api/v1/configuration/counties');
 		};
 		this.getNkds = function() {
 			return $http.get('/api/v1/configuration/nkds');

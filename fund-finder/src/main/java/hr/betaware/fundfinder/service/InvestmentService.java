@@ -42,6 +42,12 @@ public class InvestmentService {
 		//		createTestData();
 	}
 
+	public List<InvestmentResource> findInvestments() {
+		Query query = new Query();
+		query.with(new Sort(Direction.ASC, "name"));
+		return investmentResourceAssembler.toResources(mongoOperations.find(query, Investment.class));
+	}
+
 	public InvestmentResource findInvestment(Integer id) {
 		if (id == 0) {
 			// new investment

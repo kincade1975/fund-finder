@@ -9,10 +9,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import hr.betaware.fundfinder.domain.Question;
 import hr.betaware.fundfinder.resource.CityResource;
+import hr.betaware.fundfinder.resource.CountyResource;
 import hr.betaware.fundfinder.resource.NkdResource;
 import hr.betaware.fundfinder.resource.QuestionResource;
 import hr.betaware.fundfinder.service.ConfigurationService;
@@ -24,28 +26,28 @@ public class ConfigurationController {
 	@Autowired
 	private ConfigurationService configurationService;
 
-	@RequestMapping(method = RequestMethod.GET, value = "/company")
+	@RequestMapping(method = RequestMethod.GET, value="/question")
 	@PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR','ROLE_USER')")
-	public List<QuestionResource> getCompanyQuestions() {
-		return configurationService.getCompanyQuestions();
+	public List<QuestionResource> getQuestions(@RequestParam String entityType) {
+		return configurationService.getQuestions(entityType);
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value="/company/{id}")
+	@RequestMapping(method = RequestMethod.GET, value="/question/{id}")
 	@PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR','ROLE_USER')")
-	public QuestionResource getCompanyQuestion(@PathVariable Integer id) {
-		return configurationService.getCompanyQuestion(id);
+	public QuestionResource getQuestion(@PathVariable Integer id, @RequestParam String entityType) {
+		return configurationService.getQuestion(entityType, id);
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = "/company")
+	@RequestMapping(method = RequestMethod.POST, value="/question")
 	@PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR')")
-	public QuestionResource saveCompanyQuestion(@RequestBody QuestionResource resource) {
-		return configurationService.saveCompanyQuestion(resource);
+	public QuestionResource saveQuestion(@RequestBody QuestionResource resource) {
+		return configurationService.saveQuestion(resource);
 	}
 
-	@RequestMapping(method = RequestMethod.DELETE, value="/company/{id}")
+	@RequestMapping(method = RequestMethod.DELETE, value="/question/{id}")
 	@PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR')")
-	public void deleteCompanyQuestion(@PathVariable Integer id) {
-		configurationService.deleteCompanyQuestion(id);
+	public void deleteQuestion(@PathVariable Integer id) {
+		configurationService.deleteQuestion(id);
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value="/question/types")
@@ -62,6 +64,12 @@ public class ConfigurationController {
 	@PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR')")
 	public List<CityResource> getCities() {
 		return configurationService.getCities();
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value="/counties")
+	@PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR')")
+	public List<CountyResource> getCounties() {
+		return configurationService.getCounties();
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value="/nkds")

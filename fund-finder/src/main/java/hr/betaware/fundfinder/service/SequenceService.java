@@ -20,6 +20,7 @@ public class SequenceService {
 	public final static String SEQUENCE_INVESTMENT = "sequenceInvestment";
 	public final static String SEQUENCE_ARTICLE = "sequenceArticle";
 	public final static String SEQUENCE_QUESTION = "sequenceQuestion";
+	public final static String SEQUENCE_COUNTY = "sequenceCounty";
 
 	private final MongoTemplate mongoTemplate;
 	private final MongoOperations mongoOperations;
@@ -47,6 +48,10 @@ public class SequenceService {
 
 		if (mongoTemplate.findById(SEQUENCE_QUESTION, Sequence.class) == null) {
 			this.mongoTemplate.insert(new Sequence(SEQUENCE_QUESTION, 0));
+		}
+
+		if (mongoTemplate.findById(SEQUENCE_COUNTY, Sequence.class) == null) {
+			this.mongoTemplate.insert(new Sequence(SEQUENCE_COUNTY, 0));
 		}
 	}
 

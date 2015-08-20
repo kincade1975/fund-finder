@@ -1,8 +1,7 @@
 <div class="row border-bottom white-bg">
 	<div class="col-lg-12">
-		<h1>
-			<i class="fa fa-wrench"></i> Profile tvrtke
-		</h1>
+		<h1 ng-show="entityType == 'company'"><i class="fa fa-wrench"></i> Predložak za profil tvrtke</h1>
+		<h1 ng-show="entityType == 'tender'"><i class="fa fa-wrench"></i> Predložak za natječaj</h1>
 	</div>
 </div>
 
@@ -10,7 +9,7 @@
 	<div class="row custom-dnd">
 		<div class="col-md-12">
 			<div class="btn-group pull-right m-b-xs">
-				<button ng-click="editQuestion(0)" class="btn btn-primary"><i class="fa fa-plus"></i> Dodaj pitanje</button>
+				<button ng-click="editQuestion(0)" class="btn btn-primary"><i class="fa fa-plus"></i> Dodaj stavku</button>
 				<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					<span class="caret"></span>
 				</button>

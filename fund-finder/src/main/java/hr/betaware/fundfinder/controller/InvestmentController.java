@@ -1,5 +1,7 @@
 package hr.betaware.fundfinder.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +21,12 @@ public class InvestmentController {
 
 	@Autowired
 	private InvestmentService investmentService;
+
+	@RequestMapping(method = RequestMethod.GET)
+	@PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR')")
+	public List<InvestmentResource> findInvestments() {
+		return investmentService.findInvestments();
+	}
 
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
 	@PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR')")

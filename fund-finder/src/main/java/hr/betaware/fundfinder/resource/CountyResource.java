@@ -7,19 +7,13 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(Include.NON_NULL)
-public class CityResource extends ResourceSupport {
+public class CountyResource extends ResourceSupport {
 
 	@JsonProperty("id")
 	private Integer identificator;
 
 	@JsonProperty("name")
 	private String name;
-
-	@JsonProperty("county")
-	private CountyResource county;
-
-	@JsonProperty("group")
-	private String group;
 
 	public Integer getIdentificator() {
 		return identificator;
@@ -35,22 +29,6 @@ public class CityResource extends ResourceSupport {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public CountyResource getCounty() {
-		return county;
-	}
-
-	public void setCounty(CountyResource county) {
-		this.county = county;
-	}
-
-	public String getGroup() {
-		return group;
-	}
-
-	public void setGroup(String group) {
-		this.group = group;
 	}
 
 }

@@ -3,8 +3,8 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 ng-show="!isEditMode" class="modal-title">Dodaj pitanje</h4>
-				<h4 ng-show="isEditMode" class="modal-title">Uredi pitanje</h4>
+				<h4 ng-show="!isEditMode" class="modal-title">Dodaj stavku</h4>
+				<h4 ng-show="isEditMode" class="modal-title">Uredi stavku</h4>
 			</div>
 			<div class="body modal-body">
 				<form name="form" class="form-horizontal ng-pristine ng-valid" novalidate>
@@ -17,9 +17,7 @@
 					<div class="form-group">
 						<label class="col-sm-3 control-label">Tip</label>
 						<div class="col-sm-9">
-							<select class="form-control" ng-model="question.type" ng-options="questionType for questionType in questionTypes" ng-required="true">
-								<option value="" disabled selected="selected">Odaberite tip pitanja...</option>
-							</select>
+							<select chosen class="form-control" ng-model="question.type" ng-options="questionType for questionType in questionTypes" data-placeholder="Molimo odaberite..." ng-required="true"></select>
 						</div>
 					</div>
 					<div class="form-group" ng-show="question.type == 'RADIO' || question.type == 'SELECT' || question.type == 'MULTI_SELECT'">

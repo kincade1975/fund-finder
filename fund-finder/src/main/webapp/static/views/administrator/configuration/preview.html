@@ -36,7 +36,7 @@
 		            	
 		            	<div ng-if="question.type == 'RADIO'">
 		            		<div ng-repeat="option in question.options">
-		            			<label><input icheck ng-model="question.answer" value="{{option.id}}" type="radio" 
+		            			<label style="font-weight: normal;"><input icheck ng-model="question.answer" value="{{option.id}}" type="radio" 
 		            				name="radioGroup{{question.id}}">&nbsp;&nbsp;&nbsp;{{option.value}}</label>
 		            		</div>
 		            	</div>
@@ -48,12 +48,17 @@
 		            	
 		            	<div ng-if="question.type == 'MULTI_SELECT'">
 		            		<select chosen multiple class="form-control" option="question.options" ng-model="question.answer" 
-		            			ng-options="option.id as option.value for option in question.options track by option.id" data-placeholder="Molimo odaberite..."></select>
+		            			ng-options="option.id as option.value for option in question.options" data-placeholder="Molimo odaberite..."></select>
 		            	</div>
 		            	
 		            	<div ng-if="question.type == 'CITY'">
 		            		<select class="form-control" chosen option="cities" ng-model="question.answer" 
 		            			ng-options="city.id as city.name for city in cities track by city.id" data-placeholder="Molimo odaberite..."></select>
+		            	</div>
+		            	
+		            	<div ng-if="question.type == 'COUNTY'">
+		            		<select class="form-control" chosen option="cities" ng-model="question.answer" 
+		            			ng-options="county.id as county.name for county in counties track by county.id" data-placeholder="Molimo odaberite..."></select>
 		            	</div>
 		            	
 		            	<div ng-if="question.type == 'NKD'">
@@ -64,6 +69,11 @@
 		            	<div ng-if="question.type == 'NKD_AUX'">
 		            		<select chosen multiple class="form-control" option="nkds" ng-model="question.answer" 
 		            			ng-options="nkd.id as (nkd.area + '.' + nkd.activity + ' - ' + nkd.activityName) group by (nkd.sector + ' - ' + nkd.sectorName) for nkd in nkds" data-placeholder="Molimo odaberite..."></select>
+		            	</div>
+		            	
+		            	<div ng-if="question.type == 'INVESTMENT'">
+		            		<select chosen multiple class="form-control" option="investments" ng-model="question.answer" 
+		            			ng-options="investment.id as investment.name for investment in investments" data-placeholder="Molimo odaberite..."></select>
 		            	</div>
 		            	
 					</div>

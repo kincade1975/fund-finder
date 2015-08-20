@@ -4,6 +4,9 @@ angular.module('fundFinder')
 		this.getPage = function(resource) {
 			return $http.post('/api/v1/investment/page', resource);
 		};
+		this.getInvestments = function() {
+			return $http.get('/api/v1/investment');
+		};
 		this.getInvestment = function(id) {
 			return $http.get('/api/v1/investment/' + id);
 		};

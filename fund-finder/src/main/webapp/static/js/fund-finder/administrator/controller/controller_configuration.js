@@ -1,13 +1,18 @@
 angular.module('fundFinder')
 
-.controller('Administrator_ConfigurationCompanyCtrl', function($rootScope, $scope, $state, ModalService, Administrator_ConfigurationService) {
+.controller('Administrator_ConfigurationCtrl', function($rootScope, $scope, $stateParams, $state, ModalService, Administrator_ConfigurationService, Administrator_InvestmentService) {
 	
+	/** entity type (company/tender */
+	$scope.entityType = ($state.current.data) ?$state.current.data.entityType : $stateParams.entityType;
+	
+	/** back (preview) */
 	$scope.back = function() {
-		$state.go('administrator.configuration_company');
+		$state.go('administrator.configuration_' + $scope.entityType);
 	};
 	
-	$scope.getCompanyQuestions = function() {
-		Administrator_ConfigurationService.getCompanyQuestions()
+	/** get questions */
+	$scope.getQuestions = function() {
+		Administrator_ConfigurationService.getQuestions($scope.entityType)
 			.success(function(data, status, headers, config) {
 				$scope.selected = null;
 				$scope.questions = data;
@@ -21,37 +26,41 @@ angular.module('fundFinder')
 			});
 	}
 		
+	/** edit question (opens modal dialog) */
 	$scope.editQuestion = function(questionId) {
 		ModalService.showModal({
-			templateUrl: "dialogs/editCompanyQuestion.html",
-			controller: "Administrator_EditCompanyQuestionCtrl",
+			templateUrl: "dialogs/editQuestion.html",
+			controller: "Administrator_EditQuestionCtrl",
 			inputs: {
-				questionId: questionId
+				questionId: questionId,
+				entityType: $scope.entityType
 			}
 		}).then(function(modal) {
 			modal.element.modal();
 		});
 	}
 	
+	/** save question */
 	$scope.saveQuestion = function(resource) {
-		Administrator_ConfigurationService.saveCompanyQuestion(resource)
+		Administrator_ConfigurationService.saveQuestion(resource)
 			.success(function(data, status, headers, config) {
-				$scope.getCompanyQuestions();
+				$scope.getQuestions();
 			})
 			.error(function(data, status, headers, config) {
 				if (status == 403) {
 					$state.go('login');
 				} else {
-					toastr.error('Došlo je do pogreške prilikom spremanja pitanja');
+					toastr.error('Došlo je do pogreške prilikom spremanja stavke');
 				}
 			});
 	}
 	
+	/** delete question */
 	$scope.deleteQuestion = function(questionId) {
 		BootstrapDialog.show({
 			type: BootstrapDialog.TYPE_DEFAULT,
-            title: 'Obriši pitanje',
-            message: 'Da li doista želite obrisati pitanje?',
+            title: 'Obriši stavku',
+            message: 'Da li doista želite obrisati stavku?',
             buttons: [
 				{
 					label: 'Ne',
@@ -66,16 +75,16 @@ angular.module('fundFinder')
 	            	icon: 'fa fa-check',
 	                cssClass: 'btn-primary',
 	                action: function(dialog) {
-	                	Administrator_ConfigurationService.deleteCompanyQuestion(questionId)
+	                	Administrator_ConfigurationService.deleteQuestion(questionId)
 		        			.success(function(data, status, headers, config) {
-		        				$scope.getCompanyQuestions();
-		        				toastr.success('Pitanje je uspješno obrisano');
+		        				$scope.getQuestions();
+		        				toastr.success('Stavka je uspješno obrisana');
 		        			})
 		        			.error(function(data, status, headers, config) {
 		        				if (status == 403) {
 		        					$state.go('login');
 		        				} else {
-		        					toastr.error('Došlo je do pogreške prilikom brisanja pitanja');
+		        					toastr.error('Došlo je do pogreške prilikom brisanja stavke');
 		        				}
 		        			});
 	        			dialog.close();
@@ -85,11 +94,12 @@ angular.module('fundFinder')
         });
 	};
 	
+	/** order changed callback handler */
 	$scope.orderChanged = function() {
         angular.forEach($scope.questions, function(question, index) {
         	if (question.index != index) {
         		question.index = index;
-        		Administrator_ConfigurationService.saveCompanyQuestion(question)
+        		Administrator_ConfigurationService.saveQuestion(question)
 	    			.success(function(data, status, headers, config) {
 	    				question = data;
 	    				toastr.success('Promjene su uspješno spremljene');
@@ -117,22 +127,36 @@ angular.module('fundFinder')
 				toastr.error('Došlo je do pogreške prilikom dohvaćanja podataka');
 			}
 		});
+
+    /** get counties */
+	Administrator_ConfigurationService.getCounties()
+		.success(function(data, status, headers, config) {
+			$scope.counties = data;
+		})
+		.error(function(data, status, headers, config) {
+			if (status == 403) {
+				$state.go('login');
+			} else {
+				toastr.error('Došlo je do pogreške prilikom dohvaćanja podataka');
+			}
+		});
 	
-	/** get cities */
+	/** get NKDs */
 	Administrator_ConfigurationService.getNkds()
 		.success(function(data, status, headers, config) {
-			
-			var nkdSectors = new Array();
-			angular.forEach(data, function(nkd, index) {
-				var nkdSector = nkd.sector + " - " + nkd.sectorName;
-				if (nkdSectors.indexOf(nkdSector) == -1) {
-					nkdSectors.push(nkdSector);
-				}
-			});
-			
-			$scope.nkdSectors = nkdSectors;
-			
 			$scope.nkds = data;
+		})
+		.error(function(data, status, headers, config) {
+			if (status == 403) {
+				$state.go('login');
+			} else {
+				toastr.error('Došlo je do pogreške prilikom dohvaćanja podataka');
+			}
+		});
+	
+	Administrator_InvestmentService.getInvestments()
+		.success(function(data, status, headers, config) {
+			$scope.investments = data;
 		})
 		.error(function(data, status, headers, config) {
 			if (status == 403) {
@@ -144,9 +168,10 @@ angular.module('fundFinder')
 	
     /** preview */
 	$scope.preview = function() {
-		$state.go('administrator.configuration_company_preview');
+		$state.go('administrator.configuration_preview', { 'entityType' : $scope.entityType });
 	}
 	
+	/** text editor options */
 	$scope.summernoteOptions = {
 		height: 300,
 		focus: false,
@@ -155,11 +180,11 @@ angular.module('fundFinder')
 	};
 	
 	// initial load
-	$scope.getCompanyQuestions();
+	$scope.getQuestions();
 	
 })
 
-.controller('Administrator_EditCompanyQuestionCtrl', function($rootScope, $scope, $state, $element, Administrator_ConfigurationService, questionId) {
+.controller('Administrator_EditQuestionCtrl', function($rootScope, $scope, $state, $element, Administrator_ConfigurationService, questionId, entityType) {
 	
 	/** get question types */
 	Administrator_ConfigurationService.getQuestionTypes()
@@ -175,7 +200,7 @@ angular.module('fundFinder')
 		});
 	
 	/** get question */
-	Administrator_ConfigurationService.getCompanyQuestion(questionId)
+	Administrator_ConfigurationService.getQuestion(entityType, questionId)
 		.success(function(data, status, headers, config) {
 			if (data.id) {
 				$scope.isEditMode = true;
@@ -204,11 +229,11 @@ angular.module('fundFinder')
 	
 	/** save question */
 	$scope.save = function() {
-		Administrator_ConfigurationService.saveCompanyQuestion($scope.question)
+		Administrator_ConfigurationService.saveQuestion($scope.question)
 			.success(function(data, status, headers, config) {
 				$element.modal('hide');
-				$state.go('administrator.configuration_company', {}, { reload : true });
-				toastr.success('Pitanje je uspješno spremljeno');
+				$state.go('administrator.configuration_' + entityType, {}, { reload : true });
+				toastr.success('Stavka je uspješno spremljena');
 			})
 			.error(function(data, status, headers, config) {
 				if (status == 403) {
@@ -219,8 +244,4 @@ angular.module('fundFinder')
 			});
 	}
 	
-})
-
-.controller('Administrator_ConfigurationTenderCtrl', function($rootScope, $scope, $state) {
-
 })

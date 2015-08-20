@@ -100,9 +100,6 @@
 	box-shadow: 0 0 10px #a0a0a0;
 	padding-bottom: 5px;
 	margin-bottom: 0px;
-}
-
-.custom-panel-body {
 	height: 450px;
 	overflow: hidden;
 }

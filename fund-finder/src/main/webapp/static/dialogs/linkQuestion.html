@@ -1,0 +1,35 @@
+<div class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Poveži stavku sa...</h4>
+			</div>
+			<div class="body modal-body">
+				<form name="form" class="form-horizontal ng-pristine ng-valid" novalidate>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Stavkom</label>
+						<div class="col-sm-9">
+							<select class="form-control" chosen multiple option="questions" ng-model="question.linkQuestionId" 
+		            			ng-options="question.id as question.text for question in questions" data-placeholder="Molimo odaberite..."></select>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Operator</label>
+						<div class="col-sm-9">
+							<select class="form-control" chosen option="operators" ng-model="question.linkOperator" allow-single-deselect="true"
+		            			ng-options="operator as operator for operator in operators" data-placeholder="Molimo odaberite..."></select>
+						</div>
+					</div>
+					
+				</form>
+			</div>
+			<div class="modal-footer p-xxs">
+				<button type="button" data-dismiss="modal" class="btn btn-white">Otkaži</button>
+				<button type="button" ng-click="save()" ng-disabled="form.$invalid" class="btn btn-primary"><i class="fa fa-save"></i> Spremi</button>
+			</div>
+		</div>
+	</div>
+</div>

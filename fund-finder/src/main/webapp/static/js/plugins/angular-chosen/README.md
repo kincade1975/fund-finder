@@ -5,9 +5,7 @@ Create Chosen dropdowns with ease in angular.
 
 Check out the docs at: http://adityasharat.github.io/angular-chosen/
 
-Get the latest version for angular 1.3.x [here](https://github.com/adityasharat/angular-chosen/archive/v1.0.zip)
-
-Get the version for angular 1.2.x [here](https://github.com/adityasharat/angular-chosen/archive/v0.1-beta.zip)
+Get the latest version at: https://github.com/adityasharat/angular-chosen/archive/v0.1-beta.zip
 
 How to use:
 
@@ -16,7 +14,7 @@ How to use:
 	angular.module('myModule', ['angular.chosen']);
 ```
 
-Just add 'chosen' as an attribute to a `<select>` to convert it to a chosen drop down.
+Just add 'chosen' as an to a <select> to convert it to a chosen drop down.
 * options : options for the drop down.
 * model : to what is the chosen binded to.
 

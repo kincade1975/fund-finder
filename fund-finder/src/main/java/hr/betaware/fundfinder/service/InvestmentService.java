@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 
 import hr.betaware.fundfinder.domain.Investment;
 import hr.betaware.fundfinder.resource.InvestmentResource;
-import hr.betaware.fundfinder.resource.InvestmentResourceAssembler;
+import hr.betaware.fundfinder.resource.assembler.InvestmentResourceAssembler;
 import hr.betaware.fundfinder.resource.uigrid.PageableResource;
 import hr.betaware.fundfinder.resource.uigrid.UiGridFilterResource;
 import hr.betaware.fundfinder.resource.uigrid.UiGridResource;

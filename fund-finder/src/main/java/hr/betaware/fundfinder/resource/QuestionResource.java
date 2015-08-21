@@ -9,8 +9,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import hr.betaware.fundfinder.domain.Question.EntityType;
-import hr.betaware.fundfinder.domain.Question.Type;
+import hr.betaware.fundfinder.enums.EntityType;
+import hr.betaware.fundfinder.enums.LinkOperator;
+import hr.betaware.fundfinder.enums.QuestionType;
 
 @JsonInclude(Include.NON_NULL)
 public class QuestionResource extends ResourceSupport {
@@ -28,10 +29,16 @@ public class QuestionResource extends ResourceSupport {
 	private String text;
 
 	@JsonProperty("type")
-	private Type type;
+	private QuestionType type;
 
 	@JsonProperty("options")
 	private List<OptionResource> options;
+
+	@JsonProperty("linkQuestionId")
+	private List<Integer> linkQuestionId;
+
+	@JsonProperty("linkOperator")
+	private LinkOperator linkOperator;
 
 	@JsonProperty("timeCreated")
 	private Date timeCreated;
@@ -74,11 +81,11 @@ public class QuestionResource extends ResourceSupport {
 		this.text = text;
 	}
 
-	public Type getType() {
+	public QuestionType getType() {
 		return type;
 	}
 
-	public void setType(Type type) {
+	public void setType(QuestionType type) {
 		this.type = type;
 	}
 
@@ -88,6 +95,22 @@ public class QuestionResource extends ResourceSupport {
 
 	public void setOptions(List<OptionResource> options) {
 		this.options = options;
+	}
+
+	public List<Integer> getLinkQuestionId() {
+		return linkQuestionId;
+	}
+
+	public void setLinkQuestionId(List<Integer> linkQuestionId) {
+		this.linkQuestionId = linkQuestionId;
+	}
+
+	public LinkOperator getLinkOperator() {
+		return linkOperator;
+	}
+
+	public void setLinkOperator(LinkOperator linkOperator) {
+		this.linkOperator = linkOperator;
 	}
 
 	public Date getTimeCreated() {

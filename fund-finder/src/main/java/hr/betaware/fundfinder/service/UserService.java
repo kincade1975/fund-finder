@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 import hr.betaware.fundfinder.domain.User;
 import hr.betaware.fundfinder.domain.User.Role;
 import hr.betaware.fundfinder.resource.UserResource;
-import hr.betaware.fundfinder.resource.UserResourceAssembler;
+import hr.betaware.fundfinder.resource.assembler.UserResourceAssembler;
 import hr.betaware.fundfinder.resource.uigrid.PageableResource;
 import hr.betaware.fundfinder.resource.uigrid.UiGridFilterResource;
 import hr.betaware.fundfinder.resource.uigrid.UiGridResource;

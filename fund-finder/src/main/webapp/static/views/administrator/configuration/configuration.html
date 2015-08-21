@@ -23,12 +23,14 @@
 				<li ng-repeat="question in questions" dnd-draggable="question" dnd-moved="questions.splice($index, 1); orderChanged();"
 						dnd-effect-allowed="move" dnd-selected="selected = question" ng-class="{'selected': selected === question}">
 					<div class="row">
-						<div class="col-md-9">
+						<div class="col-md-8">
 							{{$index + 1}}. {{question.text}}
 						</div>
-						<div class="col-md-3" style="text-align: right;">
-							<span class="badge badge-default"><small style="padding-left: 3px; padding-right: 3px;">{{question.type}}</small></span>
+						<div class="col-md-4" style="text-align: right;">
+							<span class="badge badge-default"><small>{{question.type}}</small></span>
 							<button ng-click="deleteQuestion(question.id)" class="pull-right btn-xs btn-white" tooltip="Obriši"><i class="fa fa-2x fa-times"></i></button>
+							<button ng-show="entityType == 'tender' && question.linkQuestionId == null" ng-click="linkQuestion(question.id)" class="pull-right btn-xs btn-white m-r-xs" tooltip="Poveži"><i class="fa fa-2x fa-external-link"></i></button>
+							<button style="background: #1ab394;" ng-show="entityType == 'tender' && question.linkQuestionId != null" ng-click="linkQuestion(question.id)" class="pull-right btn-xs btn-white m-r-xs" tooltip="Poveži"><i style="color: white;" class="fa fa-2x fa-external-link"></i></button>
 							<button ng-click="editQuestion(question.id)" class="pull-right btn-xs btn-white m-r-xs m-l-lg" tooltip="Uredi"><i class="fa fa-2x fa-edit"></i></button>
 						</div>			
 					</div>

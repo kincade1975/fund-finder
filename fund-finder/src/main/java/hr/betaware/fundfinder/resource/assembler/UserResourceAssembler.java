@@ -1,10 +1,11 @@
-package hr.betaware.fundfinder.resource;
+package hr.betaware.fundfinder.resource.assembler;
 
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 import org.springframework.stereotype.Component;
 
 import hr.betaware.fundfinder.controller.UserController;
 import hr.betaware.fundfinder.domain.User;
+import hr.betaware.fundfinder.resource.UserResource;
 
 @Component
 public class UserResourceAssembler extends ResourceAssemblerSupport<User, UserResource> {

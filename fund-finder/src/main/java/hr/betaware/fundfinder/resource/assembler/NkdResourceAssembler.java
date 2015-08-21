@@ -1,10 +1,11 @@
-package hr.betaware.fundfinder.resource;
+package hr.betaware.fundfinder.resource.assembler;
 
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 import org.springframework.stereotype.Component;
 
 import hr.betaware.fundfinder.controller.ConfigurationController;
 import hr.betaware.fundfinder.domain.Nkd;
+import hr.betaware.fundfinder.resource.NkdResource;
 
 @Component
 public class NkdResourceAssembler extends ResourceAssemblerSupport<Nkd, NkdResource> {

@@ -1,4 +1,4 @@
-package hr.betaware.fundfinder.resource;
+package hr.betaware.fundfinder.resource.assembler;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import hr.betaware.fundfinder.controller.ConfigurationController;
 import hr.betaware.fundfinder.domain.City;
+import hr.betaware.fundfinder.resource.CityResource;
 
 @Component
 public class CityResourceAssembler extends ResourceAssemblerSupport<City, CityResource> {

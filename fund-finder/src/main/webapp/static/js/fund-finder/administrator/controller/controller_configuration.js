@@ -40,6 +40,20 @@ angular.module('fundFinder')
 		});
 	}
 	
+	/** link question (opens modal dialog) */
+	$scope.linkQuestion = function(questionId) {
+		ModalService.showModal({
+			templateUrl: "dialogs/linkQuestion.html",
+			controller: "Administrator_LinkQuestionCtrl",
+			inputs: {
+				questionId: questionId,
+				entityType: $scope.entityType
+			}
+		}).then(function(modal) {
+			modal.element.modal();
+		});
+	}
+	
 	/** save question */
 	$scope.saveQuestion = function(resource) {
 		Administrator_ConfigurationService.saveQuestion(resource)
@@ -240,6 +254,68 @@ angular.module('fundFinder')
 					$state.go('login');
 				} else {
 					toastr.error('Došlo je do pogreške prilikom spremanja podataka');
+				}
+			});
+	}
+	
+})
+
+.controller('Administrator_LinkQuestionCtrl', function($rootScope, $scope, $state, $element, Administrator_ConfigurationService, questionId, entityType) {
+
+	/** get question */
+	Administrator_ConfigurationService.getQuestion(entityType, questionId)
+		.success(function(data, status, headers, config) {
+			console.log(data);
+			$scope.question = data;
+		})
+		.error(function(data, status, headers, config) {
+			if (status == 403) {
+				$state.go('login');
+			} else {
+				toastr.error('Došlo je do pogreške prilikom dohvaćanja podataka');
+			}
+		});
+	
+    /** get operators */
+	Administrator_ConfigurationService.getOperators(questionId)
+		.success(function(data, status, headers, config) {
+			$scope.operators = data;
+		})
+		.error(function(data, status, headers, config) {
+			if (status == 403) {
+				$state.go('login');
+			} else {
+				toastr.error('Došlo je do pogreške prilikom dohvaćanja podataka');
+			}
+		});
+	
+	/** get questions */
+	Administrator_ConfigurationService.getQuestions('company')
+		.success(function(data, status, headers, config) {
+			$scope.questions = data;
+		})
+		.error(function(data, status, headers, config) {
+			if (status == 403) {
+				$state.go('login');
+			} else {
+				toastr.error('Došlo je do pogreške prilikom dohvaćanja podataka');
+			}
+		});
+	
+	/** save question */
+	$scope.save = function() {
+		console.log($scope.question);
+		Administrator_ConfigurationService.linkQuestion($scope.question.id, $scope.question.linkQuestionId, $scope.question.linkOperator)
+			.success(function(data, status, headers, config) {
+				$element.modal('hide');
+				$state.go('administrator.configuration_' + entityType, {}, { reload : true });
+				toastr.success('Podaci su uspješno spremljeni');
+			})
+			.error(function(data, status, headers, config) {
+				if (status == 403) {
+					$state.go('login');
+				} else {
+					toastr.error('Došlo je do pogreške prilikom dohvaćanja podataka');
 				}
 			});
 	}

@@ -25,4 +25,10 @@ angular.module('fundFinder')
 		this.getNkds = function() {
 			return $http.get('/api/v1/configuration/nkds');
 		};
+		this.getOperators = function(id) {
+			return $http.get('/api/v1/configuration/operators/' + id);
+		};
+		this.linkQuestion = function(tenderQuestionId, companyQuestionId, linkOperator) {
+			return $http.get('/api/v1/configuration/linkQuestion?tenderQuestionId=' + tenderQuestionId + "&companyQuestionId=" + companyQuestionId + "&linkOperator=" + linkOperator);
+		};
 	});

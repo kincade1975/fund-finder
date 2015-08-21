@@ -1,4 +1,4 @@
-package hr.betaware.fundfinder.resource;
+package hr.betaware.fundfinder.resource.assembler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,9 @@ import org.springframework.stereotype.Component;
 import hr.betaware.fundfinder.controller.ConfigurationController;
 import hr.betaware.fundfinder.domain.Option;
 import hr.betaware.fundfinder.domain.Question;
-import hr.betaware.fundfinder.domain.Question.Type;
+import hr.betaware.fundfinder.enums.QuestionType;
+import hr.betaware.fundfinder.resource.OptionResource;
+import hr.betaware.fundfinder.resource.QuestionResource;
 import hr.betaware.fundfinder.service.SequenceService;
 
 @Component
@@ -42,9 +44,11 @@ public class QuestionResourceAssembler extends ResourceAssemblerSupport<Question
 			options.add(new OptionResource(null, ""));
 		}
 		resource.setOptions(options);
+		resource.setLinkQuestionId(entity.getLinkQuestionId());
+		resource.setLinkOperator(entity.getLinkOperator());
 		resource.setTimeCreated(entity.getTimeCreated());
 		resource.setLastModified(entity.getLastModified());
-		if (resource.getType() == Type.RADIO) {
+		if (resource.getType() == QuestionType.RADIO) {
 			resource.setAnswer(resource.getOptions().get(0).getIdentificator());
 		}
 		return resource;
@@ -81,6 +85,8 @@ public class QuestionResourceAssembler extends ResourceAssemblerSupport<Question
 			options.add(option);
 		}
 		entity.setOptions(options);
+		entity.setLinkQuestionId(resource.getLinkQuestionId());
+		entity.setLinkOperator(resource.getLinkOperator());
 		return entity;
 	}
 

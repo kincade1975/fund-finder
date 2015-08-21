@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import hr.betaware.fundfinder.domain.Question;
+import hr.betaware.fundfinder.enums.LinkOperator;
+import hr.betaware.fundfinder.enums.QuestionType;
 import hr.betaware.fundfinder.resource.CityResource;
 import hr.betaware.fundfinder.resource.CountyResource;
 import hr.betaware.fundfinder.resource.NkdResource;
@@ -54,7 +55,7 @@ public class ConfigurationController {
 	@PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR')")
 	public List<String> getQuestionTypes() {
 		List<String> result = new ArrayList<>();
-		for (Question.Type type : Question.Type.values()) {
+		for (QuestionType type : QuestionType.values()) {
 			result.add(type.toString());
 		}
 		return result;
@@ -76,6 +77,17 @@ public class ConfigurationController {
 	@PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR')")
 	public List<NkdResource> getNkds() {
 		return configurationService.getNkds();
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value="/operators/{id}")
+	@PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR')")
+	public List<LinkOperator> getOperators(@PathVariable Integer id) {
+		return configurationService.getOperators(id);
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value="/linkQuestion")
+	public void linkQuestion(@RequestParam Integer tenderQuestionId, @RequestParam List<Integer> companyQuestionId, @RequestParam LinkOperator linkOperator) {
+		configurationService.linkQuestion(tenderQuestionId, companyQuestionId, linkOperator);
 	}
 
 }

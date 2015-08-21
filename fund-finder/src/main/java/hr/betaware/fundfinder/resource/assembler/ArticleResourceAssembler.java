@@ -1,4 +1,4 @@
-package hr.betaware.fundfinder.resource;
+package hr.betaware.fundfinder.resource.assembler;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import hr.betaware.fundfinder.controller.ArticleController;
 import hr.betaware.fundfinder.domain.Article;
+import hr.betaware.fundfinder.resource.ArticleResource;
 import hr.betaware.fundfinder.service.SequenceService;
 
 @Component

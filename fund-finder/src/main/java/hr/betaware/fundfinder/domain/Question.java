@@ -10,13 +10,12 @@ import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import hr.betaware.fundfinder.enums.EntityType;
+import hr.betaware.fundfinder.enums.LinkOperator;
+import hr.betaware.fundfinder.enums.QuestionType;
+
 @Document(collection = "question")
 public class Question {
-
-	public enum EntityType { COMPANY, TENDER }
-
-	public enum Type { TEXT, TEXT_AREA, TEXT_EDITOR, NUMBER, DATE, DATE_TIME,
-		RADIO, SELECT, MULTI_SELECT, NKD, NKD_AUX, CITY, COUNTY, INVESTMENT }
 
 	@Id
 	@Field("id")
@@ -32,10 +31,16 @@ public class Question {
 	private String text;
 
 	@Field("type")
-	private Type type;
+	private QuestionType type;
 
 	@Field("options")
 	private List<Option> options;
+
+	@Field("link_question_id")
+	private List<Integer> linkQuestionId;
+
+	@Field("link_operator")
+	private LinkOperator linkOperator;
 
 	@Version
 	@Field("doc_version")
@@ -81,11 +86,11 @@ public class Question {
 		this.text = text;
 	}
 
-	public Type getType() {
+	public QuestionType getType() {
 		return type;
 	}
 
-	public void setType(Type type) {
+	public void setType(QuestionType type) {
 		this.type = type;
 	}
 
@@ -95,6 +100,22 @@ public class Question {
 
 	public void setOptions(List<Option> options) {
 		this.options = options;
+	}
+
+	public List<Integer> getLinkQuestionId() {
+		return linkQuestionId;
+	}
+
+	public void setLinkQuestionId(List<Integer> linkQuestionId) {
+		this.linkQuestionId = linkQuestionId;
+	}
+
+	public LinkOperator getLinkOperator() {
+		return linkOperator;
+	}
+
+	public void setLinkOperator(LinkOperator linkOperator) {
+		this.linkOperator = linkOperator;
 	}
 
 	public Long getDocVersion() {

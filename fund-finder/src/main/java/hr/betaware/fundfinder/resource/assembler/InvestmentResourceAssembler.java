@@ -1,4 +1,4 @@
-package hr.betaware.fundfinder.resource;
+package hr.betaware.fundfinder.resource.assembler;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import hr.betaware.fundfinder.controller.InvestmentController;
 import hr.betaware.fundfinder.domain.Investment;
+import hr.betaware.fundfinder.resource.InvestmentResource;
 import hr.betaware.fundfinder.service.SequenceService;
 
 @Component

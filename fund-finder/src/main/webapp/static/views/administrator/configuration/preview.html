@@ -43,7 +43,9 @@
 		            	
 		            	<div ng-if="question.type == 'SELECT'">
 		            		<select class="form-control" chosen option="question.options" ng-model="question.answer" 
-		            			ng-options="option.id as option.value for option in question.options track by option.id" data-placeholder="Molimo odaberite..."></select>
+		            			ng-options="option.id as option.value for option in question.options track by option.id" data-placeholder="Molimo odaberite...">
+		            			<option />
+		            		</select>
 		            	</div>
 		            	
 		            	<div ng-if="question.type == 'MULTI_SELECT'">
@@ -53,17 +55,23 @@
 		            	
 		            	<div ng-if="question.type == 'CITY'">
 		            		<select class="form-control" chosen option="cities" ng-model="question.answer" 
-		            			ng-options="city.id as city.name for city in cities track by city.id" data-placeholder="Molimo odaberite..."></select>
+		            			ng-options="city.id as city.name for city in cities track by city.id" data-placeholder="Molimo odaberite...">
+		            			<option />
+		            		</select>
 		            	</div>
 		            	
 		            	<div ng-if="question.type == 'COUNTY'">
 		            		<select class="form-control" chosen option="cities" ng-model="question.answer" 
-		            			ng-options="county.id as county.name for county in counties track by county.id" data-placeholder="Molimo odaberite..."></select>
+		            			ng-options="county.id as county.name for county in counties track by county.id" data-placeholder="Molimo odaberite...">
+		            			<option />
+		            		</select>
 		            	</div>
 		            	
 		            	<div ng-if="question.type == 'NKD'">
 		            		<select class="form-control" chosen option="nkds" ng-model="question.answer" 
-		            			ng-options="nkd.id as (nkd.area + '.' + nkd.activity + ' - ' + nkd.activityName) group by (nkd.sector + ' - ' + nkd.sectorName) for nkd in nkds" data-placeholder="Molimo odaberite..."></select>
+		            			ng-options="nkd.id as (nkd.area + '.' + nkd.activity + ' - ' + nkd.activityName) group by (nkd.sector + ' - ' + nkd.sectorName) for nkd in nkds" data-placeholder="Molimo odaberite...">
+		            			<option />
+		            		</select>
 		            	</div>
 		            	
 		            	<div ng-if="question.type == 'NKD_AUX'">

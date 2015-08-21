@@ -261,11 +261,10 @@ angular.module('fundFinder')
 })
 
 .controller('Administrator_LinkQuestionCtrl', function($rootScope, $scope, $state, $element, Administrator_ConfigurationService, questionId, entityType) {
-
+	
 	/** get question */
 	Administrator_ConfigurationService.getQuestion(entityType, questionId)
 		.success(function(data, status, headers, config) {
-			console.log(data);
 			$scope.question = data;
 		})
 		.error(function(data, status, headers, config) {
@@ -304,8 +303,10 @@ angular.module('fundFinder')
 	
 	/** save question */
 	$scope.save = function() {
-		console.log($scope.question);
-		Administrator_ConfigurationService.linkQuestion($scope.question.id, $scope.question.linkQuestionId, $scope.question.linkOperator)
+		var linkQuestionId = ($scope.question.linkQuestionId) ? $scope.question.linkQuestionId : "";
+		var linkOperator = ($scope.question.linkOperator) ? $scope.question.linkOperator : "";
+		
+		Administrator_ConfigurationService.linkQuestion($scope.question.id, linkQuestionId, linkOperator)
 			.success(function(data, status, headers, config) {
 				$element.modal('hide');
 				$state.go('administrator.configuration_' + entityType, {}, { reload : true });

@@ -11,16 +11,16 @@
 					<div class="form-group">
 						<label class="col-sm-3 control-label">Stavkom</label>
 						<div class="col-sm-9">
-							<select class="form-control" chosen multiple option="questions" ng-model="question.linkQuestionId" 
-		            			ng-options="question.id as question.text for question in questions" data-placeholder="Molimo odaberite..."></select>
+							<select class="form-control" chosen multiple ng-model="question.linkQuestionId" ng-options="question.id as question.text for question in questions" data-placeholder="Molimo odaberite..."></select>
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<label class="col-sm-3 control-label">Operator</label>
 						<div class="col-sm-9">
-							<select class="form-control" chosen option="operators" ng-model="question.linkOperator" allow-single-deselect="true"
-		            			ng-options="operator as operator for operator in operators" data-placeholder="Molimo odaberite..."></select>
+							<select class="form-control" chosen ng-model="question.linkOperator" allow-single-deselect="true" ng-options="operator as operator for operator in operators" data-placeholder="Molimo odaberite...">
+		            			<option />	
+		            		</select>
 						</div>
 					</div>
 					

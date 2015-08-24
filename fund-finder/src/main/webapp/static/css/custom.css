@@ -98,6 +98,10 @@
     background-position: -18px 6px;
 }
 
+.form-control {
+	font-size: 13px;
+}
+
 .custom-hr {
 	border-top: 1px solid #e0e0e0; 
 	margin-top: 0px; 
@@ -187,4 +191,24 @@
  */
 .custom-dnd ul[dnd-list] li.selected {
 	
+}
+
+.custom-gray {
+	background-color: #f0f0f0;
+}
+
+.custom-p-xs {
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+
+.custom-text-editor, .custom-text-editor ul, .custom-text-editor p, .note-editable, .note-editable ul, .note-editable p {
+	color: #676a6c !important;
+	font-family: 'open sans', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+	font-size: 13px !important;
+}
+
+.custom-header {
+	font-size: 18px; 
+	color: #676a6c;
 }

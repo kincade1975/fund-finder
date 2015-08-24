@@ -168,6 +168,7 @@ angular.module('fundFinder')
 			}
 		});
 	
+	/** get investments */
 	Administrator_InvestmentService.getInvestments()
 		.success(function(data, status, headers, config) {
 			$scope.investments = data;
@@ -190,7 +191,7 @@ angular.module('fundFinder')
 		height: 300,
 		focus: false,
 		airMode: false,
-		toolbar: [['style', ['bold', 'italic', 'underline']], ['alignment', ['ul', 'ol', 'paragraph']], ['insert', ['link','picture','hr']]]
+		toolbar: [['style', ['bold', 'italic', 'underline']], ['alignment', ['ul', 'ol', 'paragraph']], ['insert', ['link','hr']]]
 	};
 	
 	// initial load

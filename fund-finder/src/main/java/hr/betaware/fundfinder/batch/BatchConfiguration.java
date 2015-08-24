@@ -36,7 +36,7 @@ public class BatchConfiguration {
 	@Qualifier("readerCity")
 	public ItemReader<CityItem> readerCity() {
 		FlatFileItemReader<CityItem> reader = new FlatFileItemReader<CityItem>();
-		reader.setResource(new ClassPathResource("cities.csv"));
+		reader.setResource(new ClassPathResource("csv/cities.csv"));
 		reader.setLinesToSkip(1);
 		reader.setLineMapper(new DefaultLineMapper<CityItem>() {{
 			setLineTokenizer(new DelimitedLineTokenizer() {{
@@ -53,7 +53,7 @@ public class BatchConfiguration {
 	@Qualifier("readerNkd")
 	public ItemReader<NkdItem> readerNkd() {
 		FlatFileItemReader<NkdItem> reader = new FlatFileItemReader<NkdItem>();
-		reader.setResource(new ClassPathResource("nkd.csv"));
+		reader.setResource(new ClassPathResource("csv/nkd.csv"));
 		reader.setLinesToSkip(1);
 		reader.setLineMapper(new DefaultLineMapper<NkdItem>() {{
 			setLineTokenizer(new DelimitedLineTokenizer() {{

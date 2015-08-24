@@ -49,6 +49,9 @@ public class QuestionResource extends ResourceSupport {
 	@JsonProperty("answer")
 	private Object answer;
 
+	@JsonProperty("answerInternal")
+	private Object answerInternal;
+
 	public Integer getIdentificator() {
 		return identificator;
 	}
@@ -135,6 +138,14 @@ public class QuestionResource extends ResourceSupport {
 
 	public void setAnswer(Object answer) {
 		this.answer = answer;
+	}
+
+	public Object getAnswerInternal() {
+		return answerInternal;
+	}
+
+	public void setAnswerInternal(Object answerInternal) {
+		this.answerInternal = answerInternal;
 	}
 
 }

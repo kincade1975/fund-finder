@@ -32,7 +32,7 @@ angular.module('fundFinder')
 					name: 'Kreirana',
 					field: 'timeCreated',
 					type: 'date',
-					cellFilter: 'date:"yyyy-MM-dd HH:mm:ss"',
+					cellFilter: 'date:grid.appScope.dateTimeFormat',
 					cellTooltip: false, 
 					enableSorting: true,
 					enableFiltering: false,
@@ -47,7 +47,7 @@ angular.module('fundFinder')
 					enableFiltering: false,
 					enableHiding: false,
 					width: 82,
-					cellTemplate:'<div style="padding-top: 1px"><button ng-click="grid.appScope.editInvestment(row.entity)" tooltip="Uredi" class="btn-xs btn-white m-l-xs"><i class="fa fa-2x fa-edit"></i></button><button ng-click="grid.appScope.deleteInvestment(row.entity)" tooltip="Obriši" class="btn-xs btn-white m-l-xs"><i class="fa fa-2x fa-times"></i></button></div>'
+					cellTemplate:'<div style="padding-top: 1px"><button ng-click="grid.appScope.editInvestment(row.entity)" class="btn-xs btn-white m-l-xs"><i class="fa fa-2x fa-edit"></i></button><button ng-click="grid.appScope.deleteInvestment(row.entity)" class="btn-xs btn-white m-l-xs"><i class="fa fa-2x fa-times"></i></button></div>'
 				}
 			],
 			onRegisterApi: function(gridApi) {
@@ -183,6 +183,7 @@ angular.module('fundFinder')
 // ==============================================================================================================
 .controller('Administrator_InvestmentEditCtrl', function($rootScope, $scope, $state, $stateParams, Administrator_TotalService, Administrator_InvestmentService) {
 	$scope.mode = $stateParams.mode;
+	$scope.id = $stateParams.id;
 	
 	$scope.back = function() {
 		$state.go('administrator.investment_overview');

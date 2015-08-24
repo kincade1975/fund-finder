@@ -28,10 +28,10 @@
 						</div>
 						<div class="col-md-4" style="text-align: right;">
 							<span class="badge badge-default"><small>{{question.type}}</small></span>
-							<button ng-click="deleteQuestion(question.id)" class="pull-right btn-xs btn-white" tooltip="Obriši"><i class="fa fa-2x fa-times"></i></button>
-							<button ng-show="entityType == 'tender' && question.linkQuestionId == null" ng-click="linkQuestion(question.id)" class="pull-right btn-xs btn-white m-r-xs" tooltip="Poveži"><i class="fa fa-2x fa-external-link"></i></button>
-							<button style="background: #1ab394;" ng-show="entityType == 'tender' && question.linkQuestionId != null" ng-click="linkQuestion(question.id)" class="pull-right btn-xs btn-white m-r-xs" tooltip="Poveži"><i style="color: white;" class="fa fa-2x fa-external-link"></i></button>
-							<button ng-click="editQuestion(question.id)" class="pull-right btn-xs btn-white m-r-xs m-l-lg" tooltip="Uredi"><i class="fa fa-2x fa-edit"></i></button>
+							<button ng-click="deleteQuestion(question.id)" class="pull-right btn-xs btn-white"><i class="fa fa-2x fa-times"></i></button>
+							<button ng-show="entityType == 'tender' && question.linkQuestionId == null" ng-click="linkQuestion(question.id)" class="pull-right btn-xs btn-white m-r-xs"><i class="fa fa-2x fa-external-link"></i></button>
+							<button style="background: #1ab394;" ng-show="entityType == 'tender' && question.linkQuestionId != null" ng-click="linkQuestion(question.id)" class="pull-right btn-xs btn-white m-r-xs"><i style="color: white;" class="fa fa-2x fa-external-link"></i></button>
+							<button ng-click="editQuestion(question.id)" class="pull-right btn-xs btn-white m-r-xs m-l-lg" ><i class="fa fa-2x fa-edit"></i></button>
 						</div>			
 					</div>
 				</li>

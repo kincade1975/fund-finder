@@ -1,8 +1,8 @@
 <div class="row border-bottom white-bg">
 	<div class="col-lg-12">
 		<h1 ng-show="mode == 'show'"><i class="fa fa-eye"></i> Detalji investicije</h1>
-		<h1 ng-show="mode == 'edit' && investment.id != null"><i class="fa fa-edit"></i>  Uredi investiciju</h1>
-		<h1 ng-show="mode == 'edit' && investment.id == null"><i class="fa fa-plus"></i>  Dodaj investiciju</h1>
+		<h1 ng-show="mode == 'edit' && id != 0"><i class="fa fa-edit"></i>  Uredi investiciju</h1>
+		<h1 ng-show="mode == 'edit' && id == 0"><i class="fa fa-plus"></i>  Dodaj investiciju</h1>
 	</div>
 </div>
 
@@ -11,12 +11,12 @@
 	<div class="row" ng-show="mode == 'show'">
 		<div class="col-lg-12">
 			<div class="panel panel-default">
-				<div class="panel-heading"><strong>{{investment.name}}</strong></div>
+				<div class="panel-heading"><strong class="custom-header">{{investment.name}}</strong></div>
 				<div class="panel-body">
 					{{investment.description}}
 				</div>
 				<div class="panel-footer" style="text-align: right;">
-					<small>Zadnja izmjena: {{investment.lastModified | date : 'yyyy-MM-dd HH:mm:ss'}}</small>
+					<small>Zadnja izmjena: {{investment.lastModified | date : dateTimeFormat}}</small>
 				</div>
 			</div>
 			<hr class="custom-hr">
@@ -31,15 +31,15 @@
 		<div class="col-lg-12">
 			<form name="form" class="form-horizontal ng-pristine ng-valid" novalidate>
 				<div class="form-group">
-					<label class="col-sm-2 control-label">Naziv</label>
-					<div class="col-sm-10" ng-class="{ 'has-error' : form.investmentName.$touched && form.investmentName.$invalid }">
+					<div class="col-sm-12" ng-class="{ 'has-error' : form.investmentName.$touched && form.investmentName.$invalid }">
+						<label>Naziv</label>
 						<input ng-model="investment.name" type="text" class="form-control" name="investmentName" ng-required="true" />
 						<small ng-show="form.investmentName.$touched && form.investmentName.$invalid" class="m-l-xs help-block" style="margin-top: 2px">Molimo unesite ime investicije</small>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-2 control-label">Opis</label>
-					<div class="col-sm-10" ng-class="{ 'has-error' : form.investmentDescription.$touched && form.investmentDescription.$invalid }">
+					<div class="col-sm-12" ng-class="{ 'has-error' : form.investmentDescription.$touched && form.investmentDescription.$invalid }">
+						<label>Opis</label>
 						<textarea ng-model="investment.description" rows="10" class="form-control" name="investmentDescription" ng-required="true"></textarea>
 						<small ng-show="form.investmentDescription.$touched && form.investmentDescription.$invalid" class="m-l-xs help-block" style="margin-top: 2px">Molimo unesite opis investicije</small>
 					</div>

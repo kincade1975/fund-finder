@@ -42,6 +42,12 @@ public class Question {
 	@Field("link_operator")
 	private LinkOperator linkOperator;
 
+	@Field("answer")
+	private Object answer;
+
+	@Field("answer_internal")
+	private Object answerInternal;
+
 	@Version
 	@Field("doc_version")
 	private Long docVersion;
@@ -116,6 +122,22 @@ public class Question {
 
 	public void setLinkOperator(LinkOperator linkOperator) {
 		this.linkOperator = linkOperator;
+	}
+
+	public Object getAnswer() {
+		return answer;
+	}
+
+	public void setAnswer(Object answer) {
+		this.answer = answer;
+	}
+
+	public Object getAnswerInternal() {
+		return answerInternal;
+	}
+
+	public void setAnswerInternal(Object answerInternal) {
+		this.answerInternal = answerInternal;
 	}
 
 	public Long getDocVersion() {

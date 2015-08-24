@@ -31,7 +31,13 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdlePro
         .state('administrator.tender_overview', {
             url: "/administrator/tender/overview",
             templateUrl: "views/administrator/tender/overview.html",
-            controller: 'TenderOverviewCtrl'
+            controller: 'Administrator_TenderOverviewCtrl'
+        })
+        .state('administrator.tender_edit', {
+            url: "/administrator/tender/:mode/:id",
+            templateUrl: "views/administrator/tender/edit.html",
+            controller: 'Administrator_TenderEditCtrl',
+            params: { 'id' : null, 'mode' : null }
         })
         .state('administrator.investment_overview', {
             url: "/administrator/investment/overview",
@@ -100,6 +106,10 @@ angular
     .module('fundFinder')
     .config(config)
     .run(function($rootScope, $state, $modal, $http, Idle) {
+    	
+    	$rootScope.dateFormat = "dd.MM.yyyy";
+    	$rootScope.dateTimeFormat = "dd.MM.yyyy HH:mm"
+    	
         $rootScope.$state = $state;
         
         $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {

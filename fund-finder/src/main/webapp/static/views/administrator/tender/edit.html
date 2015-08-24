@@ -1,0 +1,145 @@
+<div class="row border-bottom white-bg">
+	<div class="col-lg-12">
+		<h1 ng-show="mode == 'show'"><i class="fa fa-eye"></i> Detalji natječaja</h1>
+		<h1 ng-show="mode == 'edit' && id != 0"><i class="fa fa-edit"></i>  Uredi natječaj</h1>
+		<h1 ng-show="mode == 'edit' && id == 0"><i class="fa fa-plus"></i>  Dodaj natječaj</h1>
+	</div>
+</div>
+
+<div class="wrapper wrapper-content">
+	
+	<div class="row" ng-show="mode == 'show'">
+		<div class="col-lg-12">
+			<div class="panel panel-default">
+				<div class="panel-heading"><strong class="custom-header">{{tender.name}}</strong></div>
+				<div class="panel-body">
+					<div class="form-group" ng-repeat="question in tender.questions">
+						<label class="custom-gray p-xs" style="width: 100%">{{question.text}}</label>
+						<div class="p-xs custom-p-xs" ng-if="question.type == 'TEXT' || question.type == 'TEXT_AREA' 
+								|| question.type == 'NUMBER' || question.type == 'RADIO' || question.type == 'SELECT'">
+							{{question.answer}}
+						</div>
+						<div class="p-xs custom-p-xs custom-text-editor" ng-if="question.type == 'TEXT_EDITOR'" ng-bind-html="toTrusted(question.answer)"></div>
+						<div class="p-xs custom-p-xs" ng-if="question.type == 'DATE'">{{question.answer | date : dateFormat}}</div>
+						<div class="p-xs custom-p-xs" ng-if="question.type == 'DATE_TIME'">{{question.answer | date : dateTimeFormat}}</div>
+						<div class="p-xs custom-p-xs" ng-if="question.type == 'CHECKBOX' || question.type == 'MULTI_SELECT' 
+								|| question.type == 'COUNTY' || question.type == 'NKD_AUX' || question.type == 'INVESTMENT'">
+							<span ng-repeat="answer in question.answer">{{answer}}<br></span>
+						</div>
+					</div>
+				</div>
+				<div class="panel-footer" style="text-align: right;">
+					<small>Zadnja izmjena: {{tender.lastModified | date : dateTimeFormat}}</small>
+				</div>
+			</div>
+			<hr class="custom-hr">
+			<div class="col-lg-12" style="text-align: right;">
+				<button ng-click="back()" class="btn btn-white m-r-sm"><i class="fa fa-angle-double-left"></i> Natrag</button>
+				<button ng-click="edit()" class="btn btn-primary"><i class="fa fa-edit"></i> Uredi</button>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row" ng-show="mode == 'edit'">
+		<div class="col-lg-12">
+			<form name="form" class="form-horizontal ng-pristine ng-valid" novalidate>
+				<div class="form-group">
+					<div class="col-sm-12" ng-class="{ 'has-error' : form.tenderName.$touched && form.tenderName.$invalid }">
+						<label>Naziv natječaja</label>
+						<input ng-model="tender.name" type="text" class="form-control" name="tenderName" ng-required="true" />
+						<small ng-show="form.tenderName.$touched && form.tenderName.$invalid" class="m-l-xs help-block" style="margin-top: 2px">Molimo unesite naziv natječaja</small>
+					</div>
+				</div>
+				<div class="form-group" ng-repeat="question in tender.questions">
+					<div class="col-sm-12">
+						<label class="custom-gray p-xs" style="width: 100%">{{question.text}}</label>
+						
+						<input ng-if="question.type == 'TEXT'" class="form-control" type="text" ng-model="question.answerInternal" />
+						
+						<textarea ng-if="question.type == 'TEXT_AREA'" class="form-control" rows="5" ng-model="question.answerInternal"></textarea>
+						
+						<div ng-if="question.type == 'TEXT_EDITOR'">
+							<summernote id="summernote" config="summernoteOptions" ng-model="question.answerInternal" />
+						</div>
+						
+						<input ng-if="question.type == 'NUMBER'" class="form-control" type="number" min="0" ng-model="question.answerInternal">
+						
+						<div ng-if="question.type == 'DATE'" class="input-group date">
+		                	<input type="datetime" class="form-control" date-time ng-model="question.answerInternal" view="date" min-view="date" format="{{dateFormat}}" auto-close="true">
+		                	<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+		            	</div>
+		            	
+						<div ng-if="question.type == 'DATE_TIME'" class="input-group date">
+		                	<input type="datetime" class="form-control" date-time ng-model="question.answerInternal" view="date" format="{{dateTimeFormat}}" auto-close="true">
+		                	<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+		            	</div>
+		            	
+		            	<div ng-if="question.type == 'RADIO'" class="p-xxs">
+		            		<div ng-repeat="option in question.options">
+		            			<label style="font-weight: normal;"><input icheck ng-model="question.answerInternal" value="{{option.value}}" type="radio" 
+		            				name="radioGroup{{question.id}}">&nbsp;&nbsp;&nbsp;{{option.value}}</label>
+		            		</div>
+		            	</div>
+		            	
+		            	<div ng-if="question.type == 'CHECKBOX'" class="p-xxs">
+		            		<div ng-repeat="option in question.options">
+		            			<label style="font-weight: normal;"><input icheck ng-model="question.answerInternal[$index]" value="{{option.value}}" type="checkbox">&nbsp;&nbsp;&nbsp;{{option.value}}</label>
+		            		</div>
+		            	</div>
+		            	
+		            	<div ng-if="question.type == 'SELECT'">
+		            		<select class="form-control" chosen ng-model="question.answerInternal" 
+		            			ng-options="option.id as option.value for option in question.options track by option.id" data-placeholder="Molimo odaberite...">
+		            			<option />
+		            		</select>
+		            	</div>
+		            	
+		            	<div ng-if="question.type == 'MULTI_SELECT'">
+		            		<select chosen multiple class="form-control" ng-model="question.answerInternal" 
+		            			ng-options="option.id as option.value for option in question.options" data-placeholder="Molimo odaberite..."></select>
+		            	</div>
+		            	
+		            	<div ng-if="question.type == 'CITY'">
+		            		<select class="form-control" chosen ng-model="question.answerInternal" 
+		            			ng-options="city.id as city.name for city in cities track by city.id" data-placeholder="Molimo odaberite...">
+		            			<option />
+		            		</select>
+		            	</div>
+		            	
+		            	<div ng-if="question.type == 'COUNTY'">
+		            		<select chosen multiple class="form-control" ng-model="question.answerInternal" 
+		            			ng-options="county.id as county.name for county in counties" data-placeholder="Molimo odaberite...">
+		            			<option />
+		            		</select>
+		            	</div>
+		            	
+		            	<div ng-if="question.type == 'NKD'">
+		            		<select class="form-control" chosen ng-model="question.answerInternal" 
+		            			ng-options="nkd.id as (nkd.area + '.' + nkd.activity + ' - ' + nkd.activityName) group by (nkd.sector + ' - ' + nkd.sectorName) for nkd in nkds" data-placeholder="Molimo odaberite...">
+		            			<option />
+		            		</select>
+		            	</div>
+		            	
+		            	<div ng-if="question.type == 'NKD_AUX'">
+		            		<select chosen multiple class="form-control" ng-model="question.answerInternal" 
+		            			ng-options="nkd.id as (nkd.area + '.' + nkd.activity + ' - ' + nkd.activityName) group by (nkd.sector + ' - ' + nkd.sectorName) for nkd in nkds" data-placeholder="Molimo odaberite..."></select>
+		            	</div>
+		            	
+		            	<div ng-if="question.type == 'INVESTMENT'">
+		            		<select chosen multiple class="form-control" ng-model="question.answerInternal" 
+		            			ng-options="investment.id as investment.name for investment in investments" data-placeholder="Molimo odaberite..."></select>
+		            	</div>
+		            	
+					</div>
+				</div>
+				
+			</form>
+			<hr class="custom-hr">
+			<div class="col-lg-12" style="text-align: right;">
+				<button ng-click="cancel()" class="btn btn-white m-r-sm"><i class="fa fa-angle-double-left"></i> Natrag</button>
+				<button ng-click="save()" ng-disabled="form.$invalid" class="btn btn-primary"><i class="fa fa-save"></i> Spremi</button>
+			</div>
+		</div>
+	</div>
+	
+</div>

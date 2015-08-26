@@ -1,5 +1,6 @@
 package hr.betaware.fundfinder.service;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.encoding.MessageDigestPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,7 @@ import hr.betaware.fundfinder.resource.uigrid.PageableResource;
 import hr.betaware.fundfinder.resource.uigrid.UiGridFilterResource;
 import hr.betaware.fundfinder.resource.uigrid.UiGridResource;
 import hr.betaware.fundfinder.resource.uigrid.UiGridSortResource;
+import hr.betaware.fundfinder.security.UserDetails;
 
 @Service
 public class UserService {
@@ -96,6 +99,17 @@ public class UserService {
 		List<User> entities = mongoOperations.find(query, User.class);
 
 		return new PageableResource<>(total, userResourceAssembler.toResources(entities));
+	}
+
+	/**
+	 * Convenience method that returns user for given principal object.
+	 * @param principal
+	 * @return
+	 */
+	public User getUser4Principal(Principal principal) {
+		UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) principal;
+		UserDetails userDetails = (UserDetails) token.getPrincipal();
+		return mongoOperations.findById(userDetails.getUser().getId(), User.class);
 	}
 
 	/**

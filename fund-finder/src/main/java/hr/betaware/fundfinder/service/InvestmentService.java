@@ -1,8 +1,8 @@
 package hr.betaware.fundfinder.service;
 
+import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
-
-import javax.annotation.PostConstruct;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +16,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import hr.betaware.fundfinder.domain.Investment;
+import hr.betaware.fundfinder.domain.User;
 import hr.betaware.fundfinder.resource.InvestmentResource;
 import hr.betaware.fundfinder.resource.assembler.InvestmentResourceAssembler;
 import hr.betaware.fundfinder.resource.uigrid.PageableResource;
@@ -32,15 +33,10 @@ public class InvestmentService {
 	private MongoOperations mongoOperations;
 
 	@Autowired
-	private SequenceService sequenceService;
+	private UserService userService;
 
 	@Autowired
 	private InvestmentResourceAssembler investmentResourceAssembler;
-
-	@PostConstruct
-	public void init() {
-		//		createTestData();
-	}
 
 	public List<InvestmentResource> findInvestments() {
 		Query query = new Query();
@@ -107,14 +103,32 @@ public class InvestmentService {
 		return new PageableResource<>(total, investmentResourceAssembler.toResources(entities));
 	}
 
-	void createTestData() {
-		for (int i = 10; i < 100; i++) {
-			Investment entity = new Investment();
-			entity.setId(sequenceService.getNextSequence(SequenceService.SEQUENCE_INVESTMENT));
-			entity.setName("Name " + i);
-			entity.setDescription("Description " + i);
-			mongoOperations.save(entity);
+	public List<InvestmentResource> findInvestments4User(Principal principal) {
+		User user = userService.getUser4Principal(principal);
+		List<InvestmentResource> investments = findInvestments();
+		if (user.getInvestments() != null) {
+			for (Integer id : user.getInvestments()) {
+				for (InvestmentResource investment : investments) {
+					if (id.equals(investment.getIdentificator())) {
+						investment.setSelected(Boolean.TRUE);
+						break;
+					}
+				}
+			}
 		}
+		return investments;
+	}
+
+	public void saveInvestments4User(List<InvestmentResource> resources, Principal principal) {
+		User user = userService.getUser4Principal(principal);
+		List<Integer> investments = new ArrayList<>();
+		for (InvestmentResource resource : resources) {
+			if (resource.getSelected()) {
+				investments.add(resource.getIdentificator());
+			}
+		}
+		user.setInvestments(investments);
+		mongoOperations.save(user);
 	}
 
 }

@@ -19,6 +19,7 @@ public class ResourceController {
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 			if (authentication.getPrincipal() instanceof UserDetails) {
 				UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+				userResource.setIdentificator(userDetails.getUser().getId());
 				userResource.setUsername(userDetails.getUsername());
 				userResource.setFirstName(userDetails.getUser().getFirstName());
 				userResource.setLastName(userDetails.getUser().getLastName());

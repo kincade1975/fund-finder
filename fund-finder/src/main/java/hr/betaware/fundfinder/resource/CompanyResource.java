@@ -1,6 +1,7 @@
 package hr.betaware.fundfinder.resource;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.hateoas.ResourceSupport;
 
@@ -9,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(Include.NON_NULL)
-public class InvestmentResource extends ResourceSupport {
+public class CompanyResource extends ResourceSupport {
 
 	@JsonProperty("id")
 	private Integer identificator;
@@ -17,11 +18,11 @@ public class InvestmentResource extends ResourceSupport {
 	@JsonProperty("name")
 	private String name;
 
-	@JsonProperty("description")
-	private String description;
+	@JsonProperty("oib")
+	private String oib;
 
-	@JsonProperty("selected")
-	private Boolean selected = Boolean.FALSE;
+	@JsonProperty("questions")
+	private List<QuestionResource> questions;
 
 	@JsonProperty("timeCreated")
 	private Date timeCreated;
@@ -45,20 +46,20 @@ public class InvestmentResource extends ResourceSupport {
 		this.name = name;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getOib() {
+		return oib;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setOib(String oib) {
+		this.oib = oib;
 	}
 
-	public Boolean getSelected() {
-		return selected;
+	public List<QuestionResource> getQuestions() {
+		return questions;
 	}
 
-	public void setSelected(Boolean selected) {
-		this.selected = selected;
+	public void setQuestions(List<QuestionResource> questions) {
+		this.questions = questions;
 	}
 
 	public Date getTimeCreated() {
@@ -75,6 +76,11 @@ public class InvestmentResource extends ResourceSupport {
 
 	public void setLastModified(Date lastModified) {
 		this.lastModified = lastModified;
+	}
+
+	@Override
+	public String toString() {
+		return "CompanyResource [identificator=" + identificator + ", name=" + name + ", oib=" + oib + ", questions=" + questions + ", timeCreated=" + timeCreated + ", lastModified=" + lastModified + "]";
 	}
 
 }

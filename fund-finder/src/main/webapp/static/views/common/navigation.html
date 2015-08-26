@@ -23,7 +23,6 @@
             <li ui-sref-active="active" ng-show="role == 'ROLE_ADMINISTRATOR'">
                 <a ui-sref="administrator.statistics"><i class="fa fa-area-chart"></i> <span class="nav-label">Statistika</span></a>
             </li>
-            
             <li ng-show="role == 'ROLE_ADMINISTRATOR'" ng-class="{active: $state.is('administrator.configuration_company') || $state.is('administrator.configuration_tender') || $state.is('administrator.configuration_preview')}">
 				<a href="">
 					<i class="fa fa-wrench"></i>
@@ -36,6 +35,9 @@
 				</ul>
 			</li>
 			
+			<li ng-show="role == 'ROLE_USER'" ng-class="{active: $state.is('user.investment_overview')}">
+                <a ui-sref="user.investment_overview"><i class="fa fa-line-chart"></i> <span class="nav-label">Moje investicije</span></a>
+            </li>
             <li ng-show="role == 'ROLE_USER'" ng-class="{active: $state.is('user.article_overview') || $state.is('user.article_show')}">
                 <a ui-sref="user.article_overview"><i class="fa fa-university"></i> <span class="nav-label">Kako do sredstava</span></a>
             </li>

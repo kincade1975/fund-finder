@@ -212,3 +212,20 @@
 	font-size: 18px; 
 	color: #676a6c;
 }
+
+.custom-ibox {
+	margin-bottom: 5px;
+}
+
+.custom-ibox-title {
+	border-top-width: 1px;
+	border-left-width: 1px;
+    border-right-width: 1px;
+}
+
+.custom-ibox-content {
+	border-style: solid;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 0px;
+}

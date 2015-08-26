@@ -1,5 +1,6 @@
 package hr.betaware.fundfinder.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,18 @@ public class InvestmentController {
 	@PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR')")
 	public PageableResource<InvestmentResource> getPage(@RequestBody UiGridResource resource) {
 		return investmentService.getPage(resource);
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "/user")
+	@PreAuthorize("hasAnyRole('ROLE_USER')")
+	public List<InvestmentResource> findInvestments4User(Principal principal) {
+		return investmentService.findInvestments4User(principal);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, value = "/user")
+	@PreAuthorize("hasAnyRole('ROLE_USER')")
+	public void saveInvestments4User(@RequestBody List<InvestmentResource> resources, Principal principal) {
+		investmentService.saveInvestments4User(resources, principal);
 	}
 
 }

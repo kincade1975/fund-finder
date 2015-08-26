@@ -10,32 +10,21 @@ import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-@Document(collection = "user")
-public class User {
-
-	public enum Role { ROLE_ADMINISTRATOR, ROLE_USER }
+@Document(collection = "company")
+public class Company {
 
 	@Id
 	@Field("id")
 	private Integer id;
 
-	@Field("username")
-	private String username;
+	@Field("name")
+	private String name;
 
-	@Field("password")
-	private String password;
+	@Field("oib")
+	private String oib;
 
-	@Field("first_name")
-	private String firstName;
-
-	@Field("last_name")
-	private String lastName;
-
-	@Field("role")
-	private Role role;
-
-	@Field("investments")
-	private List<Integer> investments;
+	@Field("answers")
+	private List<Answer> answers;
 
 	@Version
 	@Field("doc_version")
@@ -57,52 +46,28 @@ public class User {
 		this.id = id;
 	}
 
-	public String getUsername() {
-		return username;
+	public String getName() {
+		return name;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getOib() {
+		return oib;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setOib(String oib) {
+		this.oib = oib;
 	}
 
-	public String getFirstName() {
-		return firstName;
+	public List<Answer> getAnswers() {
+		return answers;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public Role getRole() {
-		return role;
-	}
-
-	public void setRole(Role role) {
-		this.role = role;
-	}
-
-	public List<Integer> getInvestments() {
-		return investments;
-	}
-
-	public void setInvestments(List<Integer> investments) {
-		this.investments = investments;
+	public void setAnswers(List<Answer> answers) {
+		this.answers = answers;
 	}
 
 	public Long getDocVersion() {

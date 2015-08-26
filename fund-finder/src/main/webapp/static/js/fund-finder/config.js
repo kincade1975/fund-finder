@@ -89,6 +89,11 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdlePro
             url: "/fund_finder",
             templateUrl: "views/common/content.html",
         })
+        .state('user.investment_overview', {
+            url: "/user/investment/overview",
+            templateUrl: "views/user/investment/overview.html",
+            controller: 'User_InvestmentOverviewCtrl'
+        })
         .state('user.article_overview', {
             url: "/user/article/overview",
             templateUrl: "views/user/article/overview.html",

@@ -23,8 +23,8 @@ public class Tender {
 	@Field("active")
 	private Boolean active = Boolean.FALSE;
 
-	@Field("questions")
-	private List<Question> questions;
+	@Field("answers")
+	private List<Answer> answers;
 
 	@Version
 	@Field("doc_version")
@@ -62,12 +62,12 @@ public class Tender {
 		this.active = active;
 	}
 
-	public List<Question> getQuestions() {
-		return questions;
+	public List<Answer> getAnswers() {
+		return answers;
 	}
 
-	public void setQuestions(List<Question> questions) {
-		this.questions = questions;
+	public void setAnswers(List<Answer> answers) {
+		this.answers = answers;
 	}
 
 	public Long getDocVersion() {

@@ -43,10 +43,7 @@ public class Question {
 	private LinkOperator linkOperator;
 
 	@Field("answer")
-	private Object answer;
-
-	@Field("answer_internal")
-	private Object answerInternal;
+	private Answer answer = new Answer();
 
 	@Version
 	@Field("doc_version")
@@ -124,20 +121,12 @@ public class Question {
 		this.linkOperator = linkOperator;
 	}
 
-	public Object getAnswer() {
+	public Answer getAnswer() {
 		return answer;
 	}
 
-	public void setAnswer(Object answer) {
+	public void setAnswer(Answer answer) {
 		this.answer = answer;
-	}
-
-	public Object getAnswerInternal() {
-		return answerInternal;
-	}
-
-	public void setAnswerInternal(Object answerInternal) {
-		this.answerInternal = answerInternal;
 	}
 
 	public Long getDocVersion() {

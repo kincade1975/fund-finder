@@ -78,4 +78,9 @@ public class TenderResource extends ResourceSupport {
 		this.lastModified = lastModified;
 	}
 
+	@Override
+	public String toString() {
+		return "TenderResource [identificator=" + identificator + ", name=" + name + ", active=" + active + ", questions=" + questions + ", timeCreated=" + timeCreated + ", lastModified=" + lastModified + "]";
+	}
+
 }

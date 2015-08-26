@@ -17,14 +17,14 @@
 						<label class="custom-gray p-xs" style="width: 100%">{{question.text}}</label>
 						<div class="p-xs custom-p-xs" ng-if="question.type == 'TEXT' || question.type == 'TEXT_AREA' 
 								|| question.type == 'NUMBER' || question.type == 'RADIO' || question.type == 'SELECT'">
-							{{question.answer}}
+							{{question.answer.value}}
 						</div>
-						<div class="p-xs custom-p-xs custom-text-editor" ng-if="question.type == 'TEXT_EDITOR'" ng-bind-html="toTrusted(question.answer)"></div>
-						<div class="p-xs custom-p-xs" ng-if="question.type == 'DATE'">{{question.answer | date : dateFormat}}</div>
-						<div class="p-xs custom-p-xs" ng-if="question.type == 'DATE_TIME'">{{question.answer | date : dateTimeFormat}}</div>
+						<div class="p-xs custom-p-xs custom-text-editor" ng-if="question.type == 'TEXT_EDITOR'" ng-bind-html="toTrusted(question.answer.value)"></div>
+						<div class="p-xs custom-p-xs" ng-if="question.type == 'DATE'">{{question.answer.value | date : dateFormat}}</div>
+						<div class="p-xs custom-p-xs" ng-if="question.type == 'DATE_TIME'">{{question.answer.value | date : dateTimeFormat}}</div>
 						<div class="p-xs custom-p-xs" ng-if="question.type == 'CHECKBOX' || question.type == 'MULTI_SELECT' 
 								|| question.type == 'COUNTY' || question.type == 'NKD_AUX' || question.type == 'INVESTMENT'">
-							<span ng-repeat="answer in question.answer">{{answer}}<br></span>
+							<span ng-repeat="answer in question.answer.value">{{answer}}<br></span>
 						</div>
 					</div>
 				</div>
@@ -54,79 +54,79 @@
 					<div class="col-sm-12">
 						<label class="custom-gray p-xs" style="width: 100%">{{question.text}}</label>
 						
-						<input ng-if="question.type == 'TEXT'" class="form-control" type="text" ng-model="question.answerInternal" />
+						<input ng-if="question.type == 'TEXT'" class="form-control" type="text" ng-model="question.answer.valueInternal" />
 						
-						<textarea ng-if="question.type == 'TEXT_AREA'" class="form-control" rows="5" ng-model="question.answerInternal"></textarea>
+						<textarea ng-if="question.type == 'TEXT_AREA'" class="form-control" rows="5" ng-model="question.answer.valueInternal"></textarea>
 						
 						<div ng-if="question.type == 'TEXT_EDITOR'">
-							<summernote id="summernote" config="summernoteOptions" ng-model="question.answerInternal" />
+							<summernote id="summernote" config="summernoteOptions" ng-model="question.answer.valueInternal" />
 						</div>
 						
-						<input ng-if="question.type == 'NUMBER'" class="form-control" type="number" min="0" ng-model="question.answerInternal">
+						<input ng-if="question.type == 'NUMBER'" class="form-control" type="number" min="0" ng-model="question.answer.valueInternal">
 						
 						<div ng-if="question.type == 'DATE'" class="input-group date">
-		                	<input type="datetime" class="form-control" date-time ng-model="question.answerInternal" view="date" min-view="date" format="{{dateFormat}}" auto-close="true">
+		                	<input type="datetime" class="form-control" date-time ng-model="question.answer.valueInternal" view="date" min-view="date" format="{{dateFormat}}" auto-close="true">
 		                	<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 		            	</div>
 		            	
 						<div ng-if="question.type == 'DATE_TIME'" class="input-group date">
-		                	<input type="datetime" class="form-control" date-time ng-model="question.answerInternal" view="date" format="{{dateTimeFormat}}" auto-close="true">
+		                	<input type="datetime" class="form-control" date-time ng-model="question.answer.valueInternal" view="date" format="{{dateTimeFormat}}" auto-close="true">
 		                	<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 		            	</div>
 		            	
 		            	<div ng-if="question.type == 'RADIO'" class="p-xxs">
 		            		<div ng-repeat="option in question.options">
-		            			<label style="font-weight: normal;"><input icheck ng-model="question.answerInternal" value="{{option.value}}" type="radio" 
+		            			<label style="font-weight: normal;"><input icheck ng-model="question.answer.valueInternal" value="{{option.value}}" type="radio" 
 		            				name="radioGroup{{question.id}}">&nbsp;&nbsp;&nbsp;{{option.value}}</label>
 		            		</div>
 		            	</div>
 		            	
 		            	<div ng-if="question.type == 'CHECKBOX'" class="p-xxs">
 		            		<div ng-repeat="option in question.options">
-		            			<label style="font-weight: normal;"><input icheck ng-model="question.answerInternal[$index]" value="{{option.value}}" type="checkbox">&nbsp;&nbsp;&nbsp;{{option.value}}</label>
+		            			<label style="font-weight: normal;"><input icheck ng-model="question.answer.valueInternal[$index]" value="{{option.value}}" type="checkbox">&nbsp;&nbsp;&nbsp;{{option.value}}</label>
 		            		</div>
 		            	</div>
 		            	
 		            	<div ng-if="question.type == 'SELECT'">
-		            		<select class="form-control" chosen ng-model="question.answerInternal" 
+		            		<select class="form-control" chosen ng-model="question.answer.valueInternal" 
 		            			ng-options="option.id as option.value for option in question.options track by option.id" data-placeholder="Molimo odaberite...">
 		            			<option />
 		            		</select>
 		            	</div>
 		            	
 		            	<div ng-if="question.type == 'MULTI_SELECT'">
-		            		<select chosen multiple class="form-control" ng-model="question.answerInternal" 
+		            		<select chosen multiple class="form-control" ng-model="question.answer.valueInternal" 
 		            			ng-options="option.id as option.value for option in question.options" data-placeholder="Molimo odaberite..."></select>
 		            	</div>
 		            	
 		            	<div ng-if="question.type == 'CITY'">
-		            		<select class="form-control" chosen ng-model="question.answerInternal" 
+		            		<select class="form-control" chosen ng-model="question.answer.valueInternal" 
 		            			ng-options="city.id as city.name for city in cities track by city.id" data-placeholder="Molimo odaberite...">
 		            			<option />
 		            		</select>
 		            	</div>
 		            	
 		            	<div ng-if="question.type == 'COUNTY'">
-		            		<select chosen multiple class="form-control" ng-model="question.answerInternal" 
+		            		<select chosen multiple class="form-control" ng-model="question.answer.valueInternal" 
 		            			ng-options="county.id as county.name for county in counties" data-placeholder="Molimo odaberite...">
 		            			<option />
 		            		</select>
 		            	</div>
 		            	
 		            	<div ng-if="question.type == 'NKD'">
-		            		<select class="form-control" chosen ng-model="question.answerInternal" 
+		            		<select class="form-control" chosen ng-model="question.answer.valueInternal" 
 		            			ng-options="nkd.id as (nkd.area + '.' + nkd.activity + ' - ' + nkd.activityName) group by (nkd.sector + ' - ' + nkd.sectorName) for nkd in nkds" data-placeholder="Molimo odaberite...">
 		            			<option />
 		            		</select>
 		            	</div>
 		            	
 		            	<div ng-if="question.type == 'NKD_AUX'">
-		            		<select chosen multiple class="form-control" ng-model="question.answerInternal" 
+		            		<select chosen multiple class="form-control" ng-model="question.answer.valueInternal" 
 		            			ng-options="nkd.id as (nkd.area + '.' + nkd.activity + ' - ' + nkd.activityName) group by (nkd.sector + ' - ' + nkd.sectorName) for nkd in nkds" data-placeholder="Molimo odaberite..."></select>
 		            	</div>
 		            	
 		            	<div ng-if="question.type == 'INVESTMENT'">
-		            		<select chosen multiple class="form-control" ng-model="question.answerInternal" 
+		            		<select chosen multiple class="form-control" ng-model="question.answer.valueInternal" 
 		            			ng-options="investment.id as investment.name for investment in investments" data-placeholder="Molimo odaberite..."></select>
 		            	</div>
 		            	

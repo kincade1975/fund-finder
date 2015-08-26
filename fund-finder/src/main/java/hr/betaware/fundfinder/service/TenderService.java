@@ -1,7 +1,9 @@
 package hr.betaware.fundfinder.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,10 +16,12 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
+import hr.betaware.fundfinder.domain.Answer;
 import hr.betaware.fundfinder.domain.Tender;
 import hr.betaware.fundfinder.enums.EntityType;
 import hr.betaware.fundfinder.resource.QuestionResource;
 import hr.betaware.fundfinder.resource.TenderResource;
+import hr.betaware.fundfinder.resource.assembler.AnswerResourceAssembler;
 import hr.betaware.fundfinder.resource.assembler.TenderResourceAssembler;
 import hr.betaware.fundfinder.resource.uigrid.PageableResource;
 import hr.betaware.fundfinder.resource.uigrid.UiGridFilterResource;
@@ -36,6 +40,9 @@ public class TenderService {
 	private TenderResourceAssembler tenderResourceAssembler;
 
 	@Autowired
+	private AnswerResourceAssembler answerResourceAssembler;
+
+	@Autowired
 	private ConfigurationService configurationService;
 
 	public List<TenderResource> findAll() {
@@ -44,15 +51,26 @@ public class TenderService {
 
 	public TenderResource findTender(Integer id) {
 		TenderResource resource = null;
+		Map<Integer, Answer> answers = new HashMap<>();
+
 		if (id == 0) {
 			resource = new TenderResource();
-
-			List<QuestionResource> questions = new ArrayList<>();
-			questions.addAll(configurationService.getQuestions(EntityType.TENDER.toString()));
-			resource.setQuestions(questions);
 		} else {
-			resource = tenderResourceAssembler.toResource(mongoOperations.findById(id, Tender.class));
+			Tender tender = mongoOperations.findById(id, Tender.class);
+			for (Answer answer : tender.getAnswers()) {
+				answers.put(answer.getQuestionId(), answer);
+			}
+			resource = tenderResourceAssembler.toResource(tender);
 		}
+
+		List<QuestionResource> questions = new ArrayList<>();
+		for (QuestionResource questionResource : configurationService.getQuestions(EntityType.TENDER.toString())) {
+			if (answers.containsKey(questionResource.getIdentificator())) {
+				questionResource.setAnswer(answerResourceAssembler.toResource(answers.get(questionResource.getIdentificator())));
+			}
+			questions.add(questionResource);
+		}
+		resource.setQuestions(questions);
 
 		return resource;
 	}
@@ -82,7 +100,7 @@ public class TenderService {
 
 		mongoOperations.save(entity);
 
-		return tenderResourceAssembler.toResource(entity);
+		return findTender(entity.getId());
 	}
 
 	public void deleteTender(Integer id) {

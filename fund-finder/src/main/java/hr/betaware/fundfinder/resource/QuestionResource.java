@@ -47,10 +47,7 @@ public class QuestionResource extends ResourceSupport {
 	private Date lastModified;
 
 	@JsonProperty("answer")
-	private Object answer;
-
-	@JsonProperty("answerInternal")
-	private Object answerInternal;
+	private AnswerResource answer = new AnswerResource();
 
 	public Integer getIdentificator() {
 		return identificator;
@@ -132,20 +129,17 @@ public class QuestionResource extends ResourceSupport {
 		this.lastModified = lastModified;
 	}
 
-	public Object getAnswer() {
+	public AnswerResource getAnswer() {
 		return answer;
 	}
 
-	public void setAnswer(Object answer) {
+	public void setAnswer(AnswerResource answer) {
 		this.answer = answer;
 	}
 
-	public Object getAnswerInternal() {
-		return answerInternal;
-	}
-
-	public void setAnswerInternal(Object answerInternal) {
-		this.answerInternal = answerInternal;
+	@Override
+	public String toString() {
+		return "QuestionResource [identificator=" + identificator + ", entityType=" + entityType + ", index=" + index + ", text=" + text + ", type=" + type + ", options=" + options + ", linkQuestionId=" + linkQuestionId + ", linkOperator=" + linkOperator + ", timeCreated=" + timeCreated + ", lastModified=" + lastModified + ", answer=" + answer + "]";
 	}
 
 }

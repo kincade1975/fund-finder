@@ -8,6 +8,7 @@ import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 import org.springframework.stereotype.Component;
 
 import hr.betaware.fundfinder.controller.TenderController;
+import hr.betaware.fundfinder.domain.Answer;
 import hr.betaware.fundfinder.domain.Question;
 import hr.betaware.fundfinder.domain.Tender;
 import hr.betaware.fundfinder.resource.QuestionResource;
@@ -33,9 +34,6 @@ public class TenderResourceAssembler extends ResourceAssemblerSupport<Tender, Te
 		resource.setIdentificator(entity.getId());
 		resource.setName(entity.getName());
 		resource.setActive(entity.getActive());
-		if (entity.getQuestions() != null) {
-			resource.setQuestions(questionResourceAssembler.toResources(entity.getQuestions()));
-		}
 		resource.setTimeCreated(entity.getTimeCreated());
 		resource.setLastModified(entity.getLastModified());
 		return resource;
@@ -48,11 +46,12 @@ public class TenderResourceAssembler extends ResourceAssemblerSupport<Tender, Te
 		entity.setActive(resource.getActive());
 
 		if (resource.getQuestions() != null) {
-			List<Question> questions = new ArrayList<>();
+			List<Answer> answers = new ArrayList<>();
 			for (QuestionResource questionResource : resource.getQuestions()) {
-				questions.add(questionResourceAssembler.toEntity(questionResource));
+				Question question = questionResourceAssembler.toEntity(questionResource);
+				answers.add(new Answer(question.getId(), question.getAnswer().getValue(), question.getAnswer().getValueInternal()));
 			}
-			entity.setQuestions(questions);
+			entity.setAnswers(answers);
 		}
 
 		return entity;
@@ -62,11 +61,12 @@ public class TenderResourceAssembler extends ResourceAssemblerSupport<Tender, Te
 		entity.setName(resource.getName());
 		entity.setActive(resource.getActive());
 		if (resource.getQuestions() != null) {
-			List<Question> questions = new ArrayList<>();
+			List<Answer> answers = new ArrayList<>();
 			for (QuestionResource questionResource : resource.getQuestions()) {
-				questions.add(questionResourceAssembler.toEntity(questionResource));
+				Question question = questionResourceAssembler.toEntity(questionResource);
+				answers.add(new Answer(question.getId(), question.getAnswer().getValue(), question.getAnswer().getValueInternal()));
 			}
-			entity.setQuestions(questions);
+			entity.setAnswers(answers);
 		}
 		return entity;
 	}

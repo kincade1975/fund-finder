@@ -59,11 +59,11 @@ public class QuestionResourceAssembler extends ResourceAssemblerSupport<Question
 		resource.setTimeCreated(entity.getTimeCreated());
 		resource.setLastModified(entity.getLastModified());
 		if (resource.getType() == QuestionType.RADIO) {
-			resource.setAnswer((entity.getAnswer() == null) ? resource.getOptions().get(0).getValue() : entity.getAnswer());
-			resource.setAnswerInternal((entity.getAnswerInternal() == null) ? resource.getOptions().get(0).getValue() : entity.getAnswerInternal());
+			resource.getAnswer().setValue((entity.getAnswer().getValue() == null) ? resource.getOptions().get(0).getValue() : entity.getAnswer().getValue());
+			resource.getAnswer().setValueInternal((entity.getAnswer().getValueInternal() == null) ? resource.getOptions().get(0).getValue() : entity.getAnswer().getValueInternal());
 		} else {
-			resource.setAnswer(entity.getAnswer());
-			resource.setAnswerInternal(entity.getAnswerInternal());
+			resource.getAnswer().setValue(entity.getAnswer().getValue());
+			resource.getAnswer().setValueInternal(entity.getAnswer().getValueInternal());
 		}
 		return resource;
 	}
@@ -98,9 +98,9 @@ public class QuestionResourceAssembler extends ResourceAssemblerSupport<Question
 		} else if (resource.getType() == QuestionType.NKD_AUX) {
 			setAnswer4NkdAux(resource, entity);
 		} else {
-			entity.setAnswer(resource.getAnswerInternal());
+			entity.getAnswer().setValue(resource.getAnswer().getValueInternal());
 		}
-		entity.setAnswerInternal(resource.getAnswerInternal());
+		entity.getAnswer().setValueInternal(resource.getAnswer().getValueInternal());
 		return entity;
 	}
 
@@ -141,9 +141,9 @@ public class QuestionResourceAssembler extends ResourceAssemblerSupport<Question
 	}
 
 	private void setAnswer4MultiSelect(QuestionResource resource, Question entity) {
-		if (resource.getAnswerInternal() instanceof List) {
+		if (resource.getAnswer().getValueInternal() instanceof List) {
 			List<String> tmpAnswers = new ArrayList<>();
-			for (Object tmpAnswer : (ArrayList<?>) resource.getAnswerInternal()) {
+			for (Object tmpAnswer : (ArrayList<?>) resource.getAnswer().getValueInternal()) {
 				for (OptionResource optionResource : resource.getOptions()) {
 					if (optionResource.getIdentificator().equals(tmpAnswer.toString())) {
 						tmpAnswers.add(optionResource.getValue());
@@ -151,73 +151,73 @@ public class QuestionResourceAssembler extends ResourceAssemblerSupport<Question
 					}
 				}
 			}
-			entity.setAnswer(tmpAnswers);
+			entity.getAnswer().setValue(tmpAnswers);
 		} else {
-			entity.setAnswer(resource.getAnswerInternal());
+			entity.getAnswer().setValue(resource.getAnswer().getValueInternal());
 		}
 	}
 
 	private void setAnswer4Select(QuestionResource resource, Question entity) {
-		if (resource.getAnswerInternal() != null) {
+		if (resource.getAnswer().getValueInternal() != null) {
 			for (OptionResource optionResource : resource.getOptions()) {
-				if (optionResource.getIdentificator().equals(resource.getAnswerInternal().toString())) {
-					entity.setAnswer(optionResource.getValue());
+				if (optionResource.getIdentificator().equals(resource.getAnswer().getValueInternal().toString())) {
+					entity.getAnswer().setValue(optionResource.getValue());
 					break;
 				}
 			}
 		} else {
-			entity.setAnswer(resource.getAnswerInternal());
+			entity.getAnswer().setValue(resource.getAnswer().getValueInternal());
 		}
 	}
 
 	private void setAnswer4CheckBox(QuestionResource resource, Question entity) {
-		if (resource.getAnswerInternal() instanceof Map) {
+		if (resource.getAnswer().getValueInternal() instanceof Map) {
 			List<String> tmpAnswers = new ArrayList<>();
-			for (Entry<?, ?> entry : ((LinkedHashMap<?,?>) resource.getAnswerInternal()).entrySet()) {
+			for (Entry<?, ?> entry : ((LinkedHashMap<?,?>) resource.getAnswer().getValueInternal()).entrySet()) {
 				tmpAnswers.add(resource.getOptions().get(Integer.parseInt(entry.getKey().toString())).getValue());
 			}
-			entity.setAnswer(tmpAnswers);
+			entity.getAnswer().setValue(tmpAnswers);
 		} else {
-			entity.setAnswer(resource.getAnswerInternal());
+			entity.getAnswer().setValue(resource.getAnswer().getValueInternal());
 		}
 	}
 
 	private void setAnswer4County(QuestionResource resource, Question entity) {
-		if (resource.getAnswerInternal() != null && resource.getAnswerInternal() instanceof List) {
+		if (resource.getAnswer().getValueInternal() != null && resource.getAnswer().getValueInternal() instanceof List) {
 			List<String> tmpAnswers = new ArrayList<>();
-			for (Object tmpAnswer : (ArrayList<?>) resource.getAnswerInternal()) {
+			for (Object tmpAnswer : (ArrayList<?>) resource.getAnswer().getValueInternal()) {
 				County county = mongoOperations.findById(tmpAnswer, County.class);
 				tmpAnswers.add(county.getName());
 			}
-			entity.setAnswer(tmpAnswers);
+			entity.getAnswer().setValue(tmpAnswers);
 		} else {
-			entity.setAnswer(resource.getAnswerInternal());
+			entity.getAnswer().setValue(resource.getAnswer().getValueInternal());
 		}
 	}
 
 	private void setAnswer4Investment(QuestionResource resource, Question entity) {
-		if (resource.getAnswerInternal() != null && resource.getAnswerInternal() instanceof List) {
+		if (resource.getAnswer().getValueInternal() != null && resource.getAnswer().getValueInternal() instanceof List) {
 			List<String> tmpAnswers = new ArrayList<>();
-			for (Object tmpAnswer : (ArrayList<?>) resource.getAnswerInternal()) {
+			for (Object tmpAnswer : (ArrayList<?>) resource.getAnswer().getValueInternal()) {
 				Investment investment = mongoOperations.findById(tmpAnswer, Investment.class);
 				tmpAnswers.add(investment.getName());
 			}
-			entity.setAnswer(tmpAnswers);
+			entity.getAnswer().setValue(tmpAnswers);
 		} else {
-			entity.setAnswer(resource.getAnswerInternal());
+			entity.getAnswer().setValue(resource.getAnswer().getValueInternal());
 		}
 	}
 
 	private void setAnswer4NkdAux(QuestionResource resource, Question entity) {
-		if (resource.getAnswerInternal() != null && resource.getAnswerInternal() instanceof List) {
+		if (resource.getAnswer().getValueInternal() != null && resource.getAnswer().getValueInternal() instanceof List) {
 			List<String> tmpAnswers = new ArrayList<>();
-			for (Object tmpAnswer : (ArrayList<?>) resource.getAnswerInternal()) {
+			for (Object tmpAnswer : (ArrayList<?>) resource.getAnswer().getValueInternal()) {
 				Nkd nkd = mongoOperations.findById(tmpAnswer, Nkd.class);
 				tmpAnswers.add(nkd.getArea() + "." + nkd.getActivity() + " - " + nkd.getActivityName());
 			}
-			entity.setAnswer(tmpAnswers);
+			entity.getAnswer().setValue(tmpAnswers);
 		} else {
-			entity.setAnswer(resource.getAnswerInternal());
+			entity.getAnswer().setValue(resource.getAnswer().getValueInternal());
 		}
 	}
 

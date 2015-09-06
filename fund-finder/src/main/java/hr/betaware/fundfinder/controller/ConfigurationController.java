@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import hr.betaware.fundfinder.enums.LinkOperator;
+import hr.betaware.fundfinder.enums.QuestionMetadata;
 import hr.betaware.fundfinder.enums.QuestionType;
 import hr.betaware.fundfinder.resource.CityResource;
 import hr.betaware.fundfinder.resource.CountyResource;
@@ -61,20 +62,30 @@ public class ConfigurationController {
 		return result;
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value="/cities")
+	@RequestMapping(method = RequestMethod.GET, value="/question/metadata")
 	@PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR')")
+	public List<String> getQuestionMetadata() {
+		List<String> result = new ArrayList<>();
+		for (QuestionMetadata metadata : QuestionMetadata.values()) {
+			result.add(metadata.toString());
+		}
+		return result;
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value="/cities")
+	@PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR','ROLE_USER')")
 	public List<CityResource> getCities() {
 		return configurationService.getCities();
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value="/counties")
-	@PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR')")
+	@PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR','ROLE_USER')")
 	public List<CountyResource> getCounties() {
 		return configurationService.getCounties();
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value="/nkds")
-	@PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR')")
+	@PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR','ROLE_USER')")
 	public List<NkdResource> getNkds() {
 		return configurationService.getNkds();
 	}

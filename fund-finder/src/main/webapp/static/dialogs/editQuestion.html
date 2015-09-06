@@ -9,6 +9,21 @@
 			<div class="body modal-body">
 				<form name="form" class="form-horizontal ng-pristine ng-valid" novalidate>
 					<div class="form-group">
+						<label class="col-sm-3 control-label" style="padding-top: 0px">Obavezna stavka</label>
+						<div class="col-sm-9">
+							<input icheck ng-model="question.mandatory" type="checkbox">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Meta podaci</label>
+						<div class="col-sm-9">
+							<select chosen multiple class="form-control" ng-model="question.metadata" ng-options="metadata for metadata in questionMetadata" 
+								data-placeholder="Molimo odaberite..." allow-single-deselect="true">
+								<option />
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
 						<label class="col-sm-3 control-label">Tekst</label>
 						<div class="col-sm-9">
 							<textarea ng-model="question.text" rows="3" class="form-control" name="questionText" ng-required="true" />

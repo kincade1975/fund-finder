@@ -35,8 +35,14 @@
 				</ul>
 			</li>
 			
+			<li ng-show="role == 'ROLE_USER'" ng-class="{active: $state.is('user.company_edit')}">
+                <a ui-sref="user.company_edit({mode:'show'})"><i class="fa fa-briefcase"></i> <span class="nav-label">Moja tvrtka</span></a>
+            </li>
 			<li ng-show="role == 'ROLE_USER'" ng-class="{active: $state.is('user.investment_overview')}">
                 <a ui-sref="user.investment_overview"><i class="fa fa-line-chart"></i> <span class="nav-label">Moje investicije</span></a>
+            </li>
+            <li ng-show="role == 'ROLE_USER'" ng-class="{active: $state.is('user.opportunity_overview') || $state.is('user.opportunity_show')}">
+                <a ui-sref="user.opportunity_overview"><i class="fa fa-star"></i> <span class="nav-label">Moje prilike</span></a>
             </li>
             <li ng-show="role == 'ROLE_USER'" ng-class="{active: $state.is('user.article_overview') || $state.is('user.article_show')}">
                 <a ui-sref="user.article_overview"><i class="fa fa-university"></i> <span class="nav-label">Kako do sredstava</span></a>

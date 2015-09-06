@@ -4,6 +4,9 @@ angular.module('fundFinder')
 		this.getQuestionTypes = function() {
 			return $http.get('/api/v1/configuration/question/types');
 		};
+		this.getQuestionMetadata = function() {
+			return $http.get('/api/v1/configuration/question/metadata');
+		};
 		this.getQuestions = function(entityType) {
 			return $http.get('/api/v1/configuration/question?entityType=' + entityType);
 		};

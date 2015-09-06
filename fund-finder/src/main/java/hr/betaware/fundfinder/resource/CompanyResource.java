@@ -21,6 +21,9 @@ public class CompanyResource extends ResourceSupport {
 	@JsonProperty("oib")
 	private String oib;
 
+	@JsonProperty("incomplete")
+	private Boolean incomplete = Boolean.FALSE;
+
 	@JsonProperty("questions")
 	private List<QuestionResource> questions;
 
@@ -52,6 +55,14 @@ public class CompanyResource extends ResourceSupport {
 
 	public void setOib(String oib) {
 		this.oib = oib;
+	}
+
+	public Boolean getIncomplete() {
+		return incomplete;
+	}
+
+	public void setIncomplete(Boolean incomplete) {
+		this.incomplete = incomplete;
 	}
 
 	public List<QuestionResource> getQuestions() {

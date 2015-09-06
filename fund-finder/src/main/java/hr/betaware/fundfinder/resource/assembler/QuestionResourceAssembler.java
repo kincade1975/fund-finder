@@ -14,6 +14,7 @@ import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 import org.springframework.stereotype.Component;
 
 import hr.betaware.fundfinder.controller.ConfigurationController;
+import hr.betaware.fundfinder.domain.City;
 import hr.betaware.fundfinder.domain.County;
 import hr.betaware.fundfinder.domain.Investment;
 import hr.betaware.fundfinder.domain.Nkd;
@@ -44,6 +45,8 @@ public class QuestionResourceAssembler extends ResourceAssemblerSupport<Question
 		resource.setEntityType(entity.getEntityType());
 		resource.setIndex(entity.getIndex());
 		resource.setText(entity.getText());
+		resource.setMandatory(entity.getMandatory());
+		resource.setMetadata(entity.getMetadata());
 		resource.setType(entity.getType());
 		List<OptionResource> options = new ArrayList<>();
 		if (entity.getOptions() != null && !entity.getOptions().isEmpty()) {
@@ -58,13 +61,13 @@ public class QuestionResourceAssembler extends ResourceAssemblerSupport<Question
 		resource.setLinkOperator(entity.getLinkOperator());
 		resource.setTimeCreated(entity.getTimeCreated());
 		resource.setLastModified(entity.getLastModified());
-		if (resource.getType() == QuestionType.RADIO) {
-			resource.getAnswer().setValue((entity.getAnswer().getValue() == null) ? resource.getOptions().get(0).getValue() : entity.getAnswer().getValue());
-			resource.getAnswer().setValueInternal((entity.getAnswer().getValueInternal() == null) ? resource.getOptions().get(0).getValue() : entity.getAnswer().getValueInternal());
-		} else {
-			resource.getAnswer().setValue(entity.getAnswer().getValue());
-			resource.getAnswer().setValueInternal(entity.getAnswer().getValueInternal());
-		}
+		//		if (resource.getType() == QuestionType.RADIO) {
+		//			resource.getAnswer().setValue((entity.getAnswer().getValue() == null) ? resource.getOptions().get(0).getValue() : entity.getAnswer().getValue());
+		//			resource.getAnswer().setValueInternal((entity.getAnswer().getValueInternal() == null) ? resource.getOptions().get(0).getValue() : entity.getAnswer().getValueInternal());
+		//		} else {
+		resource.getAnswer().setValue(entity.getAnswer().getValue());
+		resource.getAnswer().setValueInternal(entity.getAnswer().getValueInternal());
+		//		}
 		return resource;
 	}
 
@@ -74,6 +77,8 @@ public class QuestionResourceAssembler extends ResourceAssemblerSupport<Question
 		entity.setEntityType(resource.getEntityType());
 		entity.setIndex(resource.getIndex());
 		entity.setText(resource.getText());
+		entity.setMandatory(resource.getMandatory());
+		entity.setMetadata(resource.getMetadata());
 		entity.setType(resource.getType());
 		List<Option> options = new ArrayList<>();
 		for (OptionResource optionResource : resource.getOptions()) {
@@ -91,10 +96,14 @@ public class QuestionResourceAssembler extends ResourceAssemblerSupport<Question
 			setAnswer4Select(resource, entity);
 		} else if (resource.getType() == QuestionType.CHECKBOX) {
 			setAnswer4CheckBox(resource, entity);
+		} else if (resource.getType() == QuestionType.CITY) {
+			setAnswer4City(resource, entity);
 		} else if (resource.getType() == QuestionType.COUNTY) {
 			setAnswer4County(resource, entity);
 		} else if (resource.getType() == QuestionType.INVESTMENT) {
 			setAnswer4Investment(resource, entity);
+		} else if (resource.getType() == QuestionType.NKD) {
+			setAnswer4Nkd(resource, entity);
 		} else if (resource.getType() == QuestionType.NKD_AUX) {
 			setAnswer4NkdAux(resource, entity);
 		} else {
@@ -110,6 +119,8 @@ public class QuestionResourceAssembler extends ResourceAssemblerSupport<Question
 		entity.setEntityType(resource.getEntityType());
 		entity.setIndex(resource.getIndex());
 		entity.setText(resource.getText());
+		entity.setMandatory(resource.getMandatory());
+		entity.setMetadata(resource.getMetadata());
 		entity.setType(resource.getType());
 		List<Option> options = new ArrayList<>();
 		for (OptionResource optionResource : resource.getOptions()) {
@@ -126,6 +137,8 @@ public class QuestionResourceAssembler extends ResourceAssemblerSupport<Question
 		entity.setEntityType(resource.getEntityType());
 		entity.setIndex(resource.getIndex());
 		entity.setText(resource.getText());
+		entity.setMandatory(resource.getMandatory());
+		entity.setMetadata(resource.getMetadata());
 		entity.setType(resource.getType());
 		List<Option> options = new ArrayList<>();
 		for (OptionResource optionResource : resource.getOptions()) {
@@ -182,6 +195,22 @@ public class QuestionResourceAssembler extends ResourceAssemblerSupport<Question
 		}
 	}
 
+	private void setAnswer4City(QuestionResource resource, Question entity) {
+		if (resource.getAnswer().getValueInternal() != null) {
+			List<String> tmpAnswers = new ArrayList<>();
+			if (resource.getAnswer().getValueInternal() instanceof List) {
+				for (Object tmpAnswer : (ArrayList<?>) resource.getAnswer().getValueInternal()) {
+					City city = mongoOperations.findById(tmpAnswer, City.class);
+					tmpAnswers.add(city.getName());
+				}
+			} else {
+				City city = mongoOperations.findById(resource.getAnswer().getValueInternal(), City.class);
+				tmpAnswers.add(city.getName());
+			}
+			entity.getAnswer().setValue(tmpAnswers);
+		}
+	}
+
 	private void setAnswer4County(QuestionResource resource, Question entity) {
 		if (resource.getAnswer().getValueInternal() != null && resource.getAnswer().getValueInternal() instanceof List) {
 			List<String> tmpAnswers = new ArrayList<>();
@@ -208,16 +237,35 @@ public class QuestionResourceAssembler extends ResourceAssemblerSupport<Question
 		}
 	}
 
-	private void setAnswer4NkdAux(QuestionResource resource, Question entity) {
-		if (resource.getAnswer().getValueInternal() != null && resource.getAnswer().getValueInternal() instanceof List) {
+	private void setAnswer4Nkd(QuestionResource resource, Question entity) {
+		if (resource.getAnswer().getValueInternal() != null) {
 			List<String> tmpAnswers = new ArrayList<>();
-			for (Object tmpAnswer : (ArrayList<?>) resource.getAnswer().getValueInternal()) {
-				Nkd nkd = mongoOperations.findById(tmpAnswer, Nkd.class);
+			if (resource.getAnswer().getValueInternal() instanceof List) {
+				for (Object tmpAnswer : (ArrayList<?>) resource.getAnswer().getValueInternal()) {
+					Nkd nkd = mongoOperations.findById(tmpAnswer, Nkd.class);
+					tmpAnswers.add(nkd.getArea() + "." + nkd.getActivity() + " - " + nkd.getActivityName());
+				}
+			} else {
+				Nkd nkd = mongoOperations.findById(resource.getAnswer().getValueInternal(), Nkd.class);
 				tmpAnswers.add(nkd.getArea() + "." + nkd.getActivity() + " - " + nkd.getActivityName());
 			}
 			entity.getAnswer().setValue(tmpAnswers);
-		} else {
-			entity.getAnswer().setValue(resource.getAnswer().getValueInternal());
+		}
+	}
+
+	private void setAnswer4NkdAux(QuestionResource resource, Question entity) {
+		if (resource.getAnswer().getValueInternal() != null) {
+			List<String> tmpAnswers = new ArrayList<>();
+			if (resource.getAnswer().getValueInternal() instanceof List) {
+				for (Object tmpAnswer : (ArrayList<?>) resource.getAnswer().getValueInternal()) {
+					Nkd nkd = mongoOperations.findById(tmpAnswer, Nkd.class);
+					tmpAnswers.add(nkd.getArea() + "." + nkd.getActivity() + " - " + nkd.getActivityName());
+				}
+			} else {
+				Nkd nkd = mongoOperations.findById(resource.getAnswer().getValueInternal(), Nkd.class);
+				tmpAnswers.add(nkd.getArea() + "." + nkd.getActivity() + " - " + nkd.getActivityName());
+			}
+			entity.getAnswer().setValue(tmpAnswers);
 		}
 	}
 

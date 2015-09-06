@@ -214,6 +214,19 @@ angular.module('fundFinder')
 			}
 		});
 	
+	/** get question metadata */
+	Administrator_ConfigurationService.getQuestionMetadata()
+		.success(function(data, status, headers, config) {
+			$scope.questionMetadata = data;
+		})
+		.error(function(data, status, headers, config) {
+			if (status == 403) {
+				$state.go('login');
+			} else {
+				toastr.error('Došlo je do pogreške prilikom dohvaćanja podataka');
+			}
+		});
+	
 	/** get question */
 	Administrator_ConfigurationService.getQuestion(entityType, questionId)
 		.success(function(data, status, headers, config) {

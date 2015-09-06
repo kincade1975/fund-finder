@@ -7,6 +7,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.annotation.Version;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -36,6 +37,10 @@ public class User {
 
 	@Field("investments")
 	private List<Integer> investments;
+
+	@DBRef
+	@Field("company")
+	private Company company;
 
 	@Version
 	@Field("doc_version")
@@ -103,6 +108,14 @@ public class User {
 
 	public void setInvestments(List<Integer> investments) {
 		this.investments = investments;
+	}
+
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
 	}
 
 	public Long getDocVersion() {

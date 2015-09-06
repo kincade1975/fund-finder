@@ -89,10 +89,26 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdlePro
             url: "/fund_finder",
             templateUrl: "views/common/content.html",
         })
+        .state('user.company_edit', {
+            url: "/user/company/:mode",
+            templateUrl: "views/user/company/edit.html",
+            controller: 'User_CompanyEditCtrl'
+        })
         .state('user.investment_overview', {
             url: "/user/investment/overview",
             templateUrl: "views/user/investment/overview.html",
             controller: 'User_InvestmentOverviewCtrl'
+        })
+        .state('user.opportunity_overview', {
+            url: "/user/opportunity/overview",
+            templateUrl: "views/user/opportunity/overview.html",
+            controller: 'User_OpportunityOverviewCtrl'
+        })
+        .state('user.opportunity_show', {
+            url: "/user/opportunity/:id",
+            templateUrl: "views/user/opportunity/show.html",
+            controller: 'User_OpportunityShowCtrl',
+            params: { 'id' : null }
         })
         .state('user.article_overview', {
             url: "/user/article/overview",

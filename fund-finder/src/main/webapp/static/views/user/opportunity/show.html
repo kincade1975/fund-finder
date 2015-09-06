@@ -1,0 +1,40 @@
+<div class="row border-bottom white-bg">
+	<div class="col-lg-12">
+		<h1>Moje prilike<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small style="font-style: italic;">"Natječaji na koje se moja tvrtka može prijaviti"</small></h1>
+	</div>
+</div>
+
+<div class="wrapper wrapper-content">
+	
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="panel panel-default">
+				<div class="panel-heading"><strong class="custom-header">{{tender.name}}</strong></div>
+				<div class="panel-body">
+					<div class="form-group" ng-repeat="question in tender.questions">
+						<label class="custom-gray p-xs" style="width: 100%">{{question.text}}</label>
+						<div class="p-xs custom-p-xs" ng-if="question.type == 'TEXT' || question.type == 'TEXT_AREA' 
+								|| question.type == 'NUMBER' || question.type == 'RADIO' || question.type == 'SELECT'">
+							{{question.answer.value}}
+						</div>
+						<div class="p-xs custom-p-xs custom-text-editor" ng-if="question.type == 'TEXT_EDITOR'" ng-bind-html="toTrusted(question.answer.value)"></div>
+						<div class="p-xs custom-p-xs" ng-if="question.type == 'DATE'">{{question.answer.value | date : dateFormat}}</div>
+						<div class="p-xs custom-p-xs" ng-if="question.type == 'DATE_TIME'">{{question.answer.value | date : dateTimeFormat}}</div>
+						<div class="p-xs custom-p-xs" ng-if="question.type == 'CHECKBOX' || question.type == 'MULTI_SELECT' 
+								|| question.type == 'COUNTY' || question.type == 'NKD_AUX' || question.type == 'INVESTMENT'">
+							<span ng-repeat="answer in question.answer.value">{{answer}}<br></span>
+						</div>
+					</div>
+				</div>
+				<div class="panel-footer" style="text-align: right;">
+					<small>Zadnja izmjena: {{tender.lastModified | date : dateTimeFormat}}</small>
+				</div>
+			</div>
+			<hr class="custom-hr">
+			<div class="col-lg-12" style="text-align: right;">
+				<button ng-click="back()" class="btn btn-white"><i class="fa fa-angle-double-left"></i> Natrag</button>
+			</div>
+		</div>
+	</div>
+	
+</div>

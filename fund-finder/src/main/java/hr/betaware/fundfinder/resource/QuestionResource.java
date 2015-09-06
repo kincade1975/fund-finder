@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import hr.betaware.fundfinder.enums.EntityType;
 import hr.betaware.fundfinder.enums.LinkOperator;
+import hr.betaware.fundfinder.enums.QuestionMetadata;
 import hr.betaware.fundfinder.enums.QuestionType;
 
 @JsonInclude(Include.NON_NULL)
@@ -27,6 +28,12 @@ public class QuestionResource extends ResourceSupport {
 
 	@JsonProperty("text")
 	private String text;
+
+	@JsonProperty("mandatory")
+	private Boolean mandatory;
+
+	@JsonProperty("metadata")
+	private List<QuestionMetadata> metadata;
 
 	@JsonProperty("type")
 	private QuestionType type;
@@ -79,6 +86,22 @@ public class QuestionResource extends ResourceSupport {
 
 	public void setText(String text) {
 		this.text = text;
+	}
+
+	public Boolean getMandatory() {
+		return mandatory;
+	}
+
+	public void setMandatory(Boolean mandatory) {
+		this.mandatory = mandatory;
+	}
+
+	public List<QuestionMetadata> getMetadata() {
+		return metadata;
+	}
+
+	public void setMetadata(List<QuestionMetadata> metadata) {
+		this.metadata = metadata;
 	}
 
 	public QuestionType getType() {

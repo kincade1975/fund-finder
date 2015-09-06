@@ -1,19 +1,22 @@
 <div class="row border-bottom white-bg">
 	<div class="col-lg-12">
-		<h1 ng-show="mode == 'show'"><i class="fa fa-eye"></i> Detalji natječaja</h1>
-		<h1 ng-show="mode == 'edit' && id != 0"><i class="fa fa-edit"></i>  Uredi natječaj</h1>
-		<h1 ng-show="mode == 'edit' && id == 0"><i class="fa fa-plus"></i>  Dodaj natječaj</h1>
+		<h1 ng-if="mode == 'show'">Moja tvrtka</h1>
+		<h1 ng-if="mode == 'edit'">Uredi profil tvrtke</h1>
 	</div>
 </div>
 
-<div class="wrapper wrapper-content">
+<div class="wrapper wrapper-content animated fadeInUp">
 	
-	<div class="row" ng-show="mode == 'show'">
+	<div class="row" ng-if="mode == 'show'">
 		<div class="col-lg-12">
 			<div class="panel panel-default">
-				<div class="panel-heading"><strong class="custom-header">{{tender.name}}</strong></div>
+				<div class="panel-heading"><strong class="custom-header">{{company.name}}</strong></div>
 				<div class="panel-body">
-					<div class="form-group" ng-repeat="question in tender.questions">
+					<div class="form-group">
+						<label class="custom-gray p-xs" style="width: 100%">OIB</label>
+						<div class="p-xs custom-p-xs">{{company.oib}}</div>
+					</div>
+					<div class="form-group" ng-repeat="question in company.questions">
 						<label class="custom-gray p-xs" style="width: 100%">{{question.text}}</label>
 						<div class="p-xs custom-p-xs" ng-if="question.type == 'TEXT' || question.type == 'TEXT_AREA' 
 								|| question.type == 'NUMBER' || question.type == 'RADIO' || question.type == 'SELECT'">
@@ -23,38 +26,45 @@
 						<div class="p-xs custom-p-xs" ng-if="question.type == 'DATE'">{{question.answer.value | date : dateFormat}}</div>
 						<div class="p-xs custom-p-xs" ng-if="question.type == 'DATE_TIME'">{{question.answer.value | date : dateTimeFormat}}</div>
 						<div class="p-xs custom-p-xs" ng-if="question.type == 'CHECKBOX' || question.type == 'MULTI_SELECT' 
-								|| question.type == 'COUNTY' || question.type == 'NKD_AUX' || question.type == 'INVESTMENT'">
+								|| question.type == 'CITY' || question.type == 'NKD' || question.type == 'NKD_AUX' || question.type == 'INVESTMENT'">
 							<span ng-repeat="answer in question.answer.value">{{answer}}<br></span>
 						</div>
 					</div>
 				</div>
 				<div class="panel-footer" style="text-align: right;">
-					<small>Zadnja izmjena: {{tender.lastModified | date : dateTimeFormat}}</small>
+					<small>Zadnja izmjena: {{company.lastModified | date : dateTimeFormat}}</small>
 				</div>
 			</div>
 			<hr class="custom-hr">
 			<div class="col-lg-12" style="text-align: right;">
-				<button ng-click="back()" class="btn btn-white m-r-sm"><i class="fa fa-angle-double-left"></i> Natrag</button>
 				<button ng-click="edit()" class="btn btn-primary"><i class="fa fa-edit"></i> Uredi</button>
 			</div>
 		</div>
 	</div>
 	
-	<div class="row" ng-show="mode == 'edit'">
+	<div class="row" ng-if="mode == 'edit'">
 		<div class="col-lg-12">
 			<form name="form" class="form-horizontal ng-pristine ng-valid" novalidate>
 				
 				<div class="form-group">
-					<div class="col-sm-12" ng-class="{ 'has-error' : form.tenderName.$touched && form.tenderName.$invalid }">
-						<label>Naziv natječaja</label>
-						<input ng-model="tender.name" type="text" class="form-control" name="tenderName" ng-required="true" />
-						<small ng-show="form.tenderName.$touched && form.tenderName.$invalid" class="m-l-xs help-block" style="margin-top: 2px">Molimo unesite naziv natječaja</small>
+					<div class="col-sm-12" ng-class="{ 'has-error' : form.companyName.$touched && form.companyName.$invalid }">
+						<label class="custom-gray p-xs" style="width: 100%">Naziv<span> *</span></label>
+						<input ng-model="company.name" type="text" class="form-control" name="companyName" ng-required="true" />
+						<small ng-show="form.companyName.$touched && form.companyName.$invalid" class="m-l-xs help-block" style="margin-top: 2px">Molimo unesite naziv tvrtke</small>
 					</div>
 				</div>
 				
-				<div class="form-group" ng-repeat="question in tender.questions">
+				<div class="form-group">
+					<div class="col-sm-12" ng-class="{ 'has-error' : form.companyOib.$touched && form.companyOib.$invalid }">
+						<label class="custom-gray p-xs" style="width: 100%">OIB<span> *</span></label>
+						<input ng-model="company.oib" type="text" class="form-control" name="companyOib" ng-required="true" />
+						<small ng-show="form.companyOib.$touched && form.companyOib.$invalid" class="m-l-xs help-block" style="margin-top: 2px">Molimo unesite OIB tvrtke</small>
+					</div>
+				</div>
+				
+				<div class="form-group" ng-repeat="question in company.questions">
 					<div class="col-sm-12">
-						<label class="custom-gray p-xs" style="width: 100%">{{question.text}}</label>
+						<label class="custom-gray p-xs" style="width: 100%">{{question.text}}<span ng-show="question.mandatory"> *</span></label>
 						
 						<input ng-if="question.type == 'TEXT'" class="form-control" type="text" ng-model="question.answer.valueInternal" />
 						
@@ -138,7 +148,7 @@
 			</form>
 			<hr class="custom-hr">
 			<div class="col-lg-12" style="text-align: right;">
-				<button ng-click="cancel()" class="btn btn-white m-r-sm"><i class="fa fa-angle-double-left"></i> Natrag</button>
+				<button ng-click="back()" class="btn btn-white m-r-sm"><i class="fa fa-angle-double-left"></i> Natrag</button>
 				<button ng-click="save()" ng-disabled="form.$invalid" class="btn btn-primary"><i class="fa fa-save"></i> Spremi</button>
 			</div>
 		</div>

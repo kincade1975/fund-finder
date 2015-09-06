@@ -102,6 +102,10 @@
 	font-size: 13px;
 }
 
+.modal-footer {
+    padding: 10px 20px 10px;
+}
+
 .custom-hr {
 	border-top: 1px solid #e0e0e0; 
 	margin-top: 0px; 
@@ -117,8 +121,11 @@
 	text-decoration: underline;
 }
 
-.custom-panel {
+.custom-box-shadow {
 	box-shadow: 0 0 10px #a0a0a0;
+}
+
+.custom-panel {
 	padding-bottom: 5px;
 	margin-bottom: 0px;
 	height: 450px;

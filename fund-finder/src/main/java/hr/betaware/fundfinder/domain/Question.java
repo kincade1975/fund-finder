@@ -12,6 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import hr.betaware.fundfinder.enums.EntityType;
 import hr.betaware.fundfinder.enums.LinkOperator;
+import hr.betaware.fundfinder.enums.QuestionMetadata;
 import hr.betaware.fundfinder.enums.QuestionType;
 
 @Document(collection = "question")
@@ -29,6 +30,12 @@ public class Question {
 
 	@Field("text")
 	private String text;
+
+	@Field("mandatory")
+	private Boolean mandatory = Boolean.FALSE;
+
+	@Field("metadata")
+	private List<QuestionMetadata> metadata;
 
 	@Field("type")
 	private QuestionType type;
@@ -87,6 +94,22 @@ public class Question {
 
 	public void setText(String text) {
 		this.text = text;
+	}
+
+	public Boolean getMandatory() {
+		return mandatory;
+	}
+
+	public void setMandatory(Boolean mandatory) {
+		this.mandatory = mandatory;
+	}
+
+	public List<QuestionMetadata> getMetadata() {
+		return metadata;
+	}
+
+	public void setMetadata(List<QuestionMetadata> metadata) {
+		this.metadata = metadata;
 	}
 
 	public QuestionType getType() {

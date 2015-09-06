@@ -24,7 +24,7 @@ public class InvestmentController {
 	private InvestmentService investmentService;
 
 	@RequestMapping(method = RequestMethod.GET)
-	@PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR')")
+	@PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR','ROLE_USER')")
 	public List<InvestmentResource> findInvestments() {
 		return investmentService.findInvestments();
 	}

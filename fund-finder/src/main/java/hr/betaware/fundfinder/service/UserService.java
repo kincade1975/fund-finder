@@ -5,8 +5,6 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
@@ -32,16 +30,23 @@ import hr.betaware.fundfinder.security.UserDetails;
 @Service
 public class UserService {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
+	@Value(value = "${default.user.admin.username}")
+	private String deafultAdminUsername;
 
-	@Value(value = "${default.user.username}")
-	private String deafultUsername;
+	@Value(value = "${default.user.admin.first-name}")
+	private String deafultAdminFirstName;
 
-	@Value(value = "${default.user.first-name}")
-	private String deafultFirstName;
+	@Value(value = "${default.user.admin.last-name}")
+	private String deafultAdminLastName;
 
-	@Value(value = "${default.user.last-name}")
-	private String deafultLastName;
+	@Value(value = "${default.user.superadmin.username}")
+	private String deafultSuperadminUsername;
+
+	@Value(value = "${default.user.superadmin.first-name}")
+	private String deafultSuperadminFirstName;
+
+	@Value(value = "${default.user.superadmin.last-name}")
+	private String deafultSuperadminLastName;
 
 	@Autowired
 	private MongoOperations mongoOperations;
@@ -54,8 +59,8 @@ public class UserService {
 
 	@PostConstruct
 	public void init() {
-		createDefaultUser();
-		//		createTestData();
+		createDefaultAdminUser();
+		createDefaultSuperadminUser();
 	}
 
 	public List<UserResource> findAll() {
@@ -95,7 +100,6 @@ public class UserService {
 		query.with(new PageRequest(resource.getPagination().getPage(), resource.getPagination().getSize()));
 
 		// get records that match query
-		LOGGER.debug("Querying database: {}", query);
 		List<User> entities = mongoOperations.find(query, User.class);
 
 		return new PageableResource<>(total, userResourceAssembler.toResources(entities));
@@ -113,40 +117,43 @@ public class UserService {
 	}
 
 	/**
-	 * Method creates default user (if it does not exist).
+	 * Method creates default admin user (if it does not exist).
 	 */
-	private void createDefaultUser() {
-		// check if default user exists
+	private void createDefaultAdminUser() {
 		Query query = new Query();
-		query.addCriteria(Criteria.where("username").is(deafultUsername));
+		query.addCriteria(Criteria.where("username").is(deafultAdminUsername));
 		if (mongoOperations.findOne(query, User.class) != null) {
 			return;
 		}
 
-		// create default user
 		User user = new User();
 		user.setId(sequenceService.getNextSequence(SequenceService.SEQUENCE_USER));
-		user.setUsername(deafultUsername);
+		user.setUsername(deafultAdminUsername);
 		user.setPassword(new MessageDigestPasswordEncoder("SHA-1").encodePassword("admin", null));
-		user.setFirstName(deafultFirstName);
-		user.setLastName(deafultLastName);
+		user.setFirstName(deafultAdminFirstName);
+		user.setLastName(deafultAdminLastName);
 		user.setRole(Role.ROLE_ADMINISTRATOR);
 		mongoOperations.save(user);
-
-		LOGGER.info("Default user created...");
 	}
 
-	void createTestData() {
-		for (int i = 10; i < 100; i++) {
-			User user = new User();
-			user.setId(sequenceService.getNextSequence(SequenceService.SEQUENCE_USER));
-			user.setUsername(i + "@test.net");
-			user.setPassword(new MessageDigestPasswordEncoder("SHA-1").encodePassword("admin", null));
-			user.setFirstName("FirstName " + i);
-			user.setLastName("LastName " + i);
-			user.setRole(Role.ROLE_USER);
-			mongoOperations.save(user);
+	/**
+	 * Method creates default superadmin user (if it does not exist).
+	 */
+	private void createDefaultSuperadminUser() {
+		Query query = new Query();
+		query.addCriteria(Criteria.where("username").is(deafultSuperadminUsername));
+		if (mongoOperations.findOne(query, User.class) != null) {
+			return;
 		}
+
+		User user = new User();
+		user.setId(sequenceService.getNextSequence(SequenceService.SEQUENCE_USER));
+		user.setUsername(deafultSuperadminUsername);
+		user.setPassword(new MessageDigestPasswordEncoder("SHA-1").encodePassword("admin", null));
+		user.setFirstName(deafultSuperadminFirstName);
+		user.setLastName(deafultSuperadminLastName);
+		user.setRole(Role.ROLE_SUPERADMIN);
+		mongoOperations.save(user);
 	}
 
 }

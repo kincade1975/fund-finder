@@ -23,19 +23,19 @@ public class UserController {
 	private UserService userService;
 
 	@RequestMapping(method = RequestMethod.GET)
-	@PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR')")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR')")
 	public List<UserResource> findAll() {
 		return userService.findAll();
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, value="/{id}")
-	@PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR')")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR')")
 	public void deleteUser(@PathVariable Integer id) {
 		userService.deleteUser(id);
 	}
 
 	@RequestMapping(value = "/page", method = RequestMethod.POST)
-	@PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR')")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR')")
 	public PageableResource<UserResource> getPage(@RequestBody UiGridResource resource) {
 		return userService.getPage(resource);
 	}

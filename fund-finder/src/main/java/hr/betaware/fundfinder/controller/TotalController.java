@@ -17,7 +17,7 @@ public class TotalController {
 	private TotalService counterService;
 
 	@RequestMapping(method = RequestMethod.GET)
-	@PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR','ROLE_USER')")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_USER')")
 	public TotalResource getTotal() {
 		return counterService.getTotal();
 	}

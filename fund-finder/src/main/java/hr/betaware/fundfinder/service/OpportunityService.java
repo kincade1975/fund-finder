@@ -60,7 +60,7 @@ public class OpportunityService {
 
 		List<Tender> tenders = mongoOperations.find(query, Tender.class);
 		for (Tender tender : tenders) {
-			if (isAcceptableTender(tender, company)) {
+			if (isAcceptableTender(tender, company, user)) {
 				Map<Integer, Answer> answers = new HashMap<>();
 				for (Answer answer : tender.getAnswers()) {
 					answers.put(answer.getQuestionId(), answer);
@@ -85,7 +85,7 @@ public class OpportunityService {
 	}
 
 	@SuppressWarnings("unchecked")
-	private boolean isAcceptableTender(Tender tender, Company company) {
+	private boolean isAcceptableTender(Tender tender, Company company, User user) {
 		boolean result = true;
 
 		for (Answer tenderAnswer : tender.getAnswers()) {
@@ -148,6 +148,15 @@ public class OpportunityService {
 				if (!result) {
 					return false;
 				}
+			} else {
+				if (tenderQuestion.getType() == QuestionType.INVESTMENT) {
+					if (tenderAnswer.getValueInternal() instanceof ArrayList<?>) {
+						ArrayList<Integer> tenderValue = (ArrayList<Integer>) tenderAnswer.getValueInternal();
+						if (ListUtils.intersection(user.getInvestments(), tenderValue).isEmpty()) {
+							result = false;
+						}
+					}
+				}
 			}
 		}
 
@@ -167,7 +176,6 @@ public class OpportunityService {
 				return answer;
 			}
 		}
-
 		return null;
 	}
 

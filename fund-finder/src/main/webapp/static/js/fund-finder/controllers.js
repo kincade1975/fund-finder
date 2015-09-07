@@ -65,7 +65,7 @@ angular
 
 		// initial load
 		authenticate();
-		$scope.credentials = { username: "kincade1975@gmail.com", password: "admin" };
+		$scope.credentials = { username: "superadmin@gmail.com", password: "admin" };
 		Administrator_TotalService.updateTotal();
     })
     

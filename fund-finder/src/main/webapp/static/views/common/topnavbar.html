@@ -2,7 +2,7 @@
     <nav ng-controller="SecurityCtrl" class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
         <div class="navbar-header">
             <span minimaliza-sidebar></span>
-            <label ng-show="role == 'ROLE_ADMINISTRATOR'" class="m-sm" style="color: white; font-size: 1.5em; font-weight: 400;">ADMINISTRACIJSKA KONZOLA</label>
+            <label ng-show="role == 'ROLE_SUPERADMIN' || role == 'ROLE_ADMINISTRATOR'" class="m-sm" style="color: white; font-size: 1.5em; font-weight: 400;">ADMINISTRACIJSKA KONZOLA</label>
             <label ng-show="role == 'ROLE_USER'" class="m-sm" style="color: white; font-size: 1.5em; font-weight: 400;">KORISNIČKA KONZOLA</label>
         </div>
         <ul class="nav navbar-top-links navbar-right">

@@ -24,31 +24,31 @@ public class InvestmentController {
 	private InvestmentService investmentService;
 
 	@RequestMapping(method = RequestMethod.GET)
-	@PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR','ROLE_USER')")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_USER')")
 	public List<InvestmentResource> findInvestments() {
 		return investmentService.findInvestments();
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
-	@PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR')")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR')")
 	public InvestmentResource findInvestment(@PathVariable Integer id) {
 		return investmentService.findInvestment(id);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	@PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR')")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR')")
 	public InvestmentResource saveInvestment(@RequestBody InvestmentResource resource) {
 		return investmentService.saveInvestment(resource);
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, value="/{id}")
-	@PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR')")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR')")
 	public void deleteInvestment(@PathVariable Integer id) {
 		investmentService.deleteInvestment(id);
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/page")
-	@PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR')")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR')")
 	public PageableResource<InvestmentResource> getPage(@RequestBody UiGridResource resource) {
 		return investmentService.getPage(resource);
 	}

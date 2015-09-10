@@ -16,10 +16,14 @@ angular
 				}
 			}).success(function(data) {
 				authenticate(function() {
-					if ($rootScope.role == 'ROLE_ADMINISTRATOR') {
-						$state.go(($rootScope.authenticated) ? 'administrator.dashboard' : 'login');
+					if ($rootScope.role == 'ROLE_USER') {
+						if ($rootScope.authenticated) {
+							$state.go('user.company_edit', { 'mode' : 'show' });
+						} else {
+							$state.go('login');
+						}
 					} else {
-						$state.go(($rootScope.authenticated) ? 'user.article_overview' : 'login');
+						$state.go(($rootScope.authenticated) ? 'administrator.dashboard' : 'login');
 					}
 				});
 			}).error(function(data, status) {
@@ -40,6 +44,20 @@ angular
 				$rootScope.authenticated = false;
 				$state.go('login');
 			});
+		};
+		
+		/**
+		 * Forgot password.
+		 */
+		$scope.forgotPassword = function() {
+			$state.go('forgot_password');
+		};
+		
+		/**
+		 * Registration.
+		 */
+		$scope.registration = function() {
+			$state.go('registration');
 		};
 		
 		var authenticate = function(callback) {

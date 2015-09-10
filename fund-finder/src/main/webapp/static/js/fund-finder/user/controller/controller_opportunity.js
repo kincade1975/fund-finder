@@ -1,12 +1,36 @@
 angular.module('fundFinder')
 
-.controller('User_OpportunityOverviewCtrl', function($rootScope, $scope, $state, $stateParams, User_OpportunityService) {
+.controller('User_OpportunityOverviewCtrl', function($rootScope, $scope, $state, $stateParams, $timeout, $interval, User_CompanyService, User_OpportunityService) {
 	
-	User_OpportunityService.findTenders()
-		.success(function(data, status, headers, config) {
-			$scope.tenders = data;
+	/** get company */
+	User_CompanyService.getCompany()
+		.success(function(data, status) {
+			$scope.company = data;
+			if ($scope.company.incomplete) {
+				$scope.counter = 9;
+				$interval(function() { 
+					$scope.counter = $scope.counter - 1; 
+					if ($scope.counter == 0) {
+						$timeout(function() {
+							angular.element('#link2EditCompany').triggerHandler('click');
+						}, 0);
+					}
+				}, 1000);
+			} else {
+				User_OpportunityService.findTenders()
+					.success(function(data, status, headers, config) {
+						$scope.tenders = data;
+					})
+					.error(function(data, status, headers, config) {
+						if (status == 403) {
+							$state.go('login');
+						} else {
+							toastr.error('Došlo je do pogreške prilikom dohvaćanja podataka');
+						}
+					});
+			}
 		})
-		.error(function(data, status, headers, config) {
+		.error(function(data, status) {
 			if (status == 403) {
 				$state.go('login');
 			} else {
@@ -16,6 +40,10 @@ angular.module('fundFinder')
 	
 	$scope.showTender = function(entity) {
 		$state.go('user.opportunity_show', { 'id' : entity.id });
+	};
+	
+	$scope.editCompany = function() {
+		$state.go('user.company_edit', { 'mode' : 'edit' });	
 	};
 	
 })

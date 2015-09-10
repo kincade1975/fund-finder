@@ -48,8 +48,10 @@ public class CompanyService {
 		if (company == null) {
 			companyResource = new CompanyResource();
 		} else {
-			for (Answer answer : company.getAnswers()) {
-				answers.put(answer.getQuestionId(), answer);
+			if (company.getAnswers() != null) {
+				for (Answer answer : company.getAnswers()) {
+					answers.put(answer.getQuestionId(), answer);
+				}
 			}
 			companyResource = companyResourceAssembler.toResource(company);
 		}
@@ -86,19 +88,20 @@ public class CompanyService {
 		}
 	}
 
-	public CompanyResource saveCompany(Principal principal, CompanyResource resource) {
-		Company entity = null;
-		if (resource.getIdentificator() == null) {
-			entity = companyResourceAssembler.createEntity(resource);
+	public CompanyResource saveCompany(Principal principal, CompanyResource companyResource) {
+		Company company = null;
+		if (companyResource.getIdentificator() == null) {
+			company = companyResourceAssembler.createEntity(companyResource);
 		} else {
-			entity = mongoOperations.findById(resource.getIdentificator(), Company.class);
-			entity = companyResourceAssembler.updateEntity(entity, resource);
+			company = mongoOperations.findById(companyResource.getIdentificator(), Company.class);
+			company = companyResourceAssembler.updateEntity(company, companyResource);
 		}
 
-		mongoOperations.save(entity);
+		mongoOperations.save(company);
 
 		User user = userService.getUser4Principal(principal);
-		user.setCompany(entity);
+		user.setCompany(company);
+		user.setCompanyName(company.getName());
 		mongoOperations.save(user);
 
 		return findCompany(principal);

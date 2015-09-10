@@ -86,7 +86,7 @@ public class SecurityConfiguration extends GlobalAuthenticationConfigurerAdapter
 
 			http
 			.authorizeRequests()
-			.antMatchers("/index.html", "/webjars/**", "/css/**", "/font-awesome/**", "/fonts/**", "/img/**", "/js/**", "/views/**", "/").permitAll()
+			.antMatchers("/index.html", "/webjars/**", "/css/**", "/font-awesome/**", "/fonts/**", "/img/**", "/js/**", "/views/**", "/registration/**", "/password/**", "/").permitAll()
 			.anyRequest().authenticated();
 
 			http

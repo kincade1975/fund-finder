@@ -37,6 +37,15 @@ angular.module('fundFinder')
 				enableHiding: false
 			},
 			{
+				name: 'Tvrtka',
+				field: 'companyName',
+				type: 'string',
+				cellTooltip: false, 
+				enableSorting: true,
+				enableFiltering: true,
+				enableHiding: false
+			},
+			{
 				name: 'Akcija',
 				type: 'string',
 				cellTooltip: false, 
@@ -44,7 +53,7 @@ angular.module('fundFinder')
 				enableFiltering: false,
 				enableHiding: false,
 				width: 82,
-				cellTemplate:'<div style="padding-top: 1px"><button ng-click="grid.appScope.showUser(row.entity)" tooltip="Prikaži" class="btn-xs btn-white m-l-xs"><i class="fa fa-2x fa-eye"></i></button><button ng-click="grid.appScope.deleteUser(row.entity)" tooltip="Obriši" class="btn-xs btn-white m-l-xs"><i class="fa fa-2x fa-times"></i></button></div>'
+				cellTemplate:'<div style="padding-top: 1px"><button ng-click="grid.appScope.showUser(row.entity)" class="btn-xs btn-white m-l-xs"><i class="fa fa-2x fa-eye"></i></button><button ng-click="grid.appScope.deleteUser(row.entity)" class="btn-xs btn-white m-l-xs"><i class="fa fa-2x fa-times"></i></button></div>'
 			}
 		],
 		onRegisterApi: function(gridApi) {

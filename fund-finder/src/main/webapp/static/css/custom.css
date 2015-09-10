@@ -113,10 +113,19 @@
 }
 
 .custom-a {
-	color: #676a6c
+	color: #676a6c;
 }
 
 .custom-a:hover {
+	color: #000000;
+	text-decoration: underline;
+}
+
+.custom-a-alt {
+	color: #909090;
+}
+
+.custom-a-alt:hover {
 	color: #000000;
 	text-decoration: underline;
 }

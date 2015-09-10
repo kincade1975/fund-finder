@@ -38,6 +38,9 @@ public class User {
 	@Field("investments")
 	private List<Integer> investments;
 
+	@Field("companyName")
+	private String companyName;
+
 	@DBRef
 	@Field("company")
 	private Company company;
@@ -108,6 +111,14 @@ public class User {
 
 	public void setInvestments(List<Integer> investments) {
 		this.investments = investments;
+	}
+
+	public String getCompanyName() {
+		return companyName;
+	}
+
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
 	}
 
 	public Company getCompany() {

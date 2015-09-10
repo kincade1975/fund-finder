@@ -24,7 +24,7 @@ public class TotalService {
 
 		// users
 		Query query = new Query();
-		query.addCriteria(Criteria.where("role").ne(Role.ROLE_ADMINISTRATOR));
+		query.addCriteria(Criteria.where("role").nin(Role.ROLE_SUPERADMIN, Role.ROLE_ADMINISTRATOR));
 		resource.setTotalUsers(mongoOperations.count(query, User.class));
 
 		// tenders

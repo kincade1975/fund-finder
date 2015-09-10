@@ -26,6 +26,12 @@ public class UserResource extends ResourceSupport {
 	@JsonProperty("role")
 	private Role role;
 
+	@JsonProperty("companyName")
+	private String companyName;
+
+	@JsonProperty("company")
+	private CompanyResource company;
+
 	public Integer getIdentificator() {
 		return identificator;
 	}
@@ -64,6 +70,22 @@ public class UserResource extends ResourceSupport {
 
 	public void setRole(Role role) {
 		this.role = role;
+	}
+
+	public String getCompanyName() {
+		return companyName;
+	}
+
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
+
+	public CompanyResource getCompany() {
+		return company;
+	}
+
+	public void setCompany(CompanyResource company) {
+		this.company = company;
 	}
 
 }

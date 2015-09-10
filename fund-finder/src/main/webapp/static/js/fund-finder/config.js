@@ -18,6 +18,21 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdlePro
 			templateUrl: 'views/common/login.html',
 			controller: 'SecurityCtrl'
 		})
+		.state('registration', {
+			url: '/registration',
+			templateUrl: 'views/common/registration.html',
+			controller: 'RegistrationCtrl'
+		})
+		.state('forgot_password', {
+			url: '/password/forgot',
+			templateUrl: 'views/common/forgot_password.html',
+			controller: 'ForgotPasswordCtrl'
+		})
+		.state('reset_password', {
+			url: '/password/reset?uuid',
+			templateUrl: 'views/common/reset_password.html',
+			controller: 'ResetPasswordCtrl'
+		})
         .state('administrator.dashboard', {
             url: "/administrator/dashboard",
             templateUrl: "views/administrator/dashboard/dashboard.html",

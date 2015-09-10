@@ -24,6 +24,8 @@ public class CsrfRequestMatcher implements RequestMatcher {
 				|| requestURI.equals("/metrics")
 				|| requestURI.equals("/shutdown")
 				|| requestURI.equals("/env")
+				|| requestURI.startsWith("/registration")
+				|| requestURI.startsWith("/password")
 				|| requestURI.equals("/login")) {
 			return false;
 		}

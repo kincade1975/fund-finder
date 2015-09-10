@@ -152,7 +152,7 @@ public class OpportunityService {
 				if (tenderQuestion.getType() == QuestionType.INVESTMENT) {
 					if (tenderAnswer.getValueInternal() instanceof ArrayList<?>) {
 						ArrayList<Integer> tenderValue = (ArrayList<Integer>) tenderAnswer.getValueInternal();
-						if (ListUtils.intersection(user.getInvestments(), tenderValue).isEmpty()) {
+						if (user.getInvestments() == null || ListUtils.intersection(user.getInvestments(), tenderValue).isEmpty()) {
 							result = false;
 						}
 					}
@@ -171,9 +171,11 @@ public class OpportunityService {
 	}
 
 	private Answer getCompanyAnswer(Company company, Integer questionId) {
-		for (Answer answer : company.getAnswers()) {
-			if (answer.getQuestionId().equals(questionId)) {
-				return answer;
+		if (company.getAnswers() != null) {
+			for (Answer answer : company.getAnswers()) {
+				if (answer.getQuestionId().equals(questionId)) {
+					return answer;
+				}
 			}
 		}
 		return null;

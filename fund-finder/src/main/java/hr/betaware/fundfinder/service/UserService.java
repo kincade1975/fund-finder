@@ -68,14 +68,14 @@ public class UserService {
 	}
 
 	public void deleteUser(Integer id) {
-		User entity = mongoOperations.findById(id, User.class);
-		mongoOperations.remove(entity);
+		User user = mongoOperations.findById(id, User.class);
+		mongoOperations.remove(user.getCompany());
+		mongoOperations.remove(user);
 	}
 
 	public PageableResource<UserResource> getPage(UiGridResource resource) {
 		Query query = new Query();
-
-		query.addCriteria(Criteria.where("role").ne(Role.ROLE_ADMINISTRATOR));
+		query.addCriteria(Criteria.where("role").nin(Role.ROLE_SUPERADMIN, Role.ROLE_ADMINISTRATOR));
 
 		// sorting
 		if (resource.getSort() == null || resource.getSort().isEmpty()) {

@@ -1,0 +1,47 @@
+<style>
+	body {
+		background-color: #f3f3f4 !important;
+	}
+</style>
+
+<div class="loginColumns animated flipInY">
+    <div class="row">
+    	<div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="ibox-content">
+            	<div class="form-group">
+					<h3>Registracija novog korisnika</h3>                	
+				</div>
+                <form name="form" class="m-t ng-pristine ng-valid" role="form" ng-submit="register()" novalidate>
+                    <div class="form-group" ng-class="{ 'has-error' : form.firstName.$touched && form.firstName.$invalid }">
+                        <input ng-model="registration.firstName" type="text" class="form-control" placeholder="Ime" name="firstName" ng-required="true">
+                        <small ng-show="form.firstName.$touched && form.firstName.$invalid" class="m-l-xs help-block" style="margin-top: 2px;">Molimo upišite vaše ime</small>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error' : form.lastName.$touched && form.lastName.$invalid }">
+                        <input ng-model="registration.lastName" type="text" class="form-control" placeholder="Prezime" name="lastName" ng-required="true">
+                        <small ng-show="form.lastName.$touched && form.lastName.$invalid" class="m-l-xs help-block" style="margin-top: 2px;">Molimo upišite vaše prezime</small>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error' : form.email.$touched && form.email.$invalid }">
+                        <input ng-model="registration.email" type="email" class="form-control" placeholder="E-mail" name="email" ng-required="true">
+                        <small ng-show="form.email.$touched && form.email.$invalid" class="m-l-xs help-block" style="margin-top: 2px;">Molimo upišite vašu e-mail adresu</small>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error' : form.company.$touched && form.company.$invalid }">
+                        <input ng-model="registration.company" type="text" class="form-control" placeholder="Tvrtka" name="company" ng-required="true">
+                        <small ng-show="form.company.$touched && form.company.$invalid" class="m-l-xs help-block" style="margin-top: 2px;">Molimo upišite ime vaše tvrtke</small>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error' : form.password.$touched && form.password.$invalid }">
+                        <input ng-model="registration.password" type="password" class="form-control" placeholder="Zaporka" name="password" ng-required="true"> 
+                        <small ng-show="form.password.$touched && form.password.$invalid" class="m-l-xs help-block" style="margin-top: 2px;">Molimo upišite zaporku</small>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error' : form.confirmPassword.$touched && form.confirmPassword.$invalid || registration.confirmPassword.length > 0 && registration.password != registration.confirmPassword }">
+                        <input ng-model="registration.confirmPassword" type="password" class="form-control" placeholder="Ponovite zaporku" name="confirmPassword" ng-required="true"> 
+                        <small ng-show="form.confirmPassword.$touched && form.confirmPassword.$invalid" class="m-l-xs help-block" style="margin-top: 2px;">Molimo ponovite zaporku</small>
+                        <small ng-show="registration.confirmPassword.length > 0 && registration.password != registration.confirmPassword" class="m-l-xs help-block" style="margin-top: 2px">Zaporke se ne podudaraju</small>
+                    </div>
+                    <button ng-disabled="form.$invalid" type="submit" class="btn btn-primary block full-width m-b-sm">Registriraj</button>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>

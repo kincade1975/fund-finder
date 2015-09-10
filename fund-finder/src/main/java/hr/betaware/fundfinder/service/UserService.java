@@ -55,6 +55,9 @@ public class UserService {
 	private SequenceService sequenceService;
 
 	@Autowired
+	private CompanyService companyService;
+
+	@Autowired
 	private UserResourceAssembler userResourceAssembler;
 
 	@PostConstruct
@@ -65,6 +68,13 @@ public class UserService {
 
 	public List<UserResource> findAll() {
 		return userResourceAssembler.toResources(mongoOperations.findAll(User.class));
+	}
+
+	public UserResource find(Integer id) {
+		User user = mongoOperations.findById(id, User.class);
+		UserResource userResource =  userResourceAssembler.toResource(user);
+		userResource.setCompany(companyService.findCompany(user));
+		return userResource;
 	}
 
 	public void deleteUser(Integer id) {

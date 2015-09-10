@@ -38,9 +38,7 @@ public class CompanyService {
 	@Autowired
 	private AnswerResourceAssembler answerResourceAssembler;
 
-	public CompanyResource findCompany(Principal principal) {
-		User user = userService.getUser4Principal(principal);
-
+	public CompanyResource findCompany(User user) {
 		CompanyResource companyResource = null;
 		Company company = user.getCompany();
 		Map<Integer, Answer> answers = new HashMap<>();
@@ -68,6 +66,10 @@ public class CompanyService {
 		incompleteCheck(companyResource);
 
 		return companyResource;
+	}
+
+	public CompanyResource findCompany(Principal principal) {
+		return findCompany(userService.getUser4Principal(principal));
 	}
 
 	/**

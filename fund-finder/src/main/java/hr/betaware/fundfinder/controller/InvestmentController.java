@@ -54,9 +54,15 @@ public class InvestmentController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/user")
-	@PreAuthorize("hasAnyRole('ROLE_USER')")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_USER')")
 	public List<InvestmentResource> findInvestments4User(Principal principal) {
 		return investmentService.findInvestments4User(principal);
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "/user/{id}")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_USER')")
+	public List<InvestmentResource> findInvestments4User(@PathVariable Integer id) {
+		return investmentService.findInvestments4User(id);
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/user")

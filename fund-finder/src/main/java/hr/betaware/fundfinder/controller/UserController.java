@@ -28,6 +28,12 @@ public class UserController {
 		return userService.findAll();
 	}
 
+	@RequestMapping(method = RequestMethod.GET, value="/{id}")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR')")
+	public UserResource find(@PathVariable Integer id) {
+		return userService.find(id);
+	}
+
 	@RequestMapping(method = RequestMethod.DELETE, value="/{id}")
 	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR')")
 	public void deleteUser(@PathVariable Integer id) {

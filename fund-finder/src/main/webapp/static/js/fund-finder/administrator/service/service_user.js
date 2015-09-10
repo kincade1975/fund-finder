@@ -7,4 +7,7 @@ angular.module('fundFinder')
 		this.deleteUser = function(id) {
 			return $http.delete('/api/v1/user/' + id);
 		};
+		this.getUser = function(id) {
+			return $http.get('/api/v1/user/' + id);
+		};
 	});

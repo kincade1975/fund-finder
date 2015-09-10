@@ -30,6 +30,8 @@ public class UserResourceAssembler extends ResourceAssemblerSupport<User, UserRe
 		if (entity.getCompany() != null) {
 			resource.setCompany(companyResourceAssembler.toResource(entity.getCompany()));
 		}
+		resource.setTimeCreated(entity.getTimeCreated());
+		resource.setLastModified(entity.getLastModified());
 		return resource;
 	}
 

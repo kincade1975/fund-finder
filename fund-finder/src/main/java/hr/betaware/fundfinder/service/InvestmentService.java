@@ -105,6 +105,12 @@ public class InvestmentService {
 
 	public List<InvestmentResource> findInvestments4User(Principal principal) {
 		User user = userService.getUser4Principal(principal);
+		return findInvestments4User(user.getId());
+	}
+
+	public List<InvestmentResource> findInvestments4User(Integer userId) {
+		User user = mongoOperations.findById(userId, User.class);
+
 		List<InvestmentResource> investments = findInvestments();
 		if (user.getInvestments() != null) {
 			for (Integer id : user.getInvestments()) {

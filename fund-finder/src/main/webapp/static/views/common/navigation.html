@@ -8,7 +8,7 @@
             <li ui-sref-active="active" ng-show="role == 'ROLE_SUPERADMIN' || role == 'ROLE_ADMINISTRATOR'">
                 <a ui-sref="administrator.dashboard"><i class="fa fa-tachometer"></i> <span class="nav-label">Kontrolna ploča</span> </a>
             </li>
-            <li ui-sref-active="active" ng-show="role == 'ROLE_SUPERADMIN' || role == 'ROLE_ADMINISTRATOR'">
+            <li ng-show="role == 'ROLE_SUPERADMIN' || role == 'ROLE_ADMINISTRATOR'" ng-class="{active: $state.is('administrator.user_overview') || $state.is('administrator.user_show')}">
                 <a ui-sref="administrator.user_overview"><i class="fa fa-users"></i> <span class="nav-label">Korisnici</span><span class="label label-default pull-right">{{totalUsers}}</span></a>
             </li>
             <li ui-sref-active="active" ng-show="role == 'ROLE_SUPERADMIN' || role == 'ROLE_ADMINISTRATOR'">

@@ -43,6 +43,12 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdlePro
             templateUrl: "views/administrator/user/overview.html",
             controller: 'Administrator_UserOverviewCtrl'
         })
+        .state('administrator.user_show', {
+            url: "/administrator/user/show/:id",
+            templateUrl: "views/administrator/user/show.html",
+            controller: 'Administrator_UserShowCtrl',
+            params: { 'id' : null }
+        })
         .state('administrator.tender_overview', {
             url: "/administrator/tender/overview",
             templateUrl: "views/administrator/tender/overview.html",

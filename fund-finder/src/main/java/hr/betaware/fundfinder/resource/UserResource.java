@@ -1,5 +1,7 @@
 package hr.betaware.fundfinder.resource;
 
+import java.util.Date;
+
 import org.springframework.hateoas.ResourceSupport;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -31,6 +33,12 @@ public class UserResource extends ResourceSupport {
 
 	@JsonProperty("company")
 	private CompanyResource company;
+
+	@JsonProperty("timeCreated")
+	private Date timeCreated;
+
+	@JsonProperty("lastModified")
+	private Date lastModified;
 
 	public Integer getIdentificator() {
 		return identificator;
@@ -86,6 +94,22 @@ public class UserResource extends ResourceSupport {
 
 	public void setCompany(CompanyResource company) {
 		this.company = company;
+	}
+
+	public Date getTimeCreated() {
+		return timeCreated;
+	}
+
+	public void setTimeCreated(Date timeCreated) {
+		this.timeCreated = timeCreated;
+	}
+
+	public Date getLastModified() {
+		return lastModified;
+	}
+
+	public void setLastModified(Date lastModified) {
+		this.lastModified = lastModified;
 	}
 
 }

@@ -213,6 +213,10 @@
 	background-color: #f0f0f0;
 }
 
+.custom-light-gray {
+	background-color: #f6f6f6;
+}
+
 .custom-p-xs {
 	padding-top: 0px;
 	padding-bottom: 0px;
@@ -244,4 +248,12 @@
     border-left-width: 1px;
     border-right-width: 1px;
     border-bottom-width: 0px;
+}
+
+.custom-ibox-content-padding-bottom {
+	padding-bottom: 1px;
+}
+
+.icheckbox_square-green.checked.disabled {
+	background-position: -48px 0;
 }

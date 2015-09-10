@@ -16,4 +16,7 @@ angular.module('fundFinder')
 		this.deleteInvestment = function(id) {
 			return $http.delete('/api/v1/investment/' + id);
 		};
+		this.getInvestments4User = function(id) {
+			return $http.get('/api/v1/investment/user/' + id);
+		};
 	});

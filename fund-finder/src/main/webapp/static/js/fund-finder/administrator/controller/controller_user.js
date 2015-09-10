@@ -1,8 +1,8 @@
 angular.module('fundFinder')
 
-//==============================================================================================================
+// ==============================================================================================================
 //	OVERVIEW
-//==============================================================================================================
+// ==============================================================================================================
 .controller('Administrator_UserOverviewCtrl', function($rootScope, $scope, $state, Administrator_TotalService, Administrator_UserService) {
 	$scope.gridOptions = {
 		enableScrollbars: false,
@@ -166,8 +166,52 @@ angular.module('fundFinder')
             	}
             ]
         });
-	}
+	};
+	
+	$scope.showUser = function(entity) {
+		$state.go('administrator.user_show', { 'id' : entity.id });
+	};
 	
 	// initial load
 	$scope.getPage(1, 10);
+})
+
+// ==============================================================================================================
+//	SHOW
+// ==============================================================================================================
+.controller('Administrator_UserShowCtrl', function($rootScope, $scope, $state, $stateParams, Administrator_UserService, Administrator_InvestmentService) {
+	
+	Administrator_UserService.getUser($stateParams.id)
+		.success(function(data, status) {
+			$scope.user = data;
+			console.log($scope.user);
+		})
+		.error(function(data, status) {
+			if (status == 403) {
+				$state.go('login');
+			} else {
+				toastr.error('Došlo je do pogreške prilikom dohvaćanja podataka');
+			}
+		});
+	
+	Administrator_InvestmentService.getInvestments4User($stateParams.id).
+		success(function(data, status, headers, config) {
+			$scope.investments = data;
+		}).
+		error(function(data, status, headers, config) {
+			if (status == 403) {
+				$state.go('login');
+			} else {
+				toastr.error('Došlo je do pogreške prilikom dohvaćanja podataka');
+			}
+		});
+	
+	$scope.back = function() {
+		if ($rootScope.previousState) {
+			$state.go($rootScope.previousState, $rootScope.previousStateParams);
+		} else {
+			window.history.back();
+		}
+	};
+		
 })

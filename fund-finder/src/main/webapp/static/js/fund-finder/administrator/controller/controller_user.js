@@ -184,7 +184,6 @@ angular.module('fundFinder')
 	Administrator_UserService.getUser($stateParams.id)
 		.success(function(data, status) {
 			$scope.user = data;
-			console.log($scope.user);
 		})
 		.error(function(data, status) {
 			if (status == 403) {
@@ -214,4 +213,46 @@ angular.module('fundFinder')
 		}
 	};
 		
+})
+
+// ==============================================================================================================
+//	SHOW
+// ==============================================================================================================
+.controller('Administrator_UserEditCtrl', function($rootScope, $scope, $state, $stateParams, Administrator_UserService) {
+	
+	Administrator_UserService.getUser($stateParams.id)
+		.success(function(data, status) {
+			$scope.user = data;
+		})
+		.error(function(data, status) {
+			if (status == 403) {
+				$state.go('login');
+			} else {
+				toastr.error('Došlo je do pogreške prilikom dohvaćanja podataka');
+			}
+		});
+		
+	$scope.back = function() {
+		if ($rootScope.previousState) {
+			$state.go($rootScope.previousState, $rootScope.previousStateParams);
+		} else {
+			window.history.back();
+		}
+	};
+	
+	$scope.save = function() {
+		Administrator_UserService.setUser($scope.user)
+			.success(function(data, status) {
+				$scope.user = data;
+				$rootScope.fullName = data.firstName + " " + data.lastName;
+				toastr.success('Podaci su uspješno spremljeni');
+			})
+			.error(function(data, status) {
+				if (status == 403) {
+					$state.go('login');
+				} else {
+					toastr.error('Došlo je do pogreške prilikom spremanja podataka');
+				}
+			});
+	};
 })

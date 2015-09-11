@@ -10,4 +10,7 @@ angular.module('fundFinder')
 		this.getUser = function(id) {
 			return $http.get('/api/v1/user/' + id);
 		};
+		this.setUser = function(resource) {
+			return $http.post('/api/v1/user', resource);
+		};
 	});

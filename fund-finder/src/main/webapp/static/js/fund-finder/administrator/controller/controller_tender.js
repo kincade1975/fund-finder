@@ -234,7 +234,11 @@ angular.module('fundFinder')
 	$scope.id = $stateParams.id
 	
 	$scope.back = function() {
-		$state.go('administrator.tender_overview');
+		if ($rootScope.previousState) {
+			$state.go($rootScope.previousState, $rootScope.previousStateParams);
+		} else {
+			window.history.back();
+		}
 	};
 	
 	$scope.cancel = function() {

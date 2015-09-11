@@ -25,8 +25,11 @@
 						<span ng-show="question.metadata && question.metadata.indexOf('DATE') != -1" class="p-xxs">{{question.answer.value | date : dateFormat}}</span>
 					</div>
 				</div>
-				<div class="panel-footer" style="text-align: right;">
-					<small>Datum objave: {{tender.lastModified | date : dateFormat}}</small>
+				<div class="panel-footer">
+					<div class="row">
+						<div class="col-md-8"><small>Datum objave: {{tender.lastModified | date : dateFormat}}</small></div>
+						<div class="col-md-4" style="text-align: right;"><small><a class="custom-a" ng-click="showTender(tender)">Detalji...</a></small></div>
+					</div>
 				</div>
 			</div>
 		</div>

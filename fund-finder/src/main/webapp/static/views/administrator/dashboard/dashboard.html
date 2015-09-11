@@ -13,62 +13,80 @@
 			<div class="ibox float-e-margins">
 				<div class="ibox-title gray-bg">
 					<h5>
-						<i class="fa fa-users"></i> Najnoviji korisnici
+						<i class="fa fa-users fa-lg"></i>&nbsp;&nbsp;&nbsp;NAJNOVIJI KORISNICI
 					</h5>
 					<div class="ibox-tools">
-						<a class="dropdown-toggle m-r-xs" data-toggle="dropdown"><i class="fa fa-wrench"></i></a>
-						<ul class="dropdown-menu dropdown-user">
-							<li><a ng-click="layout = 'grid'"><i class="fa fa-th"></i> Grid layout</a></li>
-							<li><a ng-click="layout = 'table'"><i class="fa fa-table"></i> Table layout</a></li>
-						</ul>
 						<a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 					</div>
 				</div>
 				<div class="ibox-content">
-					<div class="row" ng-show="layout == 'grid'">
-						<div ng-repeat="user in users" class="col-lg-4 col-md-4 col-sm-4 col-xs-6 p-xs">
-							<a class="grid-a" ng-click="showDetails(user)">
-								<div class="widget-head-color-box gray-bg p-lg text-center">
-		                            <div class="m-b-sm">
-		                            	<h3 class="font-bold no-margins">{{user.fullName}}</h3>
-		                                <small>{{user.company}}</small>
-		                            </div>
-		                            <i class="fa fa-user fa-4x img-circle circle-border m-b-sm"></i>
-		                            <div>
-		                                <small>{{user.oib}}</small>
-		                            </div>
-		                        </div>
-	                        </a>
+					<div ng-repeat="user in users" class="col-lg-4 col-md-4 col-sm-4 col-xs-6 p-xs">
+						<div class="panel panel-default custom-box-shadow">
+							<div class="panel-heading">
+								<h4 class="m-t-xxs m-b-xxs">
+									<a class="custom-a" ng-click="showUser(user)">{{user.firstName + ' ' + user.lastName}}</a>
+								</h4>
+							</div>
+							<div class="panel-body">
+								<div class="form-group">
+									<label class="custom-gray p-xxs" style="width: 100%">Tvrtka</label>
+									<span class="p-xxs">{{user.company.name}}</span>
+								</div>
+								<div class="form-group">
+									<label class="custom-gray p-xxs" style="width: 100%">OIB</label>
+									<span class="p-xxs">{{user.company.oib}}</span>
+								</div>
+							</div>
+							<div class="panel-footer">
+								<div class="row">
+									<div class="col-md-8"><small>Datum registracije: {{user.timeCreated | date : dateFormat}}</small></div>
+									<div class="col-md-4" style="text-align: right;"><small><a class="custom-a" ng-click="showUser(user)">Detalji...</a></small></div>
+								</div>
+							</div>
 						</div>
 					</div>
-					<div class="row" ng-show="layout == 'table'">
-						
-					</div>
 				</div>
 			</div>
 			
 			<div class="ibox float-e-margins">
 				<div class="ibox-title gray-bg">
 					<h5>
-						<i class="fa fa-star"></i> Najnoviji natječaji
+						<i class="fa fa-star fa-lg"></i>&nbsp;&nbsp;&nbsp;NAJNOVIJI NATJEČAJI
 					</h5>
 					<div class="ibox-tools">
 						<a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 					</div>
 				</div>
 				<div class="ibox-content">
-					<strong>Lorem ipsum dolor</strong> Aenean commodo ligula eget
-					dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis
-					parturient montes, nascetur ridiculus mus. Donec quam felis,
-					ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat
-					massa quis enim.
+					<div ng-repeat="tender in tenders" class="col-lg-4 col-md-4 col-sm-4 col-xs-6 p-xs">
+						<div class="panel panel-default custom-box-shadow">
+							<div class="panel-heading">
+								<h4 class="m-t-xxs m-b-xxs">
+									<a class="custom-a" ng-click="showTender(tender)">{{tender.name}}</a>
+								</h4>
+							</div>
+							<div class="panel-body">
+								<div class="form-group" ng-repeat="question in tender.questions" ng-show="question.metadata && question.metadata.indexOf('PANEL_DATA') != -1">
+									<label class="custom-gray p-xxs" style="width: 100%">{{question.text}}</label>
+									<span ng-show="question.metadata && question.metadata.indexOf('DATE') == -1" class="p-xxs">{{question.answer.value | date : dateFormat}}</span>
+									<span ng-show="question.metadata && question.metadata.indexOf('DATE') != -1" class="p-xxs">{{question.answer.value | date : dateFormat}}</span>
+								</div>
+							</div>
+							<div class="panel-footer">
+								<div class="row">
+									<div class="col-md-8"><small>Datum objave: {{tender.lastModified | date : dateFormat}}</small></div>
+									<div class="col-md-4" style="text-align: right;"><small><a class="custom-a" ng-click="showTender(tender)">Detalji...</a></small></div>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 			
 			<div class="ibox float-e-margins">
 				<div class="ibox-title gray-bg">
 					<h5>
-						<i class="fa fa-area-chart"></i> Statistika
+						<i class="fa fa-area-chart fa-lg"></i>&nbsp;&nbsp;&nbsp;STATISTIKA
 					</h5>
 					<div class="ibox-tools">
 						<a class="collapse-link"><i class="fa fa-chevron-up"></i></a>

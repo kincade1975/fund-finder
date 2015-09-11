@@ -49,6 +49,12 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdlePro
             controller: 'Administrator_UserShowCtrl',
             params: { 'id' : null }
         })
+        .state('administrator.user_edit', {
+            url: "/administrator/user/edit/:id",
+            templateUrl: "views/administrator/user/edit.html",
+            controller: 'Administrator_UserEditCtrl',
+            params: { 'id' : null }
+        })
         .state('administrator.tender_overview', {
             url: "/administrator/tender/overview",
             templateUrl: "views/administrator/tender/overview.html",
@@ -109,6 +115,12 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdlePro
             abstract: true,
             url: "/fund_finder",
             templateUrl: "views/common/content.html",
+        })
+        .state('user.user_edit', {
+            url: "/user/user/edit/:id",
+            templateUrl: "views/administrator/user/edit.html",
+            controller: 'Administrator_UserEditCtrl',
+            params: { 'id' : null }
         })
         .state('user.company_edit', {
             url: "/user/company/:mode",

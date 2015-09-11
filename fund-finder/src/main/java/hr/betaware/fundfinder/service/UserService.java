@@ -77,6 +77,12 @@ public class UserService {
 		return userResource;
 	}
 
+	public UserResource saveUser(UserResource resource) {
+		User entity = userResourceAssembler.updateEntity(mongoOperations.findById(resource.getIdentificator(), User.class), resource);
+		mongoOperations.save(entity);
+		return userResourceAssembler.toResource(entity);
+	}
+
 	public void deleteUser(Integer id) {
 		User user = mongoOperations.findById(id, User.class);
 		mongoOperations.remove(user.getCompany());

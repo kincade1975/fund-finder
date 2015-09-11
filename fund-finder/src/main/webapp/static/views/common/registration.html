@@ -38,7 +38,7 @@
                         <small ng-show="form.confirmPassword.$touched && form.confirmPassword.$invalid" class="m-l-xs help-block" style="margin-top: 2px;">Molimo ponovite zaporku</small>
                         <small ng-show="registration.confirmPassword.length > 0 && registration.password != registration.confirmPassword" class="m-l-xs help-block" style="margin-top: 2px">Zaporke se ne podudaraju</small>
                     </div>
-                    <button ng-disabled="form.$invalid" type="submit" class="btn btn-primary block full-width m-b-sm">Registriraj</button>
+                    <button ng-disabled="form.$invalid || (registration.confirmPassword.length > 0 && registration.password != registration.confirmPassword)" type="submit" class="btn btn-primary block full-width m-b-sm">Registriraj</button>
                 </form>
             </div>
         </div>

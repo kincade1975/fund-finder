@@ -29,9 +29,15 @@ public class UserController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
-	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR')")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_USER')")
 	public UserResource find(@PathVariable Integer id) {
 		return userService.find(id);
+	}
+
+	@RequestMapping(method = RequestMethod.POST)
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_USER')")
+	public UserResource saveUser(@RequestBody UserResource resource) {
+		return userService.saveUser(resource);
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, value="/{id}")

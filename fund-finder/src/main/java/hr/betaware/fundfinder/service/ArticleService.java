@@ -2,8 +2,6 @@ package hr.betaware.fundfinder.service;
 
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,15 +30,7 @@ public class ArticleService {
 	private MongoOperations mongoOperations;
 
 	@Autowired
-	private SequenceService sequenceService;
-
-	@Autowired
 	private ArticleResourceAssembler articleResourceAssembler;
-
-	@PostConstruct
-	public void init() {
-		//		createTestData();
-	}
 
 	public List<ArticleResource> findAll() {
 		return articleResourceAssembler.toResources(mongoOperations.findAll(Article.class));
@@ -103,16 +93,6 @@ public class ArticleService {
 		List<Article> entities = mongoOperations.find(query, Article.class);
 
 		return new PageableResource<>(total, articleResourceAssembler.toResources(entities));
-	}
-
-	void createTestData() {
-		for (int i = 10; i < 100; i++) {
-			Article entity = new Article();
-			entity.setId(sequenceService.getNextSequence(SequenceService.SEQUENCE_ARTICLE));
-			entity.setTitle("Title " + i);
-			entity.setText("Text " + i);
-			mongoOperations.save(entity);
-		}
 	}
 
 }

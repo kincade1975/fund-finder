@@ -1,6 +1,6 @@
 angular.module('fundFinder')
 
-.controller('DashboardCtrl', function($rootScope, $scope, $state, Administrator_DashboardService) {   
+.controller('DashboardCtrl', function($rootScope, $scope, $state, Administrator_DashboardService, Administrator_TotalService) {   
 
 	Administrator_DashboardService.getLatestUsers()
 		.success(function(data, status) {
@@ -17,6 +17,8 @@ angular.module('fundFinder')
 		.error(function(data, status) {
 			toastr.error('Došlo je do pogreške prilikom dohvaćanja najnovijih natječaja');
 		});
+	
+	Administrator_TotalService.updateTotal();
 	
 	$scope.showUser = function(user) {
 		$state.go('administrator.user_show', { 'id' : user.id });

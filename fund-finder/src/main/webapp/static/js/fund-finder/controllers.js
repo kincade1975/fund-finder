@@ -4,7 +4,7 @@ angular
     // ==============================================================================================================
     // 	Security Controller
     // ==============================================================================================================
-    .controller('SecurityCtrl', function($rootScope, $scope, $http, $state, Administrator_TotalService) {
+    .controller('SecurityCtrl', function($rootScope, $scope, $http, $state) {
     	
     	/**
     	 * Login function.
@@ -96,7 +96,6 @@ angular
 		// initial load
 		authenticate();
 		$scope.credentials = { username: "superadmin@gmail.com", password: "admin" };
-		Administrator_TotalService.updateTotal();
     })
     
     // ==============================================================================================================

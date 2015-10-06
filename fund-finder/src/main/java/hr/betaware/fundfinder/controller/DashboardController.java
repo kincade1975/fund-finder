@@ -20,13 +20,13 @@ public class DashboardController {
 	private DashboardService dashboardService;
 
 	@RequestMapping(method = RequestMethod.GET, value = "/users")
-	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR')")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO')")
 	public List<UserResource> findLatestUsers() {
 		return dashboardService.findLatestUsers();
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/tenders")
-	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR')")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO')")
 	public List<TenderResource> findLatestTenders() {
 		return dashboardService.findLatestTenders();
 	}

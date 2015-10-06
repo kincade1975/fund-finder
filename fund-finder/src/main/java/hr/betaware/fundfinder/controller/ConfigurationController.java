@@ -29,31 +29,31 @@ public class ConfigurationController {
 	private ConfigurationService configurationService;
 
 	@RequestMapping(method = RequestMethod.GET, value="/question")
-	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_USER')")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO','ROLE_USER')")
 	public List<QuestionResource> getQuestions(@RequestParam String entityType) {
 		return configurationService.getQuestions(entityType);
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value="/question/{id}")
-	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_USER')")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO','ROLE_USER')")
 	public QuestionResource getQuestion(@PathVariable Integer id, @RequestParam String entityType) {
 		return configurationService.getQuestion(entityType, id);
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value="/question")
-	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR')")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO')")
 	public QuestionResource saveQuestion(@RequestBody QuestionResource resource) {
 		return configurationService.saveQuestion(resource);
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, value="/question/{id}")
-	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR')")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO')")
 	public void deleteQuestion(@PathVariable Integer id) {
 		configurationService.deleteQuestion(id);
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value="/question/types")
-	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR')")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO')")
 	public List<String> getQuestionTypes() {
 		List<String> result = new ArrayList<>();
 		for (QuestionType type : QuestionType.values()) {
@@ -63,7 +63,7 @@ public class ConfigurationController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value="/question/metadata")
-	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR')")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO')")
 	public List<String> getQuestionMetadata() {
 		List<String> result = new ArrayList<>();
 		for (QuestionMetadata metadata : QuestionMetadata.values()) {
@@ -73,31 +73,31 @@ public class ConfigurationController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value="/cities")
-	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_USER')")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO','ROLE_USER')")
 	public List<CityResource> getCities() {
 		return configurationService.getCities();
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value="/counties")
-	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_USER')")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO','ROLE_USER')")
 	public List<CountyResource> getCounties() {
 		return configurationService.getCounties();
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value="/nkds")
-	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_USER')")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO','ROLE_USER')")
 	public List<NkdResource> getNkds() {
 		return configurationService.getNkds();
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value="/operators/{id}")
-	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR')")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO')")
 	public List<LinkOperator> getOperators(@PathVariable Integer id) {
 		return configurationService.getOperators(id);
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value="/linkQuestion")
-	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR')")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO')")
 	public void linkQuestion(@RequestParam Integer tenderQuestionId, @RequestParam List<Integer> companyQuestionId, @RequestParam LinkOperator linkOperator) {
 		configurationService.linkQuestion(tenderQuestionId, companyQuestionId, linkOperator);
 	}

@@ -4,7 +4,7 @@ angular
     // ==============================================================================================================
     // 	Security Controller
     // ==============================================================================================================
-    .controller('SecurityCtrl', function($rootScope, $scope, $http, $state) {
+    .controller('SecurityCtrl', function($rootScope, $scope, $http, $state, Administrator_TotalService) {
     	
     	/**
     	 * Login function.
@@ -78,7 +78,12 @@ angular
 					$rootScope.userId = data.id;
 					$rootScope.username = data.username;
 					$rootScope.fullName = data.firstName + " " + data.lastName;
-					$rootScope.role = data.role;	
+					$rootScope.role = data.role;
+					
+					if ($rootScope.role == "ROLE_SUPERADMIN" || $rootScope.role == "ROLE_ADMINISTRATOR" || $rootScope.role == "ROLE_ADMINISTRATOR_RO") {
+						Administrator_TotalService.updateTotal();
+						Administrator_TotalService.startAutoUpdate();
+					}
 					
 					callback && callback();
 				} else {

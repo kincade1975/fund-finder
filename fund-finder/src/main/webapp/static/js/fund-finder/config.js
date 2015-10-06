@@ -5,7 +5,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdlePro
 	
 	$urlRouterProvider.when('/', '/login').otherwise('/');
 
-    $ocLazyLoadProvider.config({ debug: true });
+    $ocLazyLoadProvider.config({ debug: false });
 
     $stateProvider
     
@@ -15,15 +15,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdlePro
         .state('administrator', {
             abstract: true,
             url: "/fund_finder",
-            templateUrl: "views/common/content.html",
-            resolve: {
-            	loadPlugin: function ($ocLazyLoad) {
-            		return $ocLazyLoad.load({
-            			name: 'fundFinder',
-            			files: ['js/fund-finder/administrator/service/service_total.js']
-            		});
-            	}
-            }
+            templateUrl: "views/common/content.html"
         })
         .state('login', {
 			url: '/login',
@@ -457,5 +449,4 @@ angular
 		    $rootScope.currentState = to.name;
 		    $rootScope.currentStateParams = toParams;
 		});
-		
     });

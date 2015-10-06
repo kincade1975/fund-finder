@@ -5,22 +5,22 @@
                 <img alt="Fund Finder" src="/img/fund_finder_logo.png" width="50">
                 <label class="nav-label m-l-xs" style="color: white; font-weight: 400;">FUND FINDER</label>
             </li>
-            <li ui-sref-active="active" ng-show="role == 'ROLE_SUPERADMIN' || role == 'ROLE_ADMINISTRATOR'">
+            <li ui-sref-active="active" ng-show="role == 'ROLE_SUPERADMIN' || role == 'ROLE_ADMINISTRATOR' || role == 'ROLE_ADMINISTRATOR_RO'">
                 <a ui-sref="administrator.dashboard"><i class="fa fa-tachometer"></i> <span class="nav-label">Kontrolna ploča</span> </a>
             </li>
-            <li ng-show="role == 'ROLE_SUPERADMIN' || role == 'ROLE_ADMINISTRATOR'" ng-class="{active: $state.is('administrator.user_overview') || $state.is('administrator.user_show')}">
+            <li ng-show="role == 'ROLE_SUPERADMIN' || role == 'ROLE_ADMINISTRATOR' || role == 'ROLE_ADMINISTRATOR_RO'" ng-class="{active: $state.is('administrator.user_overview') || $state.is('administrator.user_show')}">
                 <a ui-sref="administrator.user_overview"><i class="fa fa-users"></i> <span class="nav-label">Korisnici</span><span class="label label-default pull-right">{{totalUsers}}</span></a>
             </li>
-            <li ui-sref-active="active" ng-show="role == 'ROLE_SUPERADMIN' || role == 'ROLE_ADMINISTRATOR'">
+            <li ui-sref-active="active" ng-show="role == 'ROLE_SUPERADMIN' || role == 'ROLE_ADMINISTRATOR' || role == 'ROLE_ADMINISTRATOR_RO'">
                 <a ui-sref="administrator.tender_overview"><i class="fa fa-star"></i> <span class="nav-label">Natječaji</span><span class="label label-default pull-right">{{totalTenders}}</span></a>
             </li>
-            <li ng-show="role == 'ROLE_SUPERADMIN' || role == 'ROLE_ADMINISTRATOR'" ng-class="{active: $state.is('administrator.investment_overview') || $state.is('administrator.investment_edit')}">
+            <li ng-show="role == 'ROLE_SUPERADMIN' || role == 'ROLE_ADMINISTRATOR' || role == 'ROLE_ADMINISTRATOR_RO'" ng-class="{active: $state.is('administrator.investment_overview') || $state.is('administrator.investment_edit')}">
                 <a ui-sref="administrator.investment_overview"><i class="fa fa-line-chart"></i> <span class="nav-label">Investicije</span><span class="label label-default pull-right">{{totalInvestments}}</span></a>
             </li>
-            <li ng-show="role == 'ROLE_SUPERADMIN' || role == 'ROLE_ADMINISTRATOR'" ng-class="{active: $state.is('administrator.article_overview') || $state.is('administrator.article_edit')}">
+            <li ng-show="role == 'ROLE_SUPERADMIN' || role == 'ROLE_ADMINISTRATOR' || role == 'ROLE_ADMINISTRATOR_RO'" ng-class="{active: $state.is('administrator.article_overview') || $state.is('administrator.article_edit')}">
                 <a ui-sref="administrator.article_overview"><i class="fa fa-university"></i> <span class="nav-label">Kako do sredstava</span><span class="label label-default pull-right">{{totalArticles}}</span></a>
             </li>
-            <li ui-sref-active="active" ng-show="role == 'ROLE_SUPERADMIN' || role == 'ROLE_ADMINISTRATOR'">
+            <li ui-sref-active="active" ng-show="role == 'ROLE_SUPERADMIN' || role == 'ROLE_ADMINISTRATOR' || role == 'ROLE_ADMINISTRATOR_RO'">
                 <a ui-sref="administrator.statistics"><i class="fa fa-area-chart"></i> <span class="nav-label">Statistika</span></a>
             </li>
             <li ng-show="role == 'ROLE_SUPERADMIN'" ng-class="{active: $state.is('administrator.configuration_company') || $state.is('administrator.configuration_tender') || $state.is('administrator.configuration_preview')}">

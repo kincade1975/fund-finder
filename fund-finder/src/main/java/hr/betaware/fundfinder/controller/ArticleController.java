@@ -23,31 +23,31 @@ public class ArticleController {
 	private ArticleService articleService;
 
 	@RequestMapping(method = RequestMethod.GET)
-	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_USER')")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO','ROLE_USER')")
 	public List<ArticleResource> findAll() {
 		return articleService.findAll();
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
-	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_USER')")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO','ROLE_USER')")
 	public ArticleResource findArticle(@PathVariable Integer id) {
 		return articleService.findArticle(id);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR')")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO')")
 	public ArticleResource saveArticle(@RequestBody ArticleResource resource) {
 		return articleService.saveArticle(resource);
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, value="/{id}")
-	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR')")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO')")
 	public void deleteArticle(@PathVariable Integer id) {
 		articleService.deleteArticle(id);
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/page")
-	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR')")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO')")
 	public PageableResource<ArticleResource> getPage(@RequestBody UiGridResource resource) {
 		return articleService.getPage(resource);
 	}

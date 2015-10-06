@@ -34,6 +34,8 @@
 		<font-awesome.version>4.4.0</font-awesome.version>
 		<jquery.version>2.1.4</jquery.version>
 		<jquery-ui.version>1.11.4</jquery-ui.version>
+		<sockjs-client.version>1.0.3</sockjs-client.version>
+		<stomp-websocket.version>2.3.3</stomp-websocket.version>
 		<summernote.version>0.6.16</summernote.version>
 		<toastr.version>2.1.1</toastr.version>
 		<ui-grid.version>3.0.1</ui-grid.version>
@@ -44,15 +46,15 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 			<exclusions>
-		        <exclusion>
-		            <groupId>org.springframework.boot</groupId>
-		            <artifactId>spring-boot-starter-tomcat</artifactId>
-		        </exclusion>
-		    </exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-tomcat</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
-		    <groupId>org.springframework.boot</groupId>
-		    <artifactId>spring-boot-starter-undertow</artifactId>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-undertow</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -77,6 +79,15 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-websocket</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-messaging</artifactId>
 		</dependency>
 
 		<dependency>
@@ -219,6 +230,16 @@
 					<groupId>org.webjars.bower</groupId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars.bower</groupId>
+			<artifactId>sockjs-client</artifactId>
+			<version>${sockjs-client.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>stomp-websocket</artifactId>
+			<version>${stomp-websocket.version}</version>
 		</dependency>
 	</dependencies>
 

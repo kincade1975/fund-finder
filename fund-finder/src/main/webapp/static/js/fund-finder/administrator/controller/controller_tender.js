@@ -3,7 +3,7 @@ angular.module('fundFinder')
 // ==============================================================================================================
 // 	OVERVIEW
 // ==============================================================================================================
-.controller('Administrator_TenderOverviewCtrl', function($rootScope, $scope, $state, Administrator_TotalService, Administrator_TenderService) {
+.controller('Administrator_TenderOverviewCtrl', function($rootScope, $scope, $state, Administrator_TenderService) {
 	$scope.gridOptions = {
 			enableScrollbars: false,
 			paginationPageSizes: [10, 20, 30, 50, 100],
@@ -60,10 +60,10 @@ angular.module('fundFinder')
 					width: 126,
 					cellTemplate:
 						'<div style="padding-top: 1px">' +
-						'<button ng-show="row.entity.active == false" ng-click="grid.appScope.activateTender(row.entity)" class="btn-xs btn-white m-l-xs"><i class="fa fa-2x fa-toggle-off"></i></button>' + 
-						'<button ng-show="row.entity.active == true" ng-click="grid.appScope.deactivateTender(row.entity)" class="btn-xs btn-white m-l-xs"><i class="fa fa-2x fa-toggle-on"></i></button>' +
-						'<button ng-click="grid.appScope.editTender(row.entity)" class="btn-xs btn-white m-l-xs"><i class="fa fa-2x fa-edit"></i></button>' +
-						'<button ng-click="grid.appScope.deleteTender(row.entity)" class="btn-xs btn-white m-l-xs"><i class="fa fa-2x fa-times"></i></button>' + 
+						'<button ng-show="row.entity.active == false" ng-disabled="grid.appScope.role == \'ROLE_ADMINISTRATOR_RO\'" ng-click="grid.appScope.activateTender(row.entity)" class="btn-xs btn-white m-l-xs"><i class="fa fa-2x fa-toggle-off"></i></button>' + 
+						'<button ng-show="row.entity.active == true" ng-disabled="grid.appScope.role == \'ROLE_ADMINISTRATOR_RO\'" ng-click="grid.appScope.deactivateTender(row.entity)" class="btn-xs btn-white m-l-xs"><i class="fa fa-2x fa-toggle-on"></i></button>' +
+						'<button ng-disabled="grid.appScope.role == \'ROLE_ADMINISTRATOR_RO\'" ng-click="grid.appScope.editTender(row.entity)" class="btn-xs btn-white m-l-xs"><i class="fa fa-2x fa-edit"></i></button>' +
+						'<button ng-disabled="grid.appScope.role == \'ROLE_ADMINISTRATOR_RO\'" ng-click="grid.appScope.deleteTender(row.entity)" class="btn-xs btn-white m-l-xs"><i class="fa fa-2x fa-times"></i></button>' + 
 						'</div>'
 				}
 			],
@@ -205,7 +205,6 @@ angular.module('fundFinder')
 			    				.success(function(data, status) {
 			    					$scope.getPage($scope.gridApi.pagination.getPage(), $scope.gridOptions.paginationPageSize);
 			    					toastr.success('Natječaj je uspješno obrisan');
-			    					Administrator_TotalService.updateTotal();
 			    				})
 			    				.error(function(data, status) {
 			    					if (status == 403) {
@@ -221,6 +220,13 @@ angular.module('fundFinder')
 	        });
 		}
 		
+		// watch 'totalTenders' variable, so if it changes we can refresh grid
+		$scope.$watch('totalTenders', function(newValue, oldValue) {
+			if (newValue != oldValue) {
+				$scope.getPage($scope.gridApi.pagination.getPage(), $scope.gridOptions.paginationPageSize);
+			}
+		});
+		
 		// initial load
 		$scope.getPage(1, 10);
 })
@@ -228,7 +234,7 @@ angular.module('fundFinder')
 // ==============================================================================================================
 // 	EDIT
 // ==============================================================================================================
-.controller('Administrator_TenderEditCtrl', function($rootScope, $scope, $state, $sce, $stateParams, Administrator_TotalService, Administrator_ConfigurationService, Administrator_InvestmentService, Administrator_TenderService) {
+.controller('Administrator_TenderEditCtrl', function($rootScope, $scope, $state, $sce, $stateParams, Administrator_ConfigurationService, Administrator_InvestmentService, Administrator_TenderService) {
 	
 	$scope.mode = $stateParams.mode;
 	$scope.id = $stateParams.id
@@ -258,7 +264,6 @@ angular.module('fundFinder')
 			.success(function(data, status) {
 				$scope.tender = data;
 				toastr.success('Natječaj je uspješno spremljen');
-				Administrator_TotalService.updateTotal();
 			})
 			.error(function(data, status) {
 				if (status == 403) {

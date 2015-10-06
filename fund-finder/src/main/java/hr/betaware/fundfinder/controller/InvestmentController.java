@@ -24,43 +24,43 @@ public class InvestmentController {
 	private InvestmentService investmentService;
 
 	@RequestMapping(method = RequestMethod.GET)
-	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_USER')")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO','ROLE_USER')")
 	public List<InvestmentResource> findInvestments() {
 		return investmentService.findInvestments();
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
-	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR')")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO')")
 	public InvestmentResource findInvestment(@PathVariable Integer id) {
 		return investmentService.findInvestment(id);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR')")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO')")
 	public InvestmentResource saveInvestment(@RequestBody InvestmentResource resource) {
 		return investmentService.saveInvestment(resource);
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, value="/{id}")
-	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR')")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO')")
 	public void deleteInvestment(@PathVariable Integer id) {
 		investmentService.deleteInvestment(id);
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/page")
-	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR')")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO')")
 	public PageableResource<InvestmentResource> getPage(@RequestBody UiGridResource resource) {
 		return investmentService.getPage(resource);
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/user")
-	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_USER')")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO','ROLE_USER')")
 	public List<InvestmentResource> findInvestments4User(Principal principal) {
 		return investmentService.findInvestments4User(principal);
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/user/{id}")
-	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_USER')")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO','ROLE_USER')")
 	public List<InvestmentResource> findInvestments4User(@PathVariable Integer id) {
 		return investmentService.findInvestments4User(id);
 	}

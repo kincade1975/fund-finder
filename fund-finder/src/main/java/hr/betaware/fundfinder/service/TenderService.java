@@ -45,6 +45,9 @@ public class TenderService {
 	@Autowired
 	private ConfigurationService configurationService;
 
+	@Autowired
+	private StompService stompService;
+
 	public List<TenderResource> findAll() {
 		return tenderResourceAssembler.toResources(mongoOperations.findAll(Tender.class));
 	}
@@ -100,12 +103,18 @@ public class TenderService {
 
 		mongoOperations.save(entity);
 
+		if (resource.getIdentificator() == null) {
+			// update total only on insert, not update
+			stompService.updateTotal();
+		}
+
 		return findTender(entity.getId());
 	}
 
 	public void deleteTender(Integer id) {
 		Tender entity = mongoOperations.findById(id, Tender.class);
 		mongoOperations.remove(entity);
+		stompService.updateTotal();
 	}
 
 	public PageableResource<TenderResource> getPage(UiGridResource resource) {

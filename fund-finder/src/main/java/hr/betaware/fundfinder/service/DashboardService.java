@@ -32,7 +32,7 @@ public class DashboardService {
 
 	public List<UserResource> findLatestUsers() {
 		Query query = new Query();
-		query.addCriteria(Criteria.where("role").nin(Role.ROLE_SUPERADMIN, Role.ROLE_ADMINISTRATOR));
+		query.addCriteria(Criteria.where("role").is(Role.ROLE_USER));
 		query.with(new Sort(Direction.DESC, "time_created"));
 		query.limit(6);
 		return userResourceAssembler.toResources(mongoOperations.find(query, User.class));

@@ -3,7 +3,7 @@ angular.module('fundFinder')
 // ==============================================================================================================
 // 	OVERVIEW
 // ==============================================================================================================
-.controller('Administrator_InvestmentOverviewCtrl', function($rootScope, $scope, $state, Administrator_TotalService, Administrator_InvestmentService) {
+.controller('Administrator_InvestmentOverviewCtrl', function($rootScope, $scope, $state, Administrator_InvestmentService) {
 	$scope.gridOptions = {
 			enableScrollbars: false,
 			paginationPageSizes: [10, 20, 30, 50, 100],
@@ -47,7 +47,7 @@ angular.module('fundFinder')
 					enableFiltering: false,
 					enableHiding: false,
 					width: 82,
-					cellTemplate:'<div style="padding-top: 1px"><button ng-click="grid.appScope.editInvestment(row.entity)" class="btn-xs btn-white m-l-xs"><i class="fa fa-2x fa-edit"></i></button><button ng-click="grid.appScope.deleteInvestment(row.entity)" class="btn-xs btn-white m-l-xs"><i class="fa fa-2x fa-times"></i></button></div>'
+					cellTemplate:'<div style="padding-top: 1px"><button ng-disabled="grid.appScope.role == \'ROLE_ADMINISTRATOR_RO\'" ng-click="grid.appScope.editInvestment(row.entity)" class="btn-xs btn-white m-l-xs"><i class="fa fa-2x fa-edit"></i></button><button ng-disabled="grid.appScope.role == \'ROLE_ADMINISTRATOR_RO\'" ng-click="grid.appScope.deleteInvestment(row.entity)" class="btn-xs btn-white m-l-xs"><i class="fa fa-2x fa-times"></i></button></div>'
 				}
 			],
 			onRegisterApi: function(gridApi) {
@@ -158,7 +158,6 @@ angular.module('fundFinder')
 			    				.success(function(data, status) {
 			    					$scope.getPage($scope.gridApi.pagination.getPage(), $scope.gridOptions.paginationPageSize);
 			    					toastr.success('Investicija je uspješno obrisana');
-			    					Administrator_TotalService.updateTotal();
 			    				})
 			    				.error(function(data, status) {
 			    					if (status == 403) {
@@ -174,6 +173,13 @@ angular.module('fundFinder')
 	        });
 		}
 		
+		// watch 'totalInvestments' variable, so if it changes we can refresh grid
+		$scope.$watch('totalInvestments', function(newValue, oldValue) {
+			if (newValue != oldValue) {
+				$scope.getPage($scope.gridApi.pagination.getPage(), $scope.gridOptions.paginationPageSize);
+			}
+		});
+		
 		// initial load
 		$scope.getPage(1, 10);
 })
@@ -181,7 +187,7 @@ angular.module('fundFinder')
 // ==============================================================================================================
 // 	EDIT
 // ==============================================================================================================
-.controller('Administrator_InvestmentEditCtrl', function($rootScope, $scope, $state, $stateParams, Administrator_TotalService, Administrator_InvestmentService) {
+.controller('Administrator_InvestmentEditCtrl', function($rootScope, $scope, $state, $stateParams, Administrator_InvestmentService) {
 	$scope.mode = $stateParams.mode;
 	$scope.id = $stateParams.id;
 	
@@ -206,7 +212,6 @@ angular.module('fundFinder')
 			.success(function(data, status) {
 				$scope.investment = data;
 				toastr.success('Investicija je uspješno spremljena');
-				Administrator_TotalService.updateTotal();
 			})
 			.error(function(data, status) {
 				if (status == 403) {

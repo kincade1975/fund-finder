@@ -60,6 +60,9 @@ public class UserService {
 	@Autowired
 	private UserResourceAssembler userResourceAssembler;
 
+	@Autowired
+	private StompService stompService;
+
 	@PostConstruct
 	public void init() {
 		createDefaultAdminUser();
@@ -87,11 +90,12 @@ public class UserService {
 		User user = mongoOperations.findById(id, User.class);
 		mongoOperations.remove(user.getCompany());
 		mongoOperations.remove(user);
+		stompService.updateTotal();
 	}
 
 	public PageableResource<UserResource> getPage(UiGridResource resource) {
 		Query query = new Query();
-		query.addCriteria(Criteria.where("role").nin(Role.ROLE_SUPERADMIN, Role.ROLE_ADMINISTRATOR));
+		query.addCriteria(Criteria.where("role").is(Role.ROLE_USER));
 
 		// sorting
 		if (resource.getSort() == null || resource.getSort().isEmpty()) {

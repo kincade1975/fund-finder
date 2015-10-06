@@ -32,6 +32,9 @@ public class ArticleService {
 	@Autowired
 	private ArticleResourceAssembler articleResourceAssembler;
 
+	@Autowired
+	private StompService stompService;
+
 	public List<ArticleResource> findAll() {
 		return articleResourceAssembler.toResources(mongoOperations.findAll(Article.class));
 	}
@@ -55,12 +58,18 @@ public class ArticleService {
 
 		mongoOperations.save(entity);
 
+		if (resource.getIdentificator() == null) {
+			// update total only on insert, not update
+			stompService.updateTotal();
+		}
+
 		return articleResourceAssembler.toResource(entity);
 	}
 
 	public void deleteArticle(Integer id) {
 		Article entity = mongoOperations.findById(id, Article.class);
 		mongoOperations.remove(entity);
+		stompService.updateTotal();
 	}
 
 	public PageableResource<ArticleResource> getPage(UiGridResource resource) {

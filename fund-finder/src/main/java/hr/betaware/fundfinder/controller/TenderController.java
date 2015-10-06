@@ -23,43 +23,43 @@ public class TenderController {
 	private TenderService tenderService;
 
 	@RequestMapping(method = RequestMethod.GET)
-	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_USER')")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO','ROLE_USER')")
 	public List<TenderResource> findAll() {
 		return tenderService.findAll();
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
-	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_USER')")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO','ROLE_USER')")
 	public TenderResource findTender(@PathVariable Integer id) {
 		return tenderService.findTender(id);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR')")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO')")
 	public TenderResource saveTender(@RequestBody TenderResource resource) {
 		return tenderService.saveTender(resource);
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, value="/{id}")
-	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR')")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO')")
 	public void deleteTender(@PathVariable Integer id) {
 		tenderService.deleteTender(id);
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/page")
-	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR')")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO')")
 	public PageableResource<TenderResource> getPage(@RequestBody UiGridResource resource) {
 		return tenderService.getPage(resource);
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value="/activate/{id}")
-	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_USER')")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO','ROLE_USER')")
 	public TenderResource activateTender(@PathVariable Integer id) {
 		return tenderService.activateTender(id);
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value="/deactivate/{id}")
-	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_USER')")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO','ROLE_USER')")
 	public TenderResource deactivateTender(@PathVariable Integer id) {
 		return tenderService.deactivateTender(id);
 	}

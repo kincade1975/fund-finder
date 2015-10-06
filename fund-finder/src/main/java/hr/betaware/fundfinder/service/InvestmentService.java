@@ -38,6 +38,9 @@ public class InvestmentService {
 	@Autowired
 	private InvestmentResourceAssembler investmentResourceAssembler;
 
+	@Autowired
+	private StompService stompService;
+
 	public List<InvestmentResource> findInvestments() {
 		Query query = new Query();
 		query.with(new Sort(Direction.ASC, "name"));
@@ -63,12 +66,18 @@ public class InvestmentService {
 
 		mongoOperations.save(entity);
 
+		if (resource.getIdentificator() == null) {
+			// update total only on insert, not update
+			stompService.updateTotal();
+		}
+
 		return investmentResourceAssembler.toResource(entity);
 	}
 
 	public void deleteInvestment(Integer id) {
 		Investment entity = mongoOperations.findById(id, Investment.class);
 		mongoOperations.remove(entity);
+		stompService.updateTotal();
 	}
 
 	public PageableResource<InvestmentResource> getPage(UiGridResource resource) {

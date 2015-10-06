@@ -14,7 +14,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @Document(collection = "user")
 public class User {
 
-	public enum Role { ROLE_SUPERADMIN, ROLE_ADMINISTRATOR, ROLE_USER }
+	public enum Role { ROLE_SUPERADMIN, ROLE_ADMINISTRATOR, ROLE_ADMINISTRATOR_RO, ROLE_USER }
 
 	@Id
 	@Field("id")

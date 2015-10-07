@@ -35,8 +35,15 @@ public class ArticleService {
 	@Autowired
 	private StompService stompService;
 
+	@Autowired
+	private FileService fileService;
+
 	public List<ArticleResource> findAll() {
-		return articleResourceAssembler.toResources(mongoOperations.findAll(Article.class));
+		List<ArticleResource> resources = articleResourceAssembler.toResources(mongoOperations.findAll(Article.class));
+		for (ArticleResource resource : resources) {
+			resource.setBase64(fileService.getMetadata(resource.getImage()).getBase64());
+		}
+		return resources;
 	}
 
 	public ArticleResource findArticle(Integer id) {
@@ -44,7 +51,9 @@ public class ArticleService {
 			// new article
 			return new ArticleResource();
 		}
-		return articleResourceAssembler.toResource(mongoOperations.findById(id, Article.class));
+		ArticleResource result = articleResourceAssembler.toResource(mongoOperations.findById(id, Article.class));
+		result.setBase64(fileService.getMetadata(result.getImage()).getBase64());
+		return result;
 	}
 
 	public ArticleResource saveArticle(ArticleResource resource) {
@@ -63,7 +72,9 @@ public class ArticleService {
 			stompService.updateTotal();
 		}
 
-		return articleResourceAssembler.toResource(entity);
+		ArticleResource result = articleResourceAssembler.toResource(entity);
+		result.setBase64(fileService.getMetadata(result.getImage()).getBase64());
+		return result;
 	}
 
 	public void deleteArticle(Integer id) {

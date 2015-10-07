@@ -47,24 +47,28 @@
 			<form name="form" class="form-horizontal ng-pristine ng-valid" novalidate>
 				
 				<div class="form-group">
-					<div class="col-sm-12" ng-class="{ 'has-error' : form.companyName.$touched && form.companyName.$invalid }">
-						<label class="custom-gray p-xs" style="width: 100%">Naziv<span> *</span></label>
+					<div class="col-sm-12">
+						<label class="custom-gray p-xs" style="width: 100%">Naziv
+							<span class="pull-right" ng-show="form.companyName.$invalid"><i class="fa fa-asterisk" tooltip="Obavezno"></i></span>
+						</label>
 						<input ng-model="company.name" type="text" class="form-control" name="companyName" ng-required="true" />
-						<small ng-show="form.companyName.$touched && form.companyName.$invalid" class="m-l-xs help-block" style="margin-top: 2px">Molimo unesite naziv tvrtke</small>
 					</div>
 				</div>
 				
 				<div class="form-group">
-					<div class="col-sm-12" ng-class="{ 'has-error' : form.companyOib.$touched && form.companyOib.$invalid }">
-						<label class="custom-gray p-xs" style="width: 100%">OIB<span> *</span></label>
+					<div class="col-sm-12">
+						<label class="custom-gray p-xs" style="width: 100%">OIB
+							<span class="pull-right" ng-show="form.companyOib.$invalid"><i class="fa fa-asterisk" tooltip="Obavezno"></i></span>
+						</label>
 						<input ng-model="company.oib" type="text" class="form-control" name="companyOib" ng-required="true" />
-						<small ng-show="form.companyOib.$touched && form.companyOib.$invalid" class="m-l-xs help-block" style="margin-top: 2px">Molimo unesite OIB tvrtke</small>
 					</div>
 				</div>
 				
 				<div class="form-group" ng-repeat="question in company.questions">
 					<div class="col-sm-12">
-						<label class="custom-gray p-xs" style="width: 100%">{{question.text}}<span ng-show="question.mandatory"> *</span></label>
+						<label class="custom-gray p-xs" style="width: 100%">{{question.text}}
+							<span class="pull-right" ng-show="form.question{{question.id}}.$invalid"><i class="fa fa-asterisk" tooltip="Obavezno"></i></span>
+						</label>
 						
 						<input ng-if="question.type == 'TEXT'" class="form-control" type="text" ng-model="question.answer.valueInternal" />
 						
@@ -74,22 +78,21 @@
 							<summernote id="summernote" config="summernoteOptions" ng-model="question.answer.valueInternal" />
 						</div>
 						
-						<input ng-if="question.type == 'NUMBER'" class="form-control" type="number" min="0" ng-model="question.answer.valueInternal">
+						<input name="question{{question.id}}" ng-if="question.type == 'NUMBER'" class="form-control" type="number" min="0" ng-model="question.answer.valueInternal" ng-required="{{question.mandatory}}">
 						
 						<div ng-if="question.type == 'DATE'" class="input-group date">
-		                	<input type="datetime" class="form-control" date-time ng-model="question.answer.valueInternal" view="date" min-view="date" format="{{dateFormat}}" auto-close="true">
+		                	<input name="question{{question.id}}" type="datetime" class="form-control" date-time ng-model="question.answer.valueInternal" view="date" min-view="date" format="{{dateFormat}}" auto-close="true" ng-required="{{question.mandatory}}">
 		                	<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 		            	</div>
 		            	
 						<div ng-if="question.type == 'DATE_TIME'" class="input-group date">
-		                	<input type="datetime" class="form-control" date-time ng-model="question.answer.valueInternal" view="date" format="{{dateTimeFormat}}" auto-close="true">
+		                	<input name="question{{question.id}}" type="datetime" class="form-control" date-time ng-model="question.answer.valueInternal" view="date" format="{{dateTimeFormat}}" auto-close="true" ng-required="{{question.mandatory}}">
 		                	<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 		            	</div>
 		            	
 		            	<div ng-if="question.type == 'RADIO'" class="p-xxs">
 		            		<div ng-repeat="option in question.options">
-		            			<label style="font-weight: normal;"><input icheck ng-model="question.answer.valueInternal" value="{{option.value}}" type="radio" 
-		            				name="radioGroup{{question.id}}">&nbsp;&nbsp;&nbsp;{{option.value}}</label>
+		            			<label style="font-weight: normal;"><input icheck ng-model="question.answer.valueInternal" value="{{option.value}}" type="radio" name="question{{question.id}}" ng-required="{{question.mandatory}}">&nbsp;&nbsp;&nbsp;{{option.value}}</label>
 		            		</div>
 		            	</div>
 		            	
@@ -100,8 +103,8 @@
 		            	</div>
 		            	
 		            	<div ng-if="question.type == 'SELECT'">
-		            		<select class="form-control" chosen ng-model="question.answer.valueInternal" 
-		            			ng-options="option.id as option.value for option in question.options" data-placeholder="Molimo odaberite...">
+		            		<select name="question{{question.id}}" class="form-control" chosen ng-model="question.answer.valueInternal" 
+		            			ng-options="option.id as option.value for option in question.options" data-placeholder="Molimo odaberite..." ng-required="{{question.mandatory}}">
 		            			<option />
 		            		</select>
 		            	</div>

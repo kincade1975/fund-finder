@@ -34,6 +34,7 @@
 		<font-awesome.version>4.4.0</font-awesome.version>
 		<jquery.version>2.1.4</jquery.version>
 		<jquery-ui.version>1.11.4</jquery-ui.version>
+		<ng-file-upload.version>5.0.9</ng-file-upload.version>
 		<sockjs-client.version>1.0.3</sockjs-client.version>
 		<stomp-websocket.version>2.3.3</stomp-websocket.version>
 		<summernote.version>0.6.16</summernote.version>
@@ -99,6 +100,11 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-collections4</artifactId>
 			<version>4.0</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.4</version>
 		</dependency>
 
 		<dependency>
@@ -240,6 +246,11 @@
 			<groupId>org.webjars</groupId>
 			<artifactId>stomp-websocket</artifactId>
 			<version>${stomp-websocket.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars.bower</groupId>
+			<artifactId>ng-file-upload</artifactId>
+			<version>${ng-file-upload.version}</version>
 		</dependency>
 	</dependencies>
 

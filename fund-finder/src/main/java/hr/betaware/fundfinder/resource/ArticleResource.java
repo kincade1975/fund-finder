@@ -23,6 +23,9 @@ public class ArticleResource extends ResourceSupport {
 	@JsonProperty("image")
 	private String image;
 
+	@JsonProperty("base64")
+	private String base64;
+
 	@JsonProperty("timeCreated")
 	private Date timeCreated;
 
@@ -59,6 +62,14 @@ public class ArticleResource extends ResourceSupport {
 
 	public void setImage(String image) {
 		this.image = image;
+	}
+
+	public String getBase64() {
+		return base64;
+	}
+
+	public void setBase64(String base64) {
+		this.base64 = base64;
 	}
 
 	public Date getTimeCreated() {

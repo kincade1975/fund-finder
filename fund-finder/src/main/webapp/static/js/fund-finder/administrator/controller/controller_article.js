@@ -187,7 +187,7 @@ angular.module('fundFinder')
 // ==============================================================================================================
 // 	EDIT
 // ==============================================================================================================
-.controller('Administrator_ArticleEditCtrl', function($rootScope, $scope, $state, $sce, $stateParams, Administrator_ArticleService) {
+.controller('Administrator_ArticleEditCtrl', function($rootScope, $scope, $state, $sce, $stateParams, Upload, Administrator_ArticleService) {
 	$scope.mode = $stateParams.mode;
 	$scope.id = $stateParams.id;
 	
@@ -245,8 +245,28 @@ angular.module('fundFinder')
 	    toolbar: [
 	            ['style', ['bold', 'italic', 'underline']],
 	            ['alignment', ['ul', 'ol', 'paragraph']],
-	            ['insert', ['link','picture','hr']]
+	            ['insert', ['link','hr']]
 	        ]
 	  };
+	
+	$scope.upload = function(files) {
+		if (files && files.length == 1) {
+			Upload.upload({
+		        url: '/api/v1/file/upload',
+		        method: 'POST',
+		        file: files[0]
+		    }).success(function(data, status, headers, config) {
+		    	$scope.article.base64 = data.base64;
+		    	$scope.article.image = data.name;
+		    }).error(function(data, status, headers, config) {
+		    	toastr.error('Došlo je do pogreške prilikom uploada slike');
+		    });
+		}
+	};
+	
+	$scope.removeImage = function() {
+		$scope.article.base64 = null;
+		$scope.article.image = null;
+	}
 	
 });

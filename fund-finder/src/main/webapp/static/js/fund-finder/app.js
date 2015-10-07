@@ -4,6 +4,7 @@
 	    'datePicker',
         'dndLists',
         'localytics.directives',
+        'ngFileUpload',
         'ngIdle',
         'ngSanitize',
         'oc.lazyLoad',

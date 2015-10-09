@@ -51,10 +51,6 @@ public class TenderService {
 	@Autowired
 	private FileService fileService;
 
-	//	public List<TenderResource> findAll() {
-	//		return tenderResourceAssembler.toResources(mongoOperations.findAll(Tender.class));
-	//	}
-
 	public TenderResource findTender(Integer id) {
 		TenderResource resource = null;
 		Map<Integer, Answer> answers = new HashMap<>();
@@ -83,17 +79,17 @@ public class TenderService {
 	}
 
 	public TenderResource activateTender(Integer id) {
-		Tender tender = mongoOperations.findById(id, Tender.class);
-		tender.setActive(Boolean.TRUE);
-		mongoOperations.save(tender);
-		return tenderResourceAssembler.toResource(tender);
+		Tender entity = mongoOperations.findById(id, Tender.class);
+		entity.setActive(Boolean.TRUE);
+		mongoOperations.save(entity);
+		return tenderResourceAssembler.toResource(entity);
 	}
 
 	public TenderResource deactivateTender(Integer id) {
-		Tender tender = mongoOperations.findById(id, Tender.class);
-		tender.setActive(Boolean.FALSE);
-		mongoOperations.save(tender);
-		return tenderResourceAssembler.toResource(tender);
+		Tender entity = mongoOperations.findById(id, Tender.class);
+		entity.setActive(Boolean.FALSE);
+		mongoOperations.save(entity);
+		return tenderResourceAssembler.toResource(entity);
 	}
 
 	public TenderResource saveTender(TenderResource resource) {

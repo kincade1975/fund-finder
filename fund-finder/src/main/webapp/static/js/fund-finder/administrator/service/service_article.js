@@ -13,4 +13,10 @@ angular.module('fundFinder')
 		this.deleteArticle = function(id) {
 			return $http.delete('/api/v1/article/' + id);
 		};
+		this.activateArticle = function(id) {
+			return $http.get('/api/v1/article/activate/' + id);
+		};
+		this.deactivateArticle = function(id) {
+			return $http.get('/api/v1/article/deactivate/' + id);
+		};
 	});

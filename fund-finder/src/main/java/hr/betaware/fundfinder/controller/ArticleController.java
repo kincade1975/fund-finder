@@ -52,4 +52,16 @@ public class ArticleController {
 		return articleService.getPage(resource);
 	}
 
+	@RequestMapping(method = RequestMethod.GET, value="/activate/{id}")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO')")
+	public ArticleResource activateArticle(@PathVariable Integer id) {
+		return articleService.activateArticle(id);
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value="/deactivate/{id}")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO')")
+	public ArticleResource deactivateArticle(@PathVariable Integer id) {
+		return articleService.deactivateArticle(id);
+	}
+
 }

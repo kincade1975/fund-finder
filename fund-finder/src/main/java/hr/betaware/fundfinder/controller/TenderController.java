@@ -20,12 +20,6 @@ public class TenderController {
 	@Autowired
 	private TenderService tenderService;
 
-	//	@RequestMapping(method = RequestMethod.GET)
-	//	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO','ROLE_USER')")
-	//	public List<TenderResource> findAll() {
-	//		return tenderService.findAll();
-	//	}
-
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
 	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO','ROLE_USER')")
 	public TenderResource findTender(@PathVariable Integer id) {
@@ -51,13 +45,13 @@ public class TenderController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value="/activate/{id}")
-	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO','ROLE_USER')")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO')")
 	public TenderResource activateTender(@PathVariable Integer id) {
 		return tenderService.activateTender(id);
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value="/deactivate/{id}")
-	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO','ROLE_USER')")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO')")
 	public TenderResource deactivateTender(@PathVariable Integer id) {
 		return tenderService.deactivateTender(id);
 	}

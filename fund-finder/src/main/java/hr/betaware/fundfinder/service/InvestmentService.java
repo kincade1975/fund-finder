@@ -43,6 +43,7 @@ public class InvestmentService {
 
 	public List<InvestmentResource> findInvestments() {
 		Query query = new Query();
+		query.addCriteria(Criteria.where("active").is(Boolean.TRUE));
 		query.with(new Sort(Direction.ASC, "name"));
 		return investmentResourceAssembler.toResources(mongoOperations.find(query, Investment.class));
 	}
@@ -144,6 +145,20 @@ public class InvestmentService {
 		}
 		user.setInvestments(investments);
 		mongoOperations.save(user);
+	}
+
+	public InvestmentResource activateInvestment(Integer id) {
+		Investment entity = mongoOperations.findById(id, Investment.class);
+		entity.setActive(Boolean.TRUE);
+		mongoOperations.save(entity);
+		return investmentResourceAssembler.toResource(entity);
+	}
+
+	public InvestmentResource deactivateInvestment(Integer id) {
+		Investment entity = mongoOperations.findById(id, Investment.class);
+		entity.setActive(Boolean.FALSE);
+		mongoOperations.save(entity);
+		return investmentResourceAssembler.toResource(entity);
 	}
 
 }

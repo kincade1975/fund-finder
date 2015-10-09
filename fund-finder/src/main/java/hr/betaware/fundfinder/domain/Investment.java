@@ -22,6 +22,9 @@ public class Investment {
 	@Field("description")
 	private String description;
 
+	@Field("active")
+	private Boolean active = Boolean.FALSE;
+
 	@Version
 	@Field("doc_version")
 	private Long docVersion;
@@ -56,6 +59,14 @@ public class Investment {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
 	}
 
 	public Long getDocVersion() {

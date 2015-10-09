@@ -15,7 +15,7 @@
 			<div class="panel panel-default custom-box-shadow">
 				<div class="panel-heading custom-panel-heading">
 					<div style="text-align: right; margin-top: -22px; margin-right: -10px;">
-						<small class="label-primary custom-label-date">{{tender.lastModified | date : 'dd.MM.yyyy'}}</small>
+						<small class="label-primary custom-label-date">{{tender.lastModified | date : dateFormat}}</small>
 					</div>
 					<a class="custom-a" ng-click="showTender(tender)">
 						<p class="custom-panel-heading-p" data-ng-bind="tender.name" data-ellipsis></p>

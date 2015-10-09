@@ -30,6 +30,7 @@ public class ArticleResourceAssembler extends ResourceAssemblerSupport<Article, 
 		resource.setText(StringEscapeUtils.unescapeHtml4(entity.getText()));
 		resource.setStrippedText(new HtmlToPlainText().getPlainText(Jsoup.parse(resource.getText())).substring(0, 300));
 		resource.setImage(entity.getImage());
+		resource.setActive(entity.getActive());
 		resource.setTimeCreated(entity.getTimeCreated());
 		resource.setLastModified(entity.getLastModified());
 		return resource;
@@ -41,6 +42,7 @@ public class ArticleResourceAssembler extends ResourceAssemblerSupport<Article, 
 		entity.setTitle(resource.getTitle());
 		entity.setText(StringEscapeUtils.escapeHtml4(resource.getText()));
 		entity.setImage(resource.getImage());
+		entity.setActive(resource.getActive());
 		return entity;
 	}
 
@@ -48,6 +50,7 @@ public class ArticleResourceAssembler extends ResourceAssemblerSupport<Article, 
 		entity.setTitle(resource.getTitle());
 		entity.setText(StringEscapeUtils.escapeHtml4(resource.getText()));
 		entity.setImage(resource.getImage());
+		entity.setActive(resource.getActive());
 		return entity;
 	}
 

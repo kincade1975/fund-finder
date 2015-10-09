@@ -29,6 +29,9 @@ public class ArticleResource extends ResourceSupport {
 	@JsonProperty("base64")
 	private String base64;
 
+	@JsonProperty("active")
+	private Boolean active = Boolean.FALSE;
+
 	@JsonProperty("timeCreated")
 	private Date timeCreated;
 
@@ -81,6 +84,14 @@ public class ArticleResource extends ResourceSupport {
 
 	public void setBase64(String base64) {
 		this.base64 = base64;
+	}
+
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
 	}
 
 	public Date getTimeCreated() {

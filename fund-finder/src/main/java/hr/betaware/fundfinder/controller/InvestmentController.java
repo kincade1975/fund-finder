@@ -71,4 +71,16 @@ public class InvestmentController {
 		investmentService.saveInvestments4User(resources, principal);
 	}
 
+	@RequestMapping(method = RequestMethod.GET, value="/activate/{id}")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO')")
+	public InvestmentResource activateInvestment(@PathVariable Integer id) {
+		return investmentService.activateInvestment(id);
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value="/deactivate/{id}")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO')")
+	public InvestmentResource deactivateInvestment(@PathVariable Integer id) {
+		return investmentService.deactivateInvestment(id);
+	}
+
 }

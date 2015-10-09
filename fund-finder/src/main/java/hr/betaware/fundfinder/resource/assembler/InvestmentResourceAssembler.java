@@ -25,6 +25,7 @@ public class InvestmentResourceAssembler extends ResourceAssemblerSupport<Invest
 		resource.setIdentificator(entity.getId());
 		resource.setName(entity.getName());
 		resource.setDescription(entity.getDescription());
+		resource.setActive(entity.getActive());
 		resource.setTimeCreated(entity.getTimeCreated());
 		resource.setLastModified(entity.getLastModified());
 		return resource;
@@ -35,12 +36,14 @@ public class InvestmentResourceAssembler extends ResourceAssemblerSupport<Invest
 		entity.setId(sequenceService.getNextSequence(SequenceService.SEQUENCE_INVESTMENT));
 		entity.setName(resource.getName());
 		entity.setDescription(resource.getDescription());
+		entity.setActive(resource.getActive());
 		return entity;
 	}
 
 	public Investment updateEntity(Investment entity, InvestmentResource resource) {
 		entity.setName(resource.getName());
 		entity.setDescription(resource.getDescription());
+		entity.setActive(resource.getActive());
 		return entity;
 	}
 

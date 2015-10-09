@@ -25,6 +25,9 @@ public class Article {
 	@Field("image")
 	private String image;
 
+	@Field("active")
+	private Boolean active = Boolean.FALSE;
+
 	@Version
 	@Field("doc_version")
 	private Long docVersion;
@@ -67,6 +70,14 @@ public class Article {
 
 	public void setImage(String image) {
 		this.image = image;
+	}
+
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
 	}
 
 	public Long getDocVersion() {

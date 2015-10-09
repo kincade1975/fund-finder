@@ -23,6 +23,9 @@ public class InvestmentResource extends ResourceSupport {
 	@JsonProperty("selected")
 	private Boolean selected = Boolean.FALSE;
 
+	@JsonProperty("active")
+	private Boolean active = Boolean.FALSE;
+
 	@JsonProperty("timeCreated")
 	private Date timeCreated;
 
@@ -59,6 +62,14 @@ public class InvestmentResource extends ResourceSupport {
 
 	public void setSelected(Boolean selected) {
 		this.selected = selected;
+	}
+
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
 	}
 
 	public Date getTimeCreated() {

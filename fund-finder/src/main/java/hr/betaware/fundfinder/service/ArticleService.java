@@ -39,7 +39,11 @@ public class ArticleService {
 	private FileService fileService;
 
 	public List<ArticleResource> findAll() {
-		List<ArticleResource> resources = articleResourceAssembler.toResources(mongoOperations.findAll(Article.class));
+		Query query = new Query();
+		query.addCriteria(Criteria.where("active").is(Boolean.TRUE));
+		query.with(new Sort(Direction.DESC, "last_modified"));
+
+		List<ArticleResource> resources = articleResourceAssembler.toResources(mongoOperations.find(query, Article.class));
 		for (ArticleResource resource : resources) {
 			resource.setBase64(fileService.getMetadata(resource.getImage()).getBase64());
 		}
@@ -113,6 +117,20 @@ public class ArticleService {
 		List<Article> entities = mongoOperations.find(query, Article.class);
 
 		return new PageableResource<>(total, articleResourceAssembler.toResources(entities));
+	}
+
+	public ArticleResource activateArticle(Integer id) {
+		Article entity = mongoOperations.findById(id, Article.class);
+		entity.setActive(Boolean.TRUE);
+		mongoOperations.save(entity);
+		return articleResourceAssembler.toResource(entity);
+	}
+
+	public ArticleResource deactivateArticle(Integer id) {
+		Article entity = mongoOperations.findById(id, Article.class);
+		entity.setActive(Boolean.FALSE);
+		mongoOperations.save(entity);
+		return articleResourceAssembler.toResource(entity);
 	}
 
 }

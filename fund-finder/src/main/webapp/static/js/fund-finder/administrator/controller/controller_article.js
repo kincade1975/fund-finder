@@ -29,6 +29,17 @@ angular.module('fundFinder')
 					cellTemplate:'<div class="ui-grid-cell-contents"><a class="custom-a" ng-click="grid.appScope.showArticle(row.entity)">{{row.entity.title}}</a></div>'
 				},
 				{
+					name: 'Status',
+					field: 'active',
+					type: 'boolean',
+					cellTooltip: false, 
+					enableSorting: true,
+					enableFiltering: false,
+					enableHiding: false,
+					width: 100,
+					cellTemplate:'<div ng-show="row.entity.active == true" class="ui-grid-cell-contents"><span class="badge badge-primary"><small>AKTIVAN</small></span></div><div ng-show="row.entity.active == false" class="ui-grid-cell-contents"><span class="badge badge-danger"><small>NEAKTIVAN</small></span></div>'
+				},
+				{
 					name: 'Kreiran',
 					field: 'timeCreated',
 					type: 'date',
@@ -46,8 +57,14 @@ angular.module('fundFinder')
 					enableSorting: false,
 					enableFiltering: false,
 					enableHiding: false,
-					width: 82,
-					cellTemplate:'<div style="padding-top: 1px"><button ng-disabled="grid.appScope.role == \'ROLE_ADMINISTRATOR_RO\'" ng-click="grid.appScope.editArticle(row.entity)" class="btn-xs btn-white m-l-xs"><i class="fa fa-2x fa-edit"></i></button><button ng-disabled="grid.appScope.role == \'ROLE_ADMINISTRATOR_RO\'" ng-click="grid.appScope.deleteArticle(row.entity)" class="btn-xs btn-white m-l-xs"><i class="fa fa-2x fa-times"></i></button></div>'
+					width: 126,
+					cellTemplate:
+						'<div style="padding-top: 1px">' + 
+						'<button ng-show="row.entity.active == false" ng-disabled="grid.appScope.role == \'ROLE_ADMINISTRATOR_RO\'" ng-click="grid.appScope.activateArticle(row.entity)" class="btn-xs btn-white m-l-xs"><i class="fa fa-2x fa-toggle-off"></i></button>' + 
+						'<button ng-show="row.entity.active == true" ng-disabled="grid.appScope.role == \'ROLE_ADMINISTRATOR_RO\'" ng-click="grid.appScope.deactivateArticle(row.entity)" class="btn-xs btn-white m-l-xs"><i class="fa fa-2x fa-toggle-on"></i></button>' +
+						'<button ng-disabled="grid.appScope.role == \'ROLE_ADMINISTRATOR_RO\'" ng-click="grid.appScope.editArticle(row.entity)" class="btn-xs btn-white m-l-xs"><i class="fa fa-2x fa-edit"></i></button>' + 
+						'<button ng-disabled="grid.appScope.role == \'ROLE_ADMINISTRATOR_RO\'" ng-click="grid.appScope.deleteArticle(row.entity)" class="btn-xs btn-white m-l-xs"><i class="fa fa-2x fa-times"></i></button>' + 
+						'</div>'
 				}
 			],
 			onRegisterApi: function(gridApi) {
@@ -172,6 +189,36 @@ angular.module('fundFinder')
 	            ]
 	        });
 		}
+		
+		$scope.activateArticle = function(entity) {
+			Administrator_ArticleService.activateArticle(entity.id)
+				.success(function(data, status) {
+					toastr.success('Članak je uspješno aktiviran');
+					$scope.getPage($scope.gridApi.pagination.getPage(), $scope.gridOptions.paginationPageSize);
+				})
+				.error(function(data, status) {
+					if (status == 403) {
+						$state.go('login');
+					} else {
+						toastr.error('Došlo je do pogreške prilikom aktiviranja članka');
+					}
+				});
+		};
+		
+		$scope.deactivateArticle = function(entity) {
+			Administrator_ArticleService.deactivateArticle(entity.id)
+				.success(function(data, status) {
+					toastr.success('Članak je uspješno deaktiviran');
+					$scope.getPage($scope.gridApi.pagination.getPage(), $scope.gridOptions.paginationPageSize);
+				})
+				.error(function(data, status) {
+					if (status == 403) {
+						$state.go('login');
+					} else {
+						toastr.error('Došlo je do pogreške prilikom deaktiviranja članka');
+					}
+				});
+		};
 		
 		// watch 'totalArticles' variable, so if it changes we can refresh grid
 		$scope.$watch('totalArticles', function(newValue, oldValue) {

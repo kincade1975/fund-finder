@@ -10,7 +10,7 @@
 			<div class="panel panel-default custom-box-shadow">
 				<div class="panel-heading custom-panel-heading">
 					<div style="text-align: right; margin-top: -22px; margin-right: -10px;">
-						<small class="label-primary custom-label-date">{{article.lastModified | date : 'dd.MM.yyyy'}}</small>
+						<small class="label-primary custom-label-date">{{article.lastModified | date : dateFormat}}</small>
 					</div>
 					<a class="custom-a" ng-click="showArticle(article)">
 						<p class="custom-panel-heading-p" data-ng-bind="article.title" data-ellipsis></p>

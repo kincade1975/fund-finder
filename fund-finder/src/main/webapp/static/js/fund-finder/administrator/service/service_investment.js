@@ -19,4 +19,10 @@ angular.module('fundFinder')
 		this.getInvestments4User = function(id) {
 			return $http.get('/api/v1/investment/user/' + id);
 		};
+		this.activateInvestment = function(id) {
+			return $http.get('/api/v1/investment/activate/' + id);
+		};
+		this.deactivateInvestment = function(id) {
+			return $http.get('/api/v1/investment/deactivate/' + id);
+		};
 	});

@@ -1,7 +1,5 @@
 package hr.betaware.fundfinder.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,11 +20,11 @@ public class TenderController {
 	@Autowired
 	private TenderService tenderService;
 
-	@RequestMapping(method = RequestMethod.GET)
-	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO','ROLE_USER')")
-	public List<TenderResource> findAll() {
-		return tenderService.findAll();
-	}
+	//	@RequestMapping(method = RequestMethod.GET)
+	//	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO','ROLE_USER')")
+	//	public List<TenderResource> findAll() {
+	//		return tenderService.findAll();
+	//	}
 
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
 	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO','ROLE_USER')")

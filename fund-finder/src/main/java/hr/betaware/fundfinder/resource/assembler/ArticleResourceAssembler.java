@@ -1,6 +1,8 @@
 package hr.betaware.fundfinder.resource.assembler;
 
 import org.apache.commons.lang3.StringEscapeUtils;
+import org.jsoup.Jsoup;
+import org.jsoup.examples.HtmlToPlainText;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 import org.springframework.stereotype.Component;
@@ -26,6 +28,7 @@ public class ArticleResourceAssembler extends ResourceAssemblerSupport<Article, 
 		resource.setIdentificator(entity.getId());
 		resource.setTitle(entity.getTitle());
 		resource.setText(StringEscapeUtils.unescapeHtml4(entity.getText()));
+		resource.setStrippedText(new HtmlToPlainText().getPlainText(Jsoup.parse(resource.getText())).substring(0, 300));
 		resource.setImage(entity.getImage());
 		resource.setTimeCreated(entity.getTimeCreated());
 		resource.setLastModified(entity.getLastModified());

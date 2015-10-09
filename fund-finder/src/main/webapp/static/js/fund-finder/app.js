@@ -2,6 +2,7 @@
     angular.module('fundFinder', [
 	    'angularModalService',
 	    'datePicker',
+	    'dibari.angular-ellipsis',
         'dndLists',
         'localytics.directives',
         'ngFileUpload',

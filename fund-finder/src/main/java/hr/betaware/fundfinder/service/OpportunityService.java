@@ -48,6 +48,9 @@ public class OpportunityService {
 	@Autowired
 	private AnswerResourceAssembler answerResourceAssembler;
 
+	@Autowired
+	private FileService fileService;
+
 	public List<TenderResource> findTenders(Principal principal) {
 		List<TenderResource> result = new ArrayList<>();
 
@@ -75,6 +78,7 @@ public class OpportunityService {
 				}
 
 				TenderResource tenderResource = tenderResourceAssembler.toResource(tender);
+				tenderResource.setBase64(fileService.getMetadata(tenderResource.getImage()).getBase64());
 				tenderResource.setQuestions(questions);
 
 				result.add(tenderResource);

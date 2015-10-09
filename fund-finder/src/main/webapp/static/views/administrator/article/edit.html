@@ -33,26 +33,26 @@
 			<form name="form" class="form-horizontal ng-pristine ng-valid" novalidate>
 				<div class="form-group">
 					<div class="col-sm-12" ng-class="{ 'has-error' : form.articleTitle.$touched && form.articleTitle.$invalid }">
-						<label>Naziv</label>
+						<label class="custom-gray p-xs" style="width: 100%">Naziv</label>
 						<input ng-model="article.title" type="text" class="form-control" name="articleTitle" ng-required="true" />
 						<small ng-show="form.articleTitle.$touched && form.articleTitle.$invalid" class="m-l-xs help-block" style="margin-top: 2px">Molimo unesite naslov članka</small>
 					</div>
 				</div>
 				<div class="form-group">
 					<div class="col-sm-12" ng-class="{ 'has-error' : form.articleText.$touched && form.articleText.$invalid }">
-						<label>Tekst</label>
+						<label class="custom-gray p-xs" style="width: 100%">Tekst</label>
 						<summernote id="summernote" config="options" ng-model="article.text" name="articleText" ng-required="true" />	
-						<small ng-show="form.articleText.$touched && form.articleText.$invalid" class="m-l-xs help-block" style="margin-top: 2px">Molimo unesite text članka</small>
+						<small ng-show="form.articleText.$touched && form.articleText.$invalid" class="m-l-xs help-block" style="margin-top: 2px">Molimo unesite tekst članka</small>
 					</div>
 				</div>
 				<div class="form-group">
 					<div class="col-sm-12">
-						<label>Slika</label>
+						<label class="custom-gray p-xs" style="width: 100%">Slika</label>
 						<div style="display: flex;">
 							<img ng-show="article.base64 != null" ng-src="data:image/JPEG;base64,{{article.base64}}">
 							<a ng-show="article.base64 != null" ng-click="removeImage()" class="custom-a pull-right m-l-xs"><i class="fa fa-trash-o fa-lg"></i></a>
 						</div>
-						<a href="#" class="btn btn-white m-t-xs" ngf-select ngf-change="upload($files)"><i class="fa fa-upload"></i> Upload...</a>	
+						<a href="#" class="btn btn-white m-t-xs" ngf-select ngf-change="upload($files)" tooltip="Preporučeni format: JPEG 320x240"><i class="fa fa-upload"></i> Odaberite...</a>	
 					</div>
 				</div>
 			</form>

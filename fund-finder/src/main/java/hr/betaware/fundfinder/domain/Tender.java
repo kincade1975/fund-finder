@@ -23,6 +23,9 @@ public class Tender {
 	@Field("active")
 	private Boolean active = Boolean.FALSE;
 
+	@Field("image")
+	private String image;
+
 	@Field("answers")
 	private List<Answer> answers;
 
@@ -68,6 +71,14 @@ public class Tender {
 
 	public void setAnswers(List<Answer> answers) {
 		this.answers = answers;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 	public Long getDocVersion() {

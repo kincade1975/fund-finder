@@ -21,6 +21,12 @@ public class TenderResource extends ResourceSupport {
 	@JsonProperty("active")
 	private Boolean active = Boolean.FALSE;
 
+	@JsonProperty("image")
+	private String image;
+
+	@JsonProperty("base64")
+	private String base64;
+
 	@JsonProperty("questions")
 	private List<QuestionResource> questions;
 
@@ -52,6 +58,22 @@ public class TenderResource extends ResourceSupport {
 
 	public void setActive(Boolean active) {
 		this.active = active;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public String getBase64() {
+		return base64;
+	}
+
+	public void setBase64(String base64) {
+		this.base64 = base64;
 	}
 
 	public List<QuestionResource> getQuestions() {

@@ -20,6 +20,9 @@ public class ArticleResource extends ResourceSupport {
 	@JsonProperty("text")
 	private String text;
 
+	@JsonProperty("strippedText")
+	private String strippedText;
+
 	@JsonProperty("image")
 	private String image;
 
@@ -54,6 +57,14 @@ public class ArticleResource extends ResourceSupport {
 
 	public void setText(String text) {
 		this.text = text;
+	}
+
+	public String getStrippedText() {
+		return strippedText;
+	}
+
+	public void setStrippedText(String strippedText) {
+		this.strippedText = strippedText;
 	}
 
 	public String getImage() {

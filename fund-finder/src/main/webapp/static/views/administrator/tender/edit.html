@@ -13,6 +13,10 @@
 			<div class="panel panel-default">
 				<div class="panel-heading"><strong class="custom-header">{{tender.name}}</strong></div>
 				<div class="panel-body">
+					<div class="form-group">
+						<label class="custom-gray p-xs" style="width: 100%">Slika</label>
+						<img ng-show="tender.base64 != null" ng-src="data:image/JPEG;base64,{{tender.base64}}">
+					</div>
 					<div class="form-group" ng-repeat="question in tender.questions">
 						<label class="custom-gray p-xs" style="width: 100%">{{question.text}}</label>
 						<div class="p-xs custom-p-xs" ng-if="question.type == 'TEXT' || question.type == 'TEXT_AREA' 
@@ -46,9 +50,20 @@
 				
 				<div class="form-group">
 					<div class="col-sm-12" ng-class="{ 'has-error' : form.tenderName.$touched && form.tenderName.$invalid }">
-						<label>Naziv natječaja</label>
+						<label class="custom-gray p-xs" style="width: 100%">Naziv natječaja</label>
 						<input ng-model="tender.name" type="text" class="form-control" name="tenderName" ng-required="true" />
 						<small ng-show="form.tenderName.$touched && form.tenderName.$invalid" class="m-l-xs help-block" style="margin-top: 2px">Molimo unesite naziv natječaja</small>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<div class="col-sm-12">
+						<label class="custom-gray p-xs" style="width: 100%">Slika</label>
+						<div style="display: flex;">
+							<img ng-show="tender.base64 != null" ng-src="data:image/JPEG;base64,{{tender.base64}}">
+							<a ng-show="tender.base64 != null" ng-click="removeImage()" class="custom-a pull-right m-l-xs"><i class="fa fa-trash-o fa-lg"></i></a>
+						</div>
+						<a href="#" class="btn btn-white m-t-xs" ngf-select ngf-change="upload($files)" tooltip="Preporučeni format: JPEG 320x240"><i class="fa fa-upload"></i> Odaberite...</a>	
 					</div>
 				</div>
 				

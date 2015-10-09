@@ -32,14 +32,14 @@
 			<form name="form" class="form-horizontal ng-pristine ng-valid" novalidate>
 				<div class="form-group">
 					<div class="col-sm-12" ng-class="{ 'has-error' : form.investmentName.$touched && form.investmentName.$invalid }">
-						<label>Naziv</label>
+						<label class="custom-gray p-xs" style="width: 100%">Naziv</label>
 						<input ng-model="investment.name" type="text" class="form-control" name="investmentName" ng-required="true" />
 						<small ng-show="form.investmentName.$touched && form.investmentName.$invalid" class="m-l-xs help-block" style="margin-top: 2px">Molimo unesite ime investicije</small>
 					</div>
 				</div>
 				<div class="form-group">
 					<div class="col-sm-12" ng-class="{ 'has-error' : form.investmentDescription.$touched && form.investmentDescription.$invalid }">
-						<label>Opis</label>
+						<label class="custom-gray p-xs" style="width: 100%">Opis</label>
 						<textarea ng-model="investment.description" rows="10" class="form-control" name="investmentDescription" ng-required="true"></textarea>
 						<small ng-show="form.investmentDescription.$touched && form.investmentDescription.$invalid" class="m-l-xs help-block" style="margin-top: 2px">Molimo unesite opis investicije</small>
 					</div>

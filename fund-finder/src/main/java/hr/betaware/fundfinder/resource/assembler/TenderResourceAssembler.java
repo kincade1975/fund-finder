@@ -34,6 +34,7 @@ public class TenderResourceAssembler extends ResourceAssemblerSupport<Tender, Te
 		resource.setIdentificator(entity.getId());
 		resource.setName(entity.getName());
 		resource.setActive(entity.getActive());
+		resource.setImage(entity.getImage());
 		resource.setTimeCreated(entity.getTimeCreated());
 		resource.setLastModified(entity.getLastModified());
 		return resource;
@@ -44,6 +45,7 @@ public class TenderResourceAssembler extends ResourceAssemblerSupport<Tender, Te
 		entity.setId(sequenceService.getNextSequence(SequenceService.SEQUENCE_TENDER));
 		entity.setName(resource.getName());
 		entity.setActive(resource.getActive());
+		entity.setImage(resource.getImage());
 
 		if (resource.getQuestions() != null) {
 			List<Answer> answers = new ArrayList<>();
@@ -60,6 +62,7 @@ public class TenderResourceAssembler extends ResourceAssemblerSupport<Tender, Te
 	public Tender updateEntity(Tender entity, TenderResource resource) {
 		entity.setName(resource.getName());
 		entity.setActive(resource.getActive());
+		entity.setImage(resource.getImage());
 		if (resource.getQuestions() != null) {
 			List<Answer> answers = new ArrayList<>();
 			for (QuestionResource questionResource : resource.getQuestions()) {

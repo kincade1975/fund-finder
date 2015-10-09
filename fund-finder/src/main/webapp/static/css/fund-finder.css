@@ -131,7 +131,7 @@
 }
 
 .custom-box-shadow {
-	box-shadow: 0 0 10px #a0a0a0;
+	box-shadow: 0 0 8px #a0a0a0;
 }
 
 .custom-panel {
@@ -139,6 +139,22 @@
 	margin-bottom: 0px;
 	height: 450px;
 	overflow: hidden;
+}
+
+.custom-panel-heading {
+	height: 55px;	
+}
+
+.custom-panel-heading-p {
+	max-height: 50px; 
+	margin: 0 auto; 
+	overflow: hidden;
+	font-weight: 700;
+	padding-top: 5px;
+}
+
+.custom-panel-body-p {
+	max-height: 100px; margin: 0 auto; overflow: hidden;
 }
 
 .custom-label-date {

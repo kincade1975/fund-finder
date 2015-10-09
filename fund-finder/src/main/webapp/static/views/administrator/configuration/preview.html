@@ -10,7 +10,7 @@
 			<form name="form" class="form">
 				<div class="form-group" ng-repeat="question in questions">
 					<div class="form-group">
-						<label>{{question.text}}</label>
+						<label class="custom-gray p-xs" style="width: 100%">{{question.text}}</label>
 						
 						<input ng-if="question.type == 'TEXT'" class="form-control" type="text" ng-model="question.answer.valueInternal" />
 						

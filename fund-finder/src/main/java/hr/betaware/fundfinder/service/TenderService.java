@@ -48,9 +48,12 @@ public class TenderService {
 	@Autowired
 	private StompService stompService;
 
-	public List<TenderResource> findAll() {
-		return tenderResourceAssembler.toResources(mongoOperations.findAll(Tender.class));
-	}
+	@Autowired
+	private FileService fileService;
+
+	//	public List<TenderResource> findAll() {
+	//		return tenderResourceAssembler.toResources(mongoOperations.findAll(Tender.class));
+	//	}
 
 	public TenderResource findTender(Integer id) {
 		TenderResource resource = null;
@@ -64,6 +67,7 @@ public class TenderService {
 				answers.put(answer.getQuestionId(), answer);
 			}
 			resource = tenderResourceAssembler.toResource(tender);
+			resource.setBase64(fileService.getMetadata(resource.getImage()).getBase64());
 		}
 
 		List<QuestionResource> questions = new ArrayList<>();

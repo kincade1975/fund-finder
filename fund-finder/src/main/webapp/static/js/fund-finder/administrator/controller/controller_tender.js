@@ -234,7 +234,7 @@ angular.module('fundFinder')
 // ==============================================================================================================
 // 	EDIT
 // ==============================================================================================================
-.controller('Administrator_TenderEditCtrl', function($rootScope, $scope, $state, $sce, $stateParams, Administrator_ConfigurationService, Administrator_InvestmentService, Administrator_TenderService) {
+.controller('Administrator_TenderEditCtrl', function($rootScope, $scope, $state, $sce, $stateParams, Upload, Administrator_ConfigurationService, Administrator_InvestmentService, Administrator_TenderService) {
 	
 	$scope.mode = $stateParams.mode;
 	$scope.id = $stateParams.id
@@ -348,6 +348,26 @@ angular.module('fundFinder')
 	
 	$scope.toTrusted = function(html) {
 	    return $sce.trustAsHtml(html);
+	}
+	
+	$scope.upload = function(files) {
+		if (files && files.length == 1) {
+			Upload.upload({
+		        url: '/api/v1/file/upload',
+		        method: 'POST',
+		        file: files[0]
+		    }).success(function(data, status, headers, config) {
+		    	$scope.tender.base64 = data.base64;
+		    	$scope.tender.image = data.name;
+		    }).error(function(data, status, headers, config) {
+		    	toastr.error('Došlo je do pogreške prilikom uploada slike');
+		    });
+		}
+	};
+	
+	$scope.removeImage = function() {
+		$scope.tender.base64 = null;
+		$scope.tender.image = null;
 	}
 	
 });

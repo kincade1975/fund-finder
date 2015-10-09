@@ -8,6 +8,8 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -17,6 +19,7 @@ import hr.betaware.fundfinder.domain.User;
 import hr.betaware.fundfinder.enums.EntityType;
 import hr.betaware.fundfinder.resource.CompanyResource;
 import hr.betaware.fundfinder.resource.QuestionResource;
+import hr.betaware.fundfinder.resource.ValidationResource;
 import hr.betaware.fundfinder.resource.assembler.AnswerResourceAssembler;
 import hr.betaware.fundfinder.resource.assembler.CompanyResourceAssembler;
 
@@ -90,8 +93,22 @@ public class CompanyService {
 		}
 	}
 
+	public ValidationResource validateCompany(CompanyResource companyResource) {
+		ValidationResource result = new ValidationResource();
+
+		Query query = new Query();
+		query.addCriteria(Criteria.where("oib").is(companyResource.getOib()));
+		Company company = mongoOperations.findOne(query, Company.class);
+		if (company != null && !company.getId().equals(companyResource.getIdentificator())) {
+			result.getMessages().add(new String("Tvrtka sa OIB-om " + company.getOib() + " je već registrirana u Fund Finder sustavu."));
+		}
+
+		return result;
+	}
+
 	public CompanyResource saveCompany(Principal principal, CompanyResource companyResource) {
 		Company company = null;
+
 		if (companyResource.getIdentificator() == null) {
 			company = companyResourceAssembler.createEntity(companyResource);
 		} else {

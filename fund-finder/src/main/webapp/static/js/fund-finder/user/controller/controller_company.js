@@ -18,10 +18,24 @@ angular.module('fundFinder')
 	
 	/** event handler for 'Save' button */
 	$scope.save = function() {
-		User_CompanyService.setCompany($scope.company)
+		User_CompanyService.validateCompany($scope.company)
 			.success(function(data, status) {
-				$scope.company = data;
-				toastr.success('Podaci su uspješno spremljeni');
+				if (data.messages.length == 0) {
+					User_CompanyService.setCompany($scope.company)
+						.success(function(data, status) {
+							$scope.company = data;
+							toastr.success('Podaci su uspješno spremljeni');
+						})
+						.error(function(data, status) {
+							if (status == 403) {
+								$state.go('login');
+							} else {
+								toastr.error('Došlo je do pogreške prilikom spremanja podataka');
+							}
+						});
+				} else {
+					toastr.warning(data.messages);
+				}
 			})
 			.error(function(data, status) {
 				if (status == 403) {

@@ -7,4 +7,7 @@ angular.module('fundFinder')
 		this.setCompany = function(resource) {
 			return $http.post('/api/v1/company', resource);
 		};
+		this.validateCompany = function(resource) {
+			return $http.post('/api/v1/company/validate', resource);
+		};
 	});

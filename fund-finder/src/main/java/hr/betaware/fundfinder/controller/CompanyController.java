@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import hr.betaware.fundfinder.resource.CompanyResource;
+import hr.betaware.fundfinder.resource.ValidationResource;
 import hr.betaware.fundfinder.service.CompanyService;
 
 @RestController
@@ -29,6 +30,12 @@ public class CompanyController {
 	@PreAuthorize("hasAnyRole('ROLE_USER')")
 	public CompanyResource saveCompany(Principal principal, @RequestBody CompanyResource resource) {
 		return companyService.saveCompany(principal, resource);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, value = "/validate")
+	@PreAuthorize("hasAnyRole('ROLE_USER')")
+	public ValidationResource validateCompany(@RequestBody CompanyResource resource) {
+		return companyService.validateCompany(resource);
 	}
 
 }

@@ -1,6 +1,7 @@
 (function () {
     angular.module('fundFinder', [
 	    'angularModalService',
+	    'chart.js',
 	    'datePicker',
 	    'dibari.angular-ellipsis',
         'dndLists',

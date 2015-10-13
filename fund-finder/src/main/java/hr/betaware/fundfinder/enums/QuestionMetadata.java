@@ -1,3 +1,11 @@
 package hr.betaware.fundfinder.enums;
 
-public enum QuestionMetadata { START_DATE, END_DATE, PANEL_DATA }
+public enum QuestionMetadata {
+	START_DATE,
+	END_DATE,
+	PANEL_DATA,
+	STATISTICS_SECTOR,
+	STATISTICS_LOCATION,
+	STATISTICS_INVESTMENT,
+	STATISTICS_REVENUE
+}

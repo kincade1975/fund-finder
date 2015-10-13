@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import hr.betaware.fundfinder.resource.StatisticsResource;
 import hr.betaware.fundfinder.resource.TenderResource;
 import hr.betaware.fundfinder.resource.UserResource;
 import hr.betaware.fundfinder.service.DashboardService;
@@ -29,6 +30,12 @@ public class DashboardController {
 	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO')")
 	public List<TenderResource> findLatestTenders() {
 		return dashboardService.findLatestTenders();
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "/statistics")
+	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO')")
+	public List<StatisticsResource> getStatistics() {
+		return dashboardService.getStatistics();
 	}
 
 }

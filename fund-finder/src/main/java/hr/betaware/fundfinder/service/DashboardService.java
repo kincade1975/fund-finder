@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import hr.betaware.fundfinder.domain.Tender;
 import hr.betaware.fundfinder.domain.User;
 import hr.betaware.fundfinder.domain.User.Role;
+import hr.betaware.fundfinder.resource.StatisticsResource;
 import hr.betaware.fundfinder.resource.TenderResource;
 import hr.betaware.fundfinder.resource.UserResource;
 import hr.betaware.fundfinder.resource.assembler.UserResourceAssembler;
@@ -29,6 +30,9 @@ public class DashboardService {
 
 	@Autowired
 	private TenderService tenderService;
+
+	@Autowired
+	private StatisticsService statisticsService;
 
 	public List<UserResource> findLatestUsers() {
 		Query query = new Query();
@@ -49,6 +53,15 @@ public class DashboardService {
 			result.add(tenderService.findTender(tender.getId()));
 		}
 
+		return result;
+	}
+
+	public List<StatisticsResource> getStatistics() {
+		List<StatisticsResource> result = new ArrayList<>();
+		result.add(statisticsService.getCompaniesBySector());
+		result.add(statisticsService.getCompaniesByLocation());
+		result.add(statisticsService.getTopInvestments());
+		result.add(statisticsService.getTopRevenues());
 		return result;
 	}
 

@@ -22,6 +22,7 @@
 		<java.version>1.8</java.version>
 
 		<angularjs.version>1.4.3</angularjs.version>
+		<angular-chart.version>0.8.4</angular-chart.version>
 		<angular-chosen.version>1.0.6</angular-chosen.version>
 		<angular-datepicker.version>1.0.12</angular-datepicker.version>
 		<angular-drag-and-drop-lists.version>1.2.0</angular-drag-and-drop-lists.version>
@@ -31,6 +32,7 @@
 		<animate.version>3.3.0</animate.version>
 		<bootstrap.version>3.3.5</bootstrap.version>
 		<bootstrap3-dialog.version>1.34.4</bootstrap3-dialog.version>
+		<chartjs.version>1.0.2</chartjs.version>
 		<chosen.version>1.4.2</chosen.version>
 		<font-awesome.version>4.4.0</font-awesome.version>
 		<jquery.version>2.1.4</jquery.version>
@@ -263,6 +265,22 @@
 			<groupId>org.webjars.bower</groupId>
 			<artifactId>angular-ellipsis</artifactId>
 			<version>${angular-ellipsis.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>chartjs</artifactId>
+			<version>${chartjs.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars.bower</groupId>
+			<artifactId>angular-chart.js</artifactId>
+			<version>${angular-chart.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>Chart.js</artifactId>
+					<groupId>org.webjars.bower</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 	</dependencies>
 

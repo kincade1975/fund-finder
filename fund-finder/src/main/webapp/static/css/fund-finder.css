@@ -273,3 +273,21 @@
 .icheckbox_square-green.checked.disabled {
 	background-position: -48px 0;
 }
+
+.doughnut-legend li {
+	display: table;
+}
+
+.pie-legend li {
+	display: table;
+}
+
+.custom-chart-container {
+	border: solid 1px #d0d0d0;
+	margin: 5px 0px 0px 25px;
+	padding-top: 10px;
+}
+
+.custom-pointer {
+	cursor: pointer;
+}

@@ -215,7 +215,17 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdlePro
         .state('administrator.statistics', {
             url: "/administrator/statistics",
             templateUrl: "views/administrator/statistics/statistics.html",
-            controller: 'StatisticsOverviewCtrl'
+            controller: 'Administrator_StatisticsCtrl',
+            params: { type : null },
+            resolve: {
+            	loadPlugin: function ($ocLazyLoad) {
+            		return $ocLazyLoad.load({
+            			name: 'fundFinder',
+            			files: ['js/fund-finder/administrator/controller/controller_statistics.js',
+            			        'js/fund-finder/administrator/service/service_statistics.js']
+            		});
+            	}
+            }
         })
         .state('administrator.configuration_company', {
             url: "/administrator/configuration/company",

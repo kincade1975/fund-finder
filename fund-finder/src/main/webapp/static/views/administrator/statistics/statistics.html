@@ -1,13 +1,38 @@
 <div class="row border-bottom white-bg">
 	<div class="col-lg-12">
-		<h1><i class="fa fa-area-chart"></i> Statistika</h1>
+		<h1>
+			<i class="fa fa-area-chart"></i> Statistika
+		</h1>
 	</div>
 </div>
 
 <div class="wrapper wrapper-content animated fadeInRight">
 	<div class="row">
 		<div class="col-lg-12">
-		
+			<div class="tabs-container">
+				<tabset> 
+					<tab heading="Broj tvrtki po sektorima" active="active0">
+						<div class="panel-body">
+							<canvas class="chart chart-bar" chart-data="data0" chart-labels="labels0"></canvas>
+						</div>
+					</tab>  
+					<tab heading="Broj tvrtki po županijama" active="active1">
+						<div class="panel-body">
+							<canvas class="chart chart-bar" chart-data="data1" chart-labels="labels1"></canvas>
+						</div>
+					</tab>  
+					<tab heading="Investicije" active="active2">
+						<div class="panel-body">
+							<canvas class="chart chart-bar" chart-data="data2" chart-labels="labels2"></canvas>
+						</div>
+					</tab>
+					<tab heading="Prihodi poduzeća u prošloj godini" active="active3">
+						<div class="panel-body">
+							<canvas class="chart chart-bar" chart-data="data3" chart-labels="labels3"></canvas>
+						</div>
+					</tab>  
+				</tabset>
+			</div>
 		</div>
 	</div>
 </div>

@@ -2,6 +2,7 @@ package hr.betaware.fundfinder.service;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -9,6 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -35,8 +37,10 @@ public class StatisticsService {
 	@Autowired
 	private MongoOperations mongoOperations;
 
+	private int ABBREVIATE = 30;
+
 	@SuppressWarnings("unchecked")
-	public StatisticsResource getCompaniesBySector() {
+	public StatisticsResource getCompaniesBySector(int limit, boolean sort) {
 		Query query = new Query();
 		query.addCriteria(Criteria.where("metadata").is(QuestionMetadata.STATISTICS_SECTOR));
 
@@ -58,19 +62,28 @@ public class StatisticsService {
 			}
 		}
 
-		counters = sortByValue(counters);
+		if (sort) {
+			counters = sortByValue(counters);
+		}
 
-		StatisticsResource result = new StatisticsResource(StatisticsType.COMPANIES_BY_SECTOR);
+		StatisticsResource result = new StatisticsResource(StatisticsType.COMPANIES_BY_SECTOR, new Date());
 
-		int cnt = 0;
-		for (String key : counters.keySet()) {
-			if (cnt == 5) {
-				break;
-			}
-			if (counters.get(key) > 0) {
+		if (limit == Integer.MAX_VALUE) {
+			for (String key : counters.keySet()) {
 				result.getData().add(counters.get(key));
-				result.getLabels().add(key);
-				cnt++;
+				result.getLabels().add(StringUtils.abbreviate(key, ABBREVIATE));
+			}
+		} else {
+			int cnt = 0;
+			for (String key : counters.keySet()) {
+				if (cnt == limit) {
+					break;
+				}
+				if (counters.get(key) > 0) {
+					result.getData().add(counters.get(key));
+					result.getLabels().add(key);
+					cnt++;
+				}
 			}
 		}
 
@@ -78,7 +91,7 @@ public class StatisticsService {
 	}
 
 	@SuppressWarnings("unchecked")
-	public StatisticsResource getCompaniesByLocation() {
+	public StatisticsResource getCompaniesByLocation(int limit, boolean sort) {
 		Query query = new Query();
 		query.addCriteria(Criteria.where("metadata").is(QuestionMetadata.STATISTICS_LOCATION));
 
@@ -101,19 +114,28 @@ public class StatisticsService {
 			}
 		}
 
-		counters = sortByValue(counters);
+		if (sort) {
+			counters = sortByValue(counters);
+		}
 
-		StatisticsResource result = new StatisticsResource(StatisticsType.COMPANIES_BY_LOCATION);
+		StatisticsResource result = new StatisticsResource(StatisticsType.COMPANIES_BY_LOCATION, new Date());
 
-		int cnt = 0;
-		for (String key : counters.keySet()) {
-			if (cnt == 5) {
-				break;
-			}
-			if (counters.get(key) > 0) {
+		if (limit == Integer.MAX_VALUE) {
+			for (String key : counters.keySet()) {
 				result.getData().add(counters.get(key));
-				result.getLabels().add(key);
-				cnt++;
+				result.getLabels().add(StringUtils.abbreviate(key, ABBREVIATE));
+			}
+		} else {
+			int cnt = 0;
+			for (String key : counters.keySet()) {
+				if (cnt == limit) {
+					break;
+				}
+				if (counters.get(key) > 0) {
+					result.getData().add(counters.get(key));
+					result.getLabels().add(key);
+					cnt++;
+				}
 			}
 		}
 
@@ -121,7 +143,7 @@ public class StatisticsService {
 	}
 
 	@SuppressWarnings("unchecked")
-	public StatisticsResource getTopInvestments() {
+	public StatisticsResource getInvestments(int limit, boolean sort) {
 		Map<Integer, String> investments = new HashMap<>();
 		for (Investment investment : mongoOperations.findAll(Investment.class)) {
 			investments.put(investment.getId(), investment.getName());
@@ -141,19 +163,28 @@ public class StatisticsService {
 			}
 		}
 
-		counters = sortByValue(counters);
+		if (sort) {
+			counters = sortByValue(counters);
+		}
 
-		StatisticsResource result = new StatisticsResource(StatisticsType.TOP_INVESTMENTS);
+		StatisticsResource result = new StatisticsResource(StatisticsType.INVESTMENTS, new Date());
 
-		int cnt = 0;
-		for (Integer key : counters.keySet()) {
-			if (cnt == 5) {
-				break;
+		if (limit == Integer.MAX_VALUE) {
+			for (Integer key : investments.keySet()) {
+				result.getLabels().add(StringUtils.abbreviate(investments.get(key), ABBREVIATE));
+				result.getData().add((counters.containsKey(key)) ? counters.get(key) : 0);
 			}
-			if (counters.get(key) > 0) {
-				result.getData().add(counters.get(key));
-				result.getLabels().add(investments.get(key));
-				cnt++;
+		} else {
+			int cnt = 0;
+			for (Integer key : counters.keySet()) {
+				if (cnt == limit) {
+					break;
+				}
+				if (counters.get(key) > 0) {
+					result.getData().add(counters.get(key));
+					result.getLabels().add(investments.get(key));
+					cnt++;
+				}
 			}
 		}
 
@@ -161,7 +192,7 @@ public class StatisticsService {
 	}
 
 	@SuppressWarnings("unchecked")
-	public StatisticsResource getTopRevenues() {
+	public StatisticsResource getRevenues(int limit, boolean sort) {
 		Query query = new Query();
 		query.addCriteria(Criteria.where("metadata").is(QuestionMetadata.STATISTICS_REVENUE));
 
@@ -180,19 +211,28 @@ public class StatisticsService {
 			}
 		}
 
-		counters = sortByValue(counters);
+		if (sort) {
+			counters = sortByValue(counters);
+		}
 
-		StatisticsResource result = new StatisticsResource(StatisticsType.TOP_REVENUES);
+		StatisticsResource result = new StatisticsResource(StatisticsType.REVENUES, new Date());
 
-		int cnt = 0;
-		for (String key : counters.keySet()) {
-			if (cnt == 5) {
-				break;
-			}
-			if (counters.get(key) > 0) {
+		if (limit == Integer.MAX_VALUE) {
+			for (String key : counters.keySet()) {
 				result.getData().add(counters.get(key));
-				result.getLabels().add(key);
-				cnt++;
+				result.getLabels().add(StringUtils.abbreviate(key, ABBREVIATE));
+			}
+		} else {
+			int cnt = 0;
+			for (String key : counters.keySet()) {
+				if (cnt == limit) {
+					break;
+				}
+				if (counters.get(key) > 0) {
+					result.getData().add(counters.get(key));
+					result.getLabels().add(key);
+					cnt++;
+				}
 			}
 		}
 

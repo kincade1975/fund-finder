@@ -103,11 +103,3 @@ angular
 		$scope.credentials = { username: "superadmin@gmail.com", password: "admin" };
     })
     
-    // ==============================================================================================================
-    // 	Statistics Controller
-    // ==============================================================================================================
-    
-    .controller('StatisticsOverviewCtrl', function($rootScope, $scope, $http, $state) {
-    	
-    })
-    

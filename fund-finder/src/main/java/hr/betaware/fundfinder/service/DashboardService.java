@@ -58,10 +58,10 @@ public class DashboardService {
 
 	public List<StatisticsResource> getStatistics() {
 		List<StatisticsResource> result = new ArrayList<>();
-		result.add(statisticsService.getCompaniesBySector());
-		result.add(statisticsService.getCompaniesByLocation());
-		result.add(statisticsService.getTopInvestments());
-		result.add(statisticsService.getTopRevenues());
+		result.add(statisticsService.getCompaniesBySector(5, Boolean.TRUE));
+		result.add(statisticsService.getCompaniesByLocation(5, Boolean.TRUE));
+		result.add(statisticsService.getInvestments(5, Boolean.TRUE));
+		result.add(statisticsService.getRevenues(5, Boolean.TRUE));
 		return result;
 	}
 

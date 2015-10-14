@@ -3,7 +3,7 @@ angular.module('fundFinder')
 .controller('Administrator_ConfigurationCtrl', function($rootScope, $scope, $stateParams, $state, ModalService, Administrator_ConfigurationService, Administrator_InvestmentService) {
 	
 	/** entity type (company/tender */
-	$scope.entityType = ($state.current.data) ?$state.current.data.entityType : $stateParams.entityType;
+	$scope.entityType = ($state.current.data) ? $state.current.data.entityType : $stateParams.entityType;
 	
 	/** back (preview) */
 	$scope.back = function() {

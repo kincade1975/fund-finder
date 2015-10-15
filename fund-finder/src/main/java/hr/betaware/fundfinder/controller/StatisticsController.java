@@ -19,25 +19,25 @@ public class StatisticsController {
 	@RequestMapping(method = RequestMethod.GET, value = "/companiesBySector")
 	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO')")
 	public StatisticsResource getCompaniesBySector() {
-		return statisticsService.getCompaniesBySector(Integer.MAX_VALUE, Boolean.FALSE);
+		return statisticsService.getCompaniesBySector(Integer.MAX_VALUE);
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/companiesByLocation")
 	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO')")
 	public StatisticsResource getCompaniesByLocation() {
-		return statisticsService.getCompaniesByLocation(Integer.MAX_VALUE, Boolean.FALSE);
+		return statisticsService.getCompaniesByLocation(Integer.MAX_VALUE);
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/investments")
 	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO')")
 	public StatisticsResource getInvestments() {
-		return statisticsService.getInvestments(Integer.MAX_VALUE, Boolean.FALSE);
+		return statisticsService.getInvestments(Integer.MAX_VALUE);
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/revenues")
 	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO')")
 	public StatisticsResource getRevenues() {
-		return statisticsService.getRevenues(Integer.MAX_VALUE, Boolean.FALSE);
+		return statisticsService.getRevenues(Integer.MAX_VALUE);
 	}
 
 }

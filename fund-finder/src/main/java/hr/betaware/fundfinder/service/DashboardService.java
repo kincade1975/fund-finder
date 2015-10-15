@@ -22,6 +22,8 @@ import hr.betaware.fundfinder.resource.assembler.UserResourceAssembler;
 @Service
 public class DashboardService {
 
+	private int LIMIT = 5;
+
 	@Autowired
 	private MongoOperations mongoOperations;
 
@@ -58,10 +60,10 @@ public class DashboardService {
 
 	public List<StatisticsResource> getStatistics() {
 		List<StatisticsResource> result = new ArrayList<>();
-		result.add(statisticsService.getCompaniesBySector(5, Boolean.TRUE));
-		result.add(statisticsService.getCompaniesByLocation(5, Boolean.TRUE));
-		result.add(statisticsService.getInvestments(5, Boolean.TRUE));
-		result.add(statisticsService.getRevenues(5, Boolean.TRUE));
+		result.add(statisticsService.getCompaniesBySector(LIMIT));
+		result.add(statisticsService.getCompaniesByLocation(LIMIT));
+		result.add(statisticsService.getInvestments(LIMIT));
+		result.add(statisticsService.getRevenues(LIMIT));
 		return result;
 	}
 

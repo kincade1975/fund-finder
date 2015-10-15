@@ -1,6 +1,6 @@
 angular.module('fundFinder')
 
-.controller('DashboardCtrl', function($rootScope, $scope, $state, Administrator_DashboardService) {   
+.controller('Administrator_DashboardCtrl', function($rootScope, $scope, $state, ModalService, Administrator_DashboardService, Administrator_DlgCompaniesService) {   
 
 	Administrator_DashboardService.getLatestUsers()
 		.success(function(data, status) {
@@ -52,7 +52,7 @@ angular.module('fundFinder')
 			if (status == 403) {
 				$state.go('login');
 			} else {
-				toastr.error('Došlo je do pogreške prilikom dohvaćanja statistika');
+				toastr.error('Došlo je do pogreške prilikom dohvaćanja podataka');
 			}
 		});
 	
@@ -66,6 +66,32 @@ angular.module('fundFinder')
 	
 	$scope.showStatistics = function(type) {
 		$state.go('administrator.statistics', { 'type' : type });
+	}
+	
+	$scope.showCompanies = function(obj, event) {
+		if (obj && obj[0]) {
+			Administrator_DlgCompaniesService.getCompanies(event.srcElement.id, obj[0].label)
+				.success(function(data, status) {
+					ModalService.showModal({
+						templateUrl: "dialogs/companies.html",
+						controller: "Administrator_CompaniesCtrl",
+						inputs: {
+							type: event.srcElement.id,
+							label: obj[0].label,
+							data: data
+						}
+					}).then(function(modal) {
+						modal.element.modal();
+					});
+				})
+				.error(function(data, status) {
+					if (status == 403) {
+						$state.go('login');
+					} else {
+						toastr.error('Došlo je do pogreške prilikom dohvaćanja podataka');
+					}
+				});
+		}
 	}
 	
 })

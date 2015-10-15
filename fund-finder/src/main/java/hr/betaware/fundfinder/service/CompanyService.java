@@ -14,11 +14,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import hr.betaware.fundfinder.domain.Answer;
+import hr.betaware.fundfinder.domain.City;
 import hr.betaware.fundfinder.domain.Company;
+import hr.betaware.fundfinder.domain.Investment;
+import hr.betaware.fundfinder.domain.Nkd;
+import hr.betaware.fundfinder.domain.Question;
 import hr.betaware.fundfinder.domain.User;
+import hr.betaware.fundfinder.domain.User.Role;
 import hr.betaware.fundfinder.enums.EntityType;
+import hr.betaware.fundfinder.enums.QuestionMetadata;
+import hr.betaware.fundfinder.enums.StatisticsType;
 import hr.betaware.fundfinder.resource.CompanyResource;
 import hr.betaware.fundfinder.resource.QuestionResource;
+import hr.betaware.fundfinder.resource.UserResource;
 import hr.betaware.fundfinder.resource.ValidationResource;
 import hr.betaware.fundfinder.resource.assembler.AnswerResourceAssembler;
 import hr.betaware.fundfinder.resource.assembler.CompanyResourceAssembler;
@@ -124,6 +132,138 @@ public class CompanyService {
 		mongoOperations.save(user);
 
 		return findCompany(principal);
+	}
+
+	public List<UserResource> getCompanies(String type, String label) {
+		List<UserResource> result = new ArrayList<>();
+
+		if (StatisticsType.valueOf(type) == StatisticsType.COMPANIES_BY_SECTOR) {
+			Map<Integer, Nkd> nkds = new HashMap<>();
+			Query query = new Query();
+			query.addCriteria(Criteria.where("sector_name").is(label));
+			for (Nkd nkd : mongoOperations.find(query, Nkd.class)) {
+				nkds.put(nkd.getId(), nkd);
+			}
+
+			query = new Query();
+			query.addCriteria(Criteria.where("metadata").is(QuestionMetadata.STATISTICS_SECTOR));
+			Question question = mongoOperations.findOne(query, Question.class);
+
+			for (Company company : mongoOperations.findAll(Company.class)) {
+				for (Answer answer : company.getAnswers()) {
+					if (answer.getQuestionId().equals(question.getId()) && answer.getValueInternal() != null && nkds.containsKey((answer.getValueInternal()))) {
+						CompanyResource companyResource = new CompanyResource();
+						companyResource.setIdentificator(company.getId());
+						companyResource.setName(company.getName());
+						companyResource.setOib(company.getOib());
+
+						query = new Query();
+						query.addCriteria(Criteria.where("company").is(company));
+						User user = mongoOperations.findOne(query, User.class);
+
+						UserResource userResource = new UserResource();
+						userResource.setIdentificator(user.getId());
+						userResource.setFirstName(user.getFirstName());
+						userResource.setLastName(user.getLastName());
+						userResource.setCompany(companyResource);
+
+						result.add(userResource);
+					}
+				}
+			}
+		} else if (StatisticsType.valueOf(type) == StatisticsType.COMPANIES_BY_LOCATION) {
+			Map<Integer, City> cities = new HashMap<>();
+			for (City city : mongoOperations.findAll(City.class)) {
+				cities.put(city.getId(), city);
+			}
+
+			Query query = new Query();
+			query.addCriteria(Criteria.where("metadata").is(QuestionMetadata.STATISTICS_LOCATION));
+			Question question = mongoOperations.findOne(query, Question.class);
+
+			for (Company company : mongoOperations.findAll(Company.class)) {
+				for (Answer answer : company.getAnswers()) {
+					if (answer.getQuestionId().equals(question.getId()) && answer.getValueInternal() != null) {
+						if (cities.containsKey(answer.getValueInternal()) && cities.get(answer.getValueInternal()).getCounty().getName().equals(label)) {
+							CompanyResource companyResource = new CompanyResource();
+							companyResource.setIdentificator(company.getId());
+							companyResource.setName(company.getName());
+							companyResource.setOib(company.getOib());
+
+							query = new Query();
+							query.addCriteria(Criteria.where("company").is(company));
+							User user = mongoOperations.findOne(query, User.class);
+
+							UserResource userResource = new UserResource();
+							userResource.setIdentificator(user.getId());
+							userResource.setFirstName(user.getFirstName());
+							userResource.setLastName(user.getLastName());
+							userResource.setCompany(companyResource);
+
+							result.add(userResource);
+						}
+					}
+				}
+			}
+		} else if (StatisticsType.valueOf(type) == StatisticsType.INVESTMENTS) {
+			Map<Integer, String> investments = new HashMap<>();
+			for (Investment investment : mongoOperations.findAll(Investment.class)) {
+				investments.put(investment.getId(), investment.getName());
+			}
+
+			Query query = new Query();
+			query.addCriteria(Criteria.where("role").is(Role.ROLE_USER));
+
+			for (User user : mongoOperations.find(query, User.class)) {
+				for (Integer investmentId : user.getInvestments()) {
+					if (investments.get(investmentId).equals(label)) {
+						UserResource userResource = new UserResource();
+						userResource.setIdentificator(user.getId());
+						userResource.setFirstName(user.getFirstName());
+						userResource.setLastName(user.getLastName());
+
+						Company company = user.getCompany();
+						CompanyResource companyResource = new CompanyResource();
+						companyResource.setIdentificator(company.getId());
+						companyResource.setName(company.getName());
+						companyResource.setOib(company.getOib());
+
+						userResource.setCompany(companyResource);
+
+						result.add(userResource);
+					}
+				}
+			}
+		} else if (StatisticsType.valueOf(type) == StatisticsType.REVENUES) {
+			Query query = new Query();
+			query.addCriteria(Criteria.where("metadata").is(QuestionMetadata.STATISTICS_REVENUE));
+			Question question = mongoOperations.findOne(query, Question.class);
+
+			for (Company company : mongoOperations.findAll(Company.class)) {
+				for (Answer answer : company.getAnswers()) {
+					if (answer.getQuestionId().equals(question.getId()) && answer.getValueInternal() != null && answer.getValue().equals(label)) {
+						CompanyResource companyResource = new CompanyResource();
+						companyResource.setIdentificator(company.getId());
+						companyResource.setName(company.getName());
+						companyResource.setOib(company.getOib());
+
+						query = new Query();
+						query.addCriteria(Criteria.where("company").is(company));
+						User user = mongoOperations.findOne(query, User.class);
+
+						UserResource userResource = new UserResource();
+						userResource.setIdentificator(user.getId());
+						userResource.setFirstName(user.getFirstName());
+						userResource.setLastName(user.getLastName());
+						userResource.setCompany(companyResource);
+
+						result.add(userResource);
+					}
+				}
+			}
+		}
+
+		return result;
 	}
 
 }

@@ -67,13 +67,15 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdlePro
         .state('administrator.dashboard', {
             url: "/administrator/dashboard",
             templateUrl: "views/administrator/dashboard/dashboard.html",
-            controller: 'DashboardCtrl',
+            controller: 'Administrator_DashboardCtrl',
             resolve: {
             	loadPlugin: function ($ocLazyLoad) {
             		return $ocLazyLoad.load({
             			name: 'fundFinder',
             			files: ['js/fund-finder/administrator/controller/controller_dashboard.js',
-            			        'js/fund-finder/administrator/service/service_dashboard.js']
+            			        'js/fund-finder/administrator/controller/controller_dlg_companies.js',
+            			        'js/fund-finder/administrator/service/service_dashboard.js',
+            			        'js/fund-finder/administrator/service/service_dlg_companies.js']
             		});
             	}
             }
@@ -222,7 +224,9 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdlePro
             		return $ocLazyLoad.load({
             			name: 'fundFinder',
             			files: ['js/fund-finder/administrator/controller/controller_statistics.js',
-            			        'js/fund-finder/administrator/service/service_statistics.js']
+            			        'js/fund-finder/administrator/controller/controller_dlg_companies.js',
+            			        'js/fund-finder/administrator/service/service_statistics.js',
+            			        'js/fund-finder/administrator/service/service_dlg_companies.js']
             		});
             	}
             }

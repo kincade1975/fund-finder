@@ -1,0 +1,20 @@
+<div class="modal fade">
+	<div class="modal-dialog" style="width: 1024px;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" ng-click="closeModal('ok')" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">{{title}}</h4>
+			</div>
+			<div class="body modal-body">
+				<div class="row">
+					<div class="col-lg-12">
+						<div ui-grid="gridOptions" ui-grid-pagination ui-grid-auto-resize class="grid"></div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer p-xxs">
+				<button type="button" ng-click="closeModal('ok')" class="btn btn-white">Zatvori</button>
+			</div>
+		</div>
+	</div>
+</div>

@@ -40,13 +40,13 @@ public class StatisticsService {
 	private int ABBREVIATE = 30;
 
 	@SuppressWarnings("unchecked")
-	public StatisticsResource getCompaniesBySector(int limit, boolean sort) {
+	public StatisticsResource getCompaniesBySector(int limit) {
 		Query query = new Query();
 		query.addCriteria(Criteria.where("metadata").is(QuestionMetadata.STATISTICS_SECTOR));
 
 		Question question = mongoOperations.findOne(query, Question.class);
 
-		Map<String,Integer> counters = new HashMap<>();
+		Map<String,Integer> counters = new LinkedHashMap<>();
 		for (Nkd nkd : mongoOperations.findAll(Nkd.class)) {
 			counters.put(nkd.getSectorName(), 0);
 		}
@@ -62,28 +62,34 @@ public class StatisticsService {
 			}
 		}
 
-		if (sort) {
-			counters = sortByValue(counters);
-		}
-
 		StatisticsResource result = new StatisticsResource(StatisticsType.COMPANIES_BY_SECTOR, new Date());
 
 		if (limit == Integer.MAX_VALUE) {
+			counters = sortByKey(counters, true);
 			for (String key : counters.keySet()) {
 				result.getData().add(counters.get(key));
 				result.getLabels().add(StringUtils.abbreviate(key, ABBREVIATE));
 			}
 		} else {
+			counters = sortByValue(counters, false);
+
 			int cnt = 0;
+			Map<String, Integer> tmp = new LinkedHashMap<>();
 			for (String key : counters.keySet()) {
 				if (cnt == limit) {
 					break;
 				}
 				if (counters.get(key) > 0) {
-					result.getData().add(counters.get(key));
-					result.getLabels().add(key);
+					tmp.put(key, counters.get(key));
 					cnt++;
 				}
+			}
+
+			tmp = sortByKey(tmp, true);
+
+			for (String key : tmp.keySet()) {
+				result.getData().add(tmp.get(key));
+				result.getLabels().add(key);
 			}
 		}
 
@@ -91,13 +97,13 @@ public class StatisticsService {
 	}
 
 	@SuppressWarnings("unchecked")
-	public StatisticsResource getCompaniesByLocation(int limit, boolean sort) {
+	public StatisticsResource getCompaniesByLocation(int limit) {
 		Query query = new Query();
 		query.addCriteria(Criteria.where("metadata").is(QuestionMetadata.STATISTICS_LOCATION));
 
 		Question question = mongoOperations.findOne(query, Question.class);
 
-		Map<String,Integer> counters = new HashMap<>();
+		Map<String,Integer> counters = new LinkedHashMap<>();
 		for (County county : mongoOperations.findAll(County.class)) {
 			counters.put(county.getName(), 0);
 		}
@@ -114,28 +120,34 @@ public class StatisticsService {
 			}
 		}
 
-		if (sort) {
-			counters = sortByValue(counters);
-		}
-
 		StatisticsResource result = new StatisticsResource(StatisticsType.COMPANIES_BY_LOCATION, new Date());
 
 		if (limit == Integer.MAX_VALUE) {
+			counters = sortByKey(counters, true);
 			for (String key : counters.keySet()) {
 				result.getData().add(counters.get(key));
 				result.getLabels().add(StringUtils.abbreviate(key, ABBREVIATE));
 			}
 		} else {
+			counters = sortByValue(counters, false);
+
 			int cnt = 0;
+			Map<String, Integer> tmp = new LinkedHashMap<>();
 			for (String key : counters.keySet()) {
 				if (cnt == limit) {
 					break;
 				}
 				if (counters.get(key) > 0) {
-					result.getData().add(counters.get(key));
-					result.getLabels().add(key);
+					tmp.put(key, counters.get(key));
 					cnt++;
 				}
+			}
+
+			tmp = sortByKey(tmp, true);
+
+			for (String key : tmp.keySet()) {
+				result.getData().add(tmp.get(key));
+				result.getLabels().add(key);
 			}
 		}
 
@@ -143,8 +155,8 @@ public class StatisticsService {
 	}
 
 	@SuppressWarnings("unchecked")
-	public StatisticsResource getInvestments(int limit, boolean sort) {
-		Map<Integer, String> investments = new HashMap<>();
+	public StatisticsResource getInvestments(int limit) {
+		Map<Integer, String> investments = new LinkedHashMap<>();
 		for (Investment investment : mongoOperations.findAll(Investment.class)) {
 			investments.put(investment.getId(), investment.getName());
 		}
@@ -163,28 +175,34 @@ public class StatisticsService {
 			}
 		}
 
-		if (sort) {
-			counters = sortByValue(counters);
-		}
-
 		StatisticsResource result = new StatisticsResource(StatisticsType.INVESTMENTS, new Date());
 
 		if (limit == Integer.MAX_VALUE) {
+			investments = sortByValue(investments, true);
 			for (Integer key : investments.keySet()) {
 				result.getLabels().add(StringUtils.abbreviate(investments.get(key), ABBREVIATE));
 				result.getData().add((counters.containsKey(key)) ? counters.get(key) : 0);
 			}
 		} else {
+			counters = sortByValue(counters, false);
+
 			int cnt = 0;
+			Map<String,Integer> tmp = new LinkedHashMap<>();
 			for (Integer key : counters.keySet()) {
 				if (cnt == limit) {
 					break;
 				}
 				if (counters.get(key) > 0) {
-					result.getData().add(counters.get(key));
-					result.getLabels().add(investments.get(key));
+					tmp.put(investments.get(key), counters.get(key));
 					cnt++;
 				}
+			}
+
+			tmp = sortByKey(tmp, true);
+
+			for (String key : tmp.keySet()) {
+				result.getData().add(tmp.get(key));
+				result.getLabels().add(key);
 			}
 		}
 
@@ -192,13 +210,13 @@ public class StatisticsService {
 	}
 
 	@SuppressWarnings("unchecked")
-	public StatisticsResource getRevenues(int limit, boolean sort) {
+	public StatisticsResource getRevenues(int limit) {
 		Query query = new Query();
 		query.addCriteria(Criteria.where("metadata").is(QuestionMetadata.STATISTICS_REVENUE));
 
 		Question question = mongoOperations.findOne(query, Question.class);
 
-		Map<String,Integer> counters = new HashMap<>();
+		Map<String,Integer> counters = new LinkedHashMap<>();
 		for (Option option : question.getOptions()) {
 			counters.put(option.getValue(), 0);
 		}
@@ -211,10 +229,6 @@ public class StatisticsService {
 			}
 		}
 
-		if (sort) {
-			counters = sortByValue(counters);
-		}
-
 		StatisticsResource result = new StatisticsResource(StatisticsType.REVENUES, new Date());
 
 		if (limit == Integer.MAX_VALUE) {
@@ -223,16 +237,25 @@ public class StatisticsService {
 				result.getLabels().add(StringUtils.abbreviate(key, ABBREVIATE));
 			}
 		} else {
+			counters = sortByValue(counters, false);
+
 			int cnt = 0;
+			Map<String,Integer> tmp = new LinkedHashMap<>();
 			for (String key : counters.keySet()) {
 				if (cnt == limit) {
 					break;
 				}
 				if (counters.get(key) > 0) {
-					result.getData().add(counters.get(key));
-					result.getLabels().add(key);
+					tmp.put(key, counters.get(key));
 					cnt++;
 				}
+			}
+
+			tmp = sortByKey(tmp, true);
+
+			for (String key : tmp.keySet()) {
+				result.getData().add(tmp.get(key));
+				result.getLabels().add(key);
 			}
 		}
 
@@ -240,13 +263,40 @@ public class StatisticsService {
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private Map sortByValue(Map unsortMap) {
+	private Map sortByKey(Map unsortMap, boolean asc) {
 		List list = new LinkedList(unsortMap.entrySet());
 
 		Collections.sort(list, new Comparator() {
 			@Override
 			public int compare(Object o1, Object o2) {
-				return ((Comparable) ((Map.Entry) (o2)).getValue()).compareTo(((Map.Entry) (o1)).getValue());
+				if (asc) {
+					return ((Comparable) ((Map.Entry) (o1)).getKey()).compareTo(((Map.Entry) (o2)).getKey());
+				} else {
+					return ((Comparable) ((Map.Entry) (o2)).getKey()).compareTo(((Map.Entry) (o1)).getKey());
+				}
+			}
+		});
+
+		Map sortedMap = new LinkedHashMap();
+		for (Iterator it = list.iterator(); it.hasNext();) {
+			Map.Entry entry = (Map.Entry) it.next();
+			sortedMap.put(entry.getKey(), entry.getValue());
+		}
+		return sortedMap;
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	private Map sortByValue(Map unsortMap, boolean asc) {
+		List list = new LinkedList(unsortMap.entrySet());
+
+		Collections.sort(list, new Comparator() {
+			@Override
+			public int compare(Object o1, Object o2) {
+				if (asc) {
+					return ((Comparable) ((Map.Entry) (o1)).getValue()).compareTo(((Map.Entry) (o2)).getValue());
+				} else {
+					return ((Comparable) ((Map.Entry) (o2)).getValue()).compareTo(((Map.Entry) (o1)).getValue());
+				}
 			}
 		});
 

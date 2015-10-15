@@ -91,23 +91,23 @@
 				</div>
 				<div class="ibox-content">
 					<div class="row">
-						<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 m-b-md custom-chart-container">
-							<h4 style="width: 100%">Broj tvrtki po sektorima<i ng-click="showStatistics(type0)" class="fa fa-pie-chart fa-lg pull-right custom-pointer" tooltip="Detaljnije"></i></h4>
-							<canvas class="chart chart-doughnut" chart-data="data0" chart-labels="labels0" chart-legend="true"></canvas>
+						<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 m-b-md custom-chart-container custom-box-shadow">
+							<h4 style="width: 100%">Broj tvrtki po sektorima<i ng-click="showStatistics(type0)" class="fa fa-bar-chart fa-lg pull-right custom-pointer" tooltip="Detaljnije"></i></h4>
+							<canvas id="{{type0}}" class="chart chart-doughnut" chart-data="data0" chart-labels="labels0" chart-legend="true" chart-click="showCompanies"></canvas>
 						</div>
-						<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 m-b-md custom-chart-container">
-							<h4>Broj tvrtki po županijama<i ng-click="showStatistics(type1)" class="fa fa-pie-chart fa-lg pull-right custom-pointer" tooltip="Detaljnije"></i></h4>
-							<canvas class="chart chart-doughnut" chart-data="data1" chart-labels="labels1" chart-legend="true"></canvas>
+						<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 m-b-md custom-chart-container custom-box-shadow">
+							<h4>Broj tvrtki po županijama<i ng-click="showStatistics(type1)" class="fa fa-bar-chart fa-lg pull-right custom-pointer" tooltip="Detaljnije"></i></h4>
+							<canvas id="{{type1}}" class="chart chart-doughnut" chart-data="data1" chart-labels="labels1" chart-legend="true" chart-click="showCompanies"></canvas>
 						</div>
 					</div>
 					<div class="row m-t-md">
-						<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 m-b-md custom-chart-container">
-							<h4>Najčešće odabrane investicije<i ng-click="showStatistics(type2)" class="fa fa-pie-chart fa-lg pull-right custom-pointer" tooltip="Detaljnije"></i></h4>
-							<canvas class="chart chart-pie" chart-data="data2" chart-labels="labels2" chart-legend="true"></canvas>
+						<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 m-b-md custom-chart-container custom-box-shadow">
+							<h4>Najčešće odabrane investicije<i ng-click="showStatistics(type2)" class="fa fa-bar-chart fa-lg pull-right custom-pointer" tooltip="Detaljnije"></i></h4>
+							<canvas id="{{type2}}" class="chart chart-pie" chart-data="data2" chart-labels="labels2" chart-legend="true" chart-click="showCompanies"></canvas>
 						</div>
-						<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 m-b-md custom-chart-container">
-							<h4>Prihodi poduzeća u prošloj godini<i ng-click="showStatistics(type3)" class="fa fa-pie-chart fa-lg pull-right custom-pointer" tooltip="Detaljnije"></i></h4>
-							<canvas class="chart chart-pie" chart-data="data3" chart-labels="labels3" chart-legend="true"></canvas>
+						<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 m-b-md custom-chart-container custom-box-shadow">
+							<h4>Prihodi poduzeća u prošloj godini<i ng-click="showStatistics(type3)" class="fa fa-bar-chart fa-lg pull-right custom-pointer" tooltip="Detaljnije"></i></h4>
+							<canvas id="{{type3}}" class="chart chart-pie" chart-data="data3" chart-labels="labels3" chart-legend="true" chart-click="showCompanies"></canvas>
 						</div>
 					</div>
 				</div>

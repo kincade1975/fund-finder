@@ -19,27 +19,10 @@
 						<a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 					</div>
 				</div>
-				<div class="ibox-content">
-					<div ng-repeat="user in users" class="col-lg-4 col-md-4 col-sm-4 col-xs-6 p-xs">
-						<div class="panel panel-default custom-box-shadow">
-							<div class="panel-heading" style="height: 40px">
-								<div style="text-align: right; margin-top: -22px; margin-right: -10px;">
-									<small class="label-primary custom-label-date">{{user.timeCreated | date : 'dd.MM.yyyy'}}</small>
-								</div>
-								<a class="custom-a" ng-click="showUser(user)">
-									<p class="custom-panel-heading-p" data-ng-bind="user.firstName + ' ' + user.lastName" data-ellipsis></p>
-								</a>
-							</div>
-							<div class="panel-body">
-								<div class="form-group" style="margin-bottom: 5px;">
-									<label class="custom-gray p-xxs" style="width: 100%; font-weight: normal;">Tvrtka</label>
-									<span class="p-xxs">{{user.company.name}}</span>
-								</div>
-								<div class="form-group" style="margin-bottom: 5px;">
-									<label class="custom-gray p-xxs" style="width: 100%; font-weight: normal;">OIB</label>
-									<span class="p-xxs">{{user.company.oib}}</span>
-								</div>
-							</div>
+				<div class="ibox-content" style="padding-bottom: 0px;">
+					<div class="row">
+						<div class="col-lg-12">
+							<div ui-grid="gridOptions" ui-grid-auto-resize class="grid"></div>
 						</div>
 					</div>
 				</div>
@@ -59,7 +42,7 @@
 						<div class="panel panel-default custom-box-shadow">
 							<div class="panel-heading custom-panel-heading">
 								<div style="text-align: right; margin-top: -22px; margin-right: -10px;">
-									<small class="label-primary custom-label-date">{{tender.lastModified | date : 'dd.MM.yyyy'}}</small>
+									<small class="label-primary custom-label-date">{{tender.lastModified | date : dateFormat}}</small>
 								</div>
 								<a class="custom-a" ng-click="showTender(tender)">
 									<p class="custom-panel-heading-p" data-ng-bind="tender.name" data-ellipsis></p>

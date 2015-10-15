@@ -2,9 +2,87 @@ angular.module('fundFinder')
 
 .controller('Administrator_DashboardCtrl', function($rootScope, $scope, $state, ModalService, Administrator_DashboardService, Administrator_DlgCompaniesService) {   
 
+	$scope.gridOptions = {
+			enableScrollbars: false,
+			paginationPageSizes: [10, 20, 30, 50, 100],
+			paginationPageSize: 10,
+			useExternalPagination: false,
+			enableFiltering: false,
+			useExternalFiltering: false,
+			totalItems: 10,
+			rowHeight: 32,
+			enableHorizontalScrollbar: 0,
+			enableVerticalScrollbar: 0,
+			enableColumnMenus: false,
+			enableGridMenu: false,
+			columnDefs: [
+				{
+					name: 'Ime',
+					field: 'firstName',
+					type: 'string',
+					cellTooltip: false, 
+					enableSorting: true,
+					enableFiltering: true,
+					enableHiding: false
+				},
+				{
+					name: 'Prezime',
+					field: 'lastName',
+					type: 'string',
+					cellTooltip: false, 
+					enableSorting: true,
+					enableFiltering: true,
+					enableHiding: false
+				},
+				{
+					name: 'Tvrtka',
+					field: 'company.name',
+					type: 'string',
+					cellTooltip: false, 
+					enableSorting: true,
+					enableFiltering: true,
+					enableHiding: false
+				},
+				{
+					displayName: 'OIB',
+					field: 'company.oib',
+					type: 'string',
+					cellTooltip: false, 
+					enableSorting: true,
+					enableFiltering: true,
+					enableHiding: false,
+					width: 125
+				},
+				{
+					name: 'Registriran',
+					field: 'timeCreated',
+					type: 'date',
+					cellTooltip: false, 
+					enableSorting: true,
+					enableFiltering: false,
+					enableHiding: false,
+					width: 100,
+					cellTemplate:'<div class="ui-grid-cell-contents"><small class="label-primary custom-label-date">{{row.entity.timeCreated | date : grid.appScope.dateFormat}}</small></div>'
+				},
+				{
+					name: 'Akcija',
+					type: 'string',
+					cellTooltip: false, 
+					enableSorting: false,
+					enableFiltering: false,
+					enableHiding: false,
+					width: 60,
+					cellTemplate:'<div style="padding-top: 1px"><button ng-click="grid.appScope.showUser(row.entity)" class="btn-xs btn-white m-l-xs"><i class="fa fa-2x fa-eye"></i></button></div>'
+				}
+			]
+		};
+	
 	Administrator_DashboardService.getLatestUsers()
 		.success(function(data, status) {
-			$scope.users = data;
+			$scope.gridOptions.data = data;
+			$scope.gridOptions.totalItems = data.length;
+			var newHeight = data.length * 32 + (($scope.gridOptions.totalItems == 0) ? 30 : 30);
+			angular.element(document.getElementsByClassName('grid')[0]).css('height', newHeight + 'px');
 		})
 		.error(function(data, status) {
 			if (status == 403) {

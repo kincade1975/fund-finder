@@ -79,6 +79,7 @@ angular.module('fundFinder')
 	$scope.gridOptions.totalItems = data.length;
 	$scope.gridOptions.onRegisterApi = function (gridApi) {
 		var newHeight = data.length * 32 + (($scope.gridOptions.totalItems == 0) ? 62 : 62);
+		console.log(document.getElementsByClassName('grid'));
 		angular.element(document.getElementsByClassName('grid')[0]).css('height', newHeight + 'px');
 	};
 	

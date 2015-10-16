@@ -158,7 +158,9 @@ public class StatisticsService {
 	public StatisticsResource getInvestments(int limit) {
 		Map<Integer, String> investments = new LinkedHashMap<>();
 		for (Investment investment : mongoOperations.findAll(Investment.class)) {
-			investments.put(investment.getId(), investment.getName());
+			if (investment.getActive() == Boolean.TRUE) {
+				investments.put(investment.getId(), investment.getName());
+			}
 		}
 
 		Query query = new Query();
@@ -180,8 +182,10 @@ public class StatisticsService {
 		if (limit == Integer.MAX_VALUE) {
 			investments = sortByValue(investments, true);
 			for (Integer key : investments.keySet()) {
-				result.getLabels().add(StringUtils.abbreviate(investments.get(key), ABBREVIATE));
-				result.getData().add((counters.containsKey(key)) ? counters.get(key) : 0);
+				if (investments.containsKey(key)) {
+					result.getLabels().add(StringUtils.abbreviate(investments.get(key), ABBREVIATE));
+					result.getData().add((counters.containsKey(key)) ? counters.get(key) : 0);
+				}
 			}
 		} else {
 			counters = sortByValue(counters, false);
@@ -193,8 +197,10 @@ public class StatisticsService {
 					break;
 				}
 				if (counters.get(key) > 0) {
-					tmp.put(investments.get(key), counters.get(key));
-					cnt++;
+					if (investments.containsKey(key)) {
+						tmp.put(investments.get(key), counters.get(key));
+						cnt++;
+					}
 				}
 			}
 

@@ -82,7 +82,7 @@ angular.module('fundFinder')
 			$scope.gridOptions.data = data;
 			$scope.gridOptions.totalItems = data.length;
 			var newHeight = data.length * 32 + (($scope.gridOptions.totalItems == 0) ? 30 : 30);
-			angular.element(document.getElementsByClassName('grid')[0]).css('height', newHeight + 'px');
+			angular.element(document.getElementsByClassName('gridUsers')[0]).css('height', newHeight + 'px');
 		})
 		.error(function(data, status) {
 			if (status == 403) {

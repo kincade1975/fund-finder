@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import etm.core.monitor.EtmPoint;
 import hr.betaware.fundfinder.resource.TenderResource;
 import hr.betaware.fundfinder.resource.uigrid.PageableResource;
 import hr.betaware.fundfinder.resource.uigrid.UiGridResource;
+import hr.betaware.fundfinder.service.EtmService;
 import hr.betaware.fundfinder.service.TenderService;
 
 @RestController
@@ -20,40 +22,73 @@ public class TenderController {
 	@Autowired
 	private TenderService tenderService;
 
+	@Autowired
+	private EtmService etmService;
+
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
 	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO','ROLE_USER')")
 	public TenderResource findTender(@PathVariable Integer id) {
-		return tenderService.findTender(id);
+		EtmPoint point = etmService.createPoint("TenderController.findTender");
+		try {
+			return tenderService.findTender(id);
+		} finally {
+			etmService.collect(point);
+		}
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
 	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO')")
 	public TenderResource saveTender(@RequestBody TenderResource resource) {
-		return tenderService.saveTender(resource);
+		EtmPoint point = etmService.createPoint("TenderController.saveTender");
+		try {
+			return tenderService.saveTender(resource);
+		} finally {
+			etmService.collect(point);
+		}
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, value="/{id}")
 	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO')")
 	public void deleteTender(@PathVariable Integer id) {
-		tenderService.deleteTender(id);
+		EtmPoint point = etmService.createPoint("TenderController.deleteTender");
+		try {
+			tenderService.deleteTender(id);
+		} finally {
+			etmService.collect(point);
+		}
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/page")
 	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO')")
 	public PageableResource<TenderResource> getPage(@RequestBody UiGridResource resource) {
-		return tenderService.getPage(resource);
+		EtmPoint point = etmService.createPoint("TenderController.getPage");
+		try {
+			return tenderService.getPage(resource);
+		} finally {
+			etmService.collect(point);
+		}
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value="/activate/{id}")
 	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO')")
 	public TenderResource activateTender(@PathVariable Integer id) {
-		return tenderService.activateTender(id);
+		EtmPoint point = etmService.createPoint("TenderController.activateTender");
+		try {
+			return tenderService.activateTender(id);
+		} finally {
+			etmService.collect(point);
+		}
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value="/deactivate/{id}")
 	@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN','ROLE_ADMINISTRATOR','ROLE_ADMINISTRATOR_RO')")
 	public TenderResource deactivateTender(@PathVariable Integer id) {
-		return tenderService.deactivateTender(id);
+		EtmPoint point = etmService.createPoint("TenderController.deactivateTender");
+		try {
+			return tenderService.deactivateTender(id);
+		} finally {
+			etmService.collect(point);
+		}
 	}
 
 }

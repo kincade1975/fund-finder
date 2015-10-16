@@ -15,7 +15,7 @@
 				<div class="panel-body">
 					<div class="form-group">
 						<label class="custom-gray p-xs" style="width: 100%">Slika</label>
-						<img ng-show="tender.base64 != null" ng-src="data:image/JPEG;base64,{{tender.base64}}">
+						<img ng-show="tender.base64 != null" ng-src="data:image/JPEG;base64,{{tender.base64}}" style="max-width: 75%; height: auto;">
 					</div>
 					<div class="form-group" ng-repeat="question in tender.questions">
 						<label class="custom-gray p-xs" style="width: 100%">{{question.text}}</label>
@@ -59,11 +59,11 @@
 				<div class="form-group">
 					<div class="col-sm-12">
 						<label class="custom-gray p-xs" style="width: 100%">Slika</label>
-						<div style="display: flex;">
-							<img ng-show="tender.base64 != null" ng-src="data:image/JPEG;base64,{{tender.base64}}">
-							<a ng-show="tender.base64 != null" ng-click="removeImage()" class="custom-a pull-right m-l-xs"><i class="fa fa-trash-o fa-lg"></i></a>
+						<div>
+							<img ng-show="tender.base64 != null" ng-src="data:image/JPEG;base64,{{tender.base64}}" style="max-width: 75%; height: auto;">
+							<a ng-show="tender.base64 != null" ng-click="removeImage()" class="custom-a m-l-xs" tooltip="Obriši sliku"><i class="fa fa-trash-o fa-lg"></i></a>
 						</div>
-						<a href="#" class="btn btn-white m-t-xs" ngf-select ngf-change="upload($files)" tooltip="Preporučeni format: JPEG 320x240"><i class="fa fa-upload"></i> Odaberite...</a>	
+						<a href="#" class="btn btn-white m-t-xs" ngf-select ngf-change="upload($files)" tooltip="Preporučeni format: JPEG 320x240; Maks. veličina: 1MB"><i class="fa fa-upload"></i> Odaberite...</a>	
 					</div>
 				</div>
 				

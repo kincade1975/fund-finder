@@ -28,7 +28,8 @@ public class ArticleResourceAssembler extends ResourceAssemblerSupport<Article, 
 		resource.setIdentificator(entity.getId());
 		resource.setTitle(entity.getTitle());
 		resource.setText(StringEscapeUtils.unescapeHtml4(entity.getText()));
-		resource.setStrippedText(new HtmlToPlainText().getPlainText(Jsoup.parse(resource.getText())).substring(0, 300));
+		String plainText = new HtmlToPlainText().getPlainText(Jsoup.parse(resource.getText()));
+		resource.setStrippedText((plainText.length() > 300) ? plainText.substring(0, 300) : plainText);
 		resource.setImage(entity.getImage());
 		resource.setActive(entity.getActive());
 		resource.setTimeCreated(entity.getTimeCreated());

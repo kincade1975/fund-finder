@@ -49,10 +49,11 @@
 			<form name="form" class="form-horizontal ng-pristine ng-valid" novalidate>
 				
 				<div class="form-group">
-					<div class="col-sm-12" ng-class="{ 'has-error' : form.tenderName.$touched && form.tenderName.$invalid }">
-						<label class="custom-gray p-xs" style="width: 100%">Naziv natječaja</label>
+					<div class="col-sm-12">
+						<label class="custom-gray p-xs" style="width: 100%">Naziv natječaja
+							<span class="pull-right" ng-show="form.tenderName.$invalid"><i class="fa fa-asterisk" tooltip="Obavezno"></i></span>
+						</label>
 						<input ng-model="tender.name" type="text" class="form-control" name="tenderName" ng-required="true" />
-						<small ng-show="form.tenderName.$touched && form.tenderName.$invalid" class="m-l-xs help-block" style="margin-top: 2px">Molimo unesite naziv natječaja</small>
 					</div>
 				</div>
 				
@@ -69,82 +70,85 @@
 				
 				<div class="form-group" ng-repeat="question in tender.questions">
 					<div class="col-sm-12">
-						<label class="custom-gray p-xs" style="width: 100%">{{question.text}}</label>
+						<label class="custom-gray p-xs" style="width: 100%">{{question.text}}
+							<span class="pull-right" ng-show="form.question{{question.id}}.$invalid"><i class="fa fa-asterisk" tooltip="Obavezno"></i></span>
+						</label>
 						
-						<input ng-if="question.type == 'TEXT'" class="form-control" type="text" ng-model="question.answer.valueInternal" />
+						<input name="question{{question.id}}" ng-if="question.type == 'TEXT'" class="form-control" type="text" ng-model="question.answer.valueInternal" ng-required="{{question.mandatory}}" />
 						
-						<textarea ng-if="question.type == 'TEXT_AREA'" class="form-control" rows="5" ng-model="question.answer.valueInternal"></textarea>
+						<textarea name="question{{question.id}}" ng-if="question.type == 'TEXT_AREA'" class="form-control" rows="5" ng-model="question.answer.valueInternal" ng-required="{{question.mandatory}}"></textarea>
 						
 						<div ng-if="question.type == 'TEXT_EDITOR'">
 							<summernote id="summernote" config="summernoteOptions" ng-model="question.answer.valueInternal" />
 						</div>
 						
-						<input ng-if="question.type == 'NUMBER'" class="form-control" type="number" min="0" ng-model="question.answer.valueInternal">
+						<input name="question{{question.id}}" ng-if="question.type == 'NUMBER'" class="form-control" type="number" min="0" ng-model="question.answer.valueInternal" ng-required="{{question.mandatory}}">
 						
 						<div ng-if="question.type == 'DATE'" class="input-group date">
-		                	<input type="datetime" class="form-control" date-time ng-model="question.answer.valueInternal" view="date" min-view="date" format="{{dateFormat}}" auto-close="true">
+		                	<input name="question{{question.id}}" type="datetime" class="form-control" date-time ng-model="question.answer.valueInternal" view="date" min-view="date" format="{{dateFormat}}" auto-close="true" ng-required="{{question.mandatory}}">
 		                	<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 		            	</div>
 		            	
 						<div ng-if="question.type == 'DATE_TIME'" class="input-group date">
-		                	<input type="datetime" class="form-control" date-time ng-model="question.answer.valueInternal" view="date" format="{{dateTimeFormat}}" auto-close="true">
+		                	<input name="question{{question.id}}" type="datetime" class="form-control" date-time ng-model="question.answer.valueInternal" view="date" format="{{dateTimeFormat}}" auto-close="true" ng-required="{{question.mandatory}}">
 		                	<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 		            	</div>
 		            	
 		            	<div ng-if="question.type == 'RADIO'" class="p-xxs">
 		            		<div ng-repeat="option in question.options">
 		            			<label style="font-weight: normal;"><input icheck ng-model="question.answer.valueInternal" value="{{option.value}}" type="radio" 
-		            				name="radioGroup{{question.id}}">&nbsp;&nbsp;&nbsp;{{option.value}}</label>
+		            				name="question{{question.id}}" ng-required="{{question.mandatory}}">&nbsp;&nbsp;&nbsp;{{option.value}}</label>
 		            		</div>
 		            	</div>
 		            	
 		            	<div ng-if="question.type == 'CHECKBOX'" class="p-xxs">
 		            		<div ng-repeat="option in question.options">
-		            			<label style="font-weight: normal;"><input icheck ng-model="question.answer.valueInternal[$index]" value="{{option.value}}" type="checkbox">&nbsp;&nbsp;&nbsp;{{option.value}}</label>
+		            			<label style="font-weight: normal;">
+		            				<input icheck ng-model="question.answer.valueInternal[$index]" value="{{option.value}}" type="checkbox">&nbsp;&nbsp;&nbsp;{{option.value}}
+		            			</label>
 		            		</div>
 		            	</div>
 		            	
 		            	<div ng-if="question.type == 'SELECT'">
-		            		<select class="form-control" chosen ng-model="question.answer.valueInternal" 
-		            			ng-options="option.id as option.value for option in question.options" data-placeholder="Molimo odaberite...">
+		            		<select name="question{{question.id}}" class="form-control" chosen ng-model="question.answer.valueInternal" ng-options="option.id as option.value for option in question.options" data-placeholder="Molimo odaberite..." ng-required="{{question.mandatory}}">
 		            			<option />
 		            		</select>
 		            	</div>
 		            	
 		            	<div ng-if="question.type == 'MULTI_SELECT'">
-		            		<select chosen multiple class="form-control" ng-model="question.answer.valueInternal" 
-		            			ng-options="option.id as option.value for option in question.options" data-placeholder="Molimo odaberite..."></select>
+		            		<select name="question{{question.id}}" chosen multiple class="form-control" ng-model="question.answer.valueInternal" 
+		            			ng-options="option.id as option.value for option in question.options" data-placeholder="Molimo odaberite..." ng-required="{{question.mandatory}}"></select>
 		            	</div>
 		            	
 		            	<div ng-if="question.type == 'CITY'">
-		            		<select class="form-control" chosen ng-model="question.answer.valueInternal" 
-		            			ng-options="city.id as city.name for city in cities" data-placeholder="Molimo odaberite...">
+		            		<select name="question{{question.id}}" class="form-control" chosen ng-model="question.answer.valueInternal" 
+		            			ng-options="city.id as city.name for city in cities" data-placeholder="Molimo odaberite..." ng-required="{{question.mandatory}}">
 		            			<option />
 		            		</select>
 		            	</div>
 		            	
 		            	<div ng-if="question.type == 'COUNTY'">
-		            		<select chosen multiple class="form-control" ng-model="question.answer.valueInternal" 
-		            			ng-options="county.id as county.name for county in counties" data-placeholder="Molimo odaberite...">
+		            		<select name="question{{question.id}}" chosen multiple class="form-control" ng-model="question.answer.valueInternal" 
+		            			ng-options="county.id as county.name for county in counties" data-placeholder="Molimo odaberite..." ng-required="{{question.mandatory}}">
 		            			<option />
 		            		</select>
 		            	</div>
 		            	
 		            	<div ng-if="question.type == 'NKD'">
-		            		<select class="form-control" chosen ng-model="question.answer.valueInternal" 
-		            			ng-options="nkd.id as (nkd.area + '.' + nkd.activity + ' - ' + nkd.activityName) group by (nkd.sector + ' - ' + nkd.sectorName) for nkd in nkds" data-placeholder="Molimo odaberite...">
+		            		<select name="question{{question.id}}" class="form-control" chosen ng-model="question.answer.valueInternal" 
+		            			ng-options="nkd.id as (nkd.area + '.' + nkd.activity + ' - ' + nkd.activityName) group by (nkd.sector + ' - ' + nkd.sectorName) for nkd in nkds" data-placeholder="Molimo odaberite..." ng-required="{{question.mandatory}}">
 		            			<option />
 		            		</select>
 		            	</div>
 		            	
 		            	<div ng-if="question.type == 'NKD_AUX'">
-		            		<select chosen multiple class="form-control" ng-model="question.answer.valueInternal" 
-		            			ng-options="nkd.id as (nkd.area + '.' + nkd.activity + ' - ' + nkd.activityName) group by (nkd.sector + ' - ' + nkd.sectorName) for nkd in nkds" data-placeholder="Molimo odaberite..."></select>
+		            		<select name="question{{question.id}}" chosen multiple class="form-control" ng-model="question.answer.valueInternal" 
+		            			ng-options="nkd.id as (nkd.area + '.' + nkd.activity + ' - ' + nkd.activityName) group by (nkd.sector + ' - ' + nkd.sectorName) for nkd in nkds" data-placeholder="Molimo odaberite..." ng-required="{{question.mandatory}}"></select>
 		            	</div>
 		            	
 		            	<div ng-if="question.type == 'INVESTMENT'">
-		            		<select chosen multiple class="form-control" ng-model="question.answer.valueInternal" 
-		            			ng-options="investment.id as investment.name for investment in investments" data-placeholder="Molimo odaberite..."></select>
+		            		<select name="question{{question.id}}" chosen multiple class="form-control" ng-model="question.answer.valueInternal" 
+		            			ng-options="investment.id as investment.name for investment in investments" data-placeholder="Molimo odaberite..." ng-required="{{question.mandatory}}"></select>
 		            	</div>
 		            	
 					</div>
@@ -154,7 +158,7 @@
 			<hr class="custom-hr">
 			<div class="col-lg-12" style="text-align: right;">
 				<button ng-click="cancel()" class="btn btn-white m-r-sm"><i class="fa fa-angle-double-left"></i> Natrag</button>
-				<button ng-disabled="role == 'ROLE_ADMINISTRATOR_RO'" ng-click="save()" ng-disabled="form.$invalid" class="btn btn-primary"><i class="fa fa-save"></i> Spremi</button>
+				<button ng-disabled="form.$invalid || role == 'ROLE_ADMINISTRATOR_RO'" ng-click="save()" ng-disabled="form.$invalid" class="btn btn-primary"><i class="fa fa-save"></i> Spremi</button>
 			</div>
 		</div>
 	</div>

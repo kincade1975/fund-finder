@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.mongodb.core.MongoOperations;
@@ -96,18 +97,21 @@ public class ConfigurationService {
 		mongoOperations.remove(entity);
 	}
 
+	@Cacheable("cities")
 	public List<CityResource> getCities() {
 		Query query = new Query();
 		query.with(new Sort(Direction.ASC, "name"));
 		return cityResourceAssembler.toResources(mongoOperations.find(query, City.class));
 	}
 
+	@Cacheable("counties")
 	public List<CountyResource> getCounties() {
 		Query query = new Query();
 		query.with(new Sort(Direction.ASC, "name"));
 		return countyResourceAssembler.toResources(mongoOperations.find(query, County.class));
 	}
 
+	@Cacheable("nkds")
 	public List<NkdResource> getNkds() {
 		Query query = new Query();
 		query.with(new Sort(Direction.ASC, "sector"));

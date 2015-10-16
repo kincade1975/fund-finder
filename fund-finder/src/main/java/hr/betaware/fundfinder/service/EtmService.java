@@ -74,7 +74,6 @@ public class EtmService {
 			LOGGER.info("Overview of measurement points for period [{}] - [{}]\n{}",
 					DateFormatUtils.format(etmMonitor.getMetaData().getLastResetTime(), "yyyy-MM-dd HH:mm:ss"),
 					DateFormatUtils.format(Calendar.getInstance().getTime(), "yyyy-MM-dd HH:mm:ss"), stringWriter.toString());
-			LOGGER.debug("Reseting measurements points...");
 			etmMonitor.reset();
 		}
 	}

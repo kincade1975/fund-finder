@@ -1,0 +1,58 @@
+======================================================================
+	Security
+======================================================================
+
+Access control is enforced by using HTTP basic authentication, meaning that each API request must provide valid credentials in Authorization HTTP header.
+
+======================================================================
+	Methods
+======================================================================
+
+--------------------------------------
+findCompany()
+--------------------------------------
+Method returns company data (CompanyResource) according to given credentials.
+
+GET /e/api/v1/company
+
+--------------------------------------
+validateCompany()
+--------------------------------------
+Method must be called prior the invocation of saveCompany() method to validate submitted company data (CompanyResource). At the moment only OIB is validated.
+
+POST /e/api/v1/company/validate
+
+--------------------------------------
+saveCompany()
+--------------------------------------
+Method saves submitted company data (CompanyResource).
+
+POST /e/api/v1/company
+
+--------------------------------------
+getCities()
+--------------------------------------
+Method returns list of cities (CityResource).
+
+GET /e/api/v1/configuration/cities
+
+--------------------------------------
+getCounties()
+--------------------------------------
+Method returns list of counties (CountyResource).
+
+GET /e/api/v1/configuration/counties
+
+--------------------------------------
+getNkds()
+--------------------------------------
+Method returns list of NKDs (NkdResource).
+
+GET /e/api/v1/configuration/nkds
+
+--------------------------------------
+getInvestments()
+--------------------------------------
+Method returns list of investments (InvestmentResource).
+
+GET /e/api/v1/investment

@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.authentication.configurers
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.ExceptionMappingAuthenticationFailureHandler;
 import org.springframework.security.web.csrf.CsrfFilter;
 
@@ -30,29 +31,16 @@ public class SecurityConfiguration extends GlobalAuthenticationConfigurerAdapter
 		private UserDetailsService userDetailsService;
 
 		@Autowired
-		private CsrfRequestMatcher csrfRequestMatcher;
-
-		@Autowired
-		private CsrfTokenRepository csrfTokenRepository;
-
-		@Autowired
-		private CsrfHeaderFilter csrfHeaderFilter;
-
-		@Autowired
 		public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-			auth
-			.userDetailsService(userDetailsService)
-			.passwordEncoder(new ShaPasswordEncoder());
+			auth.userDetailsService(userDetailsService).passwordEncoder(new ShaPasswordEncoder());
 		}
 
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
-			http.csrf().csrfTokenRepository(csrfTokenRepository.getRepository()).requireCsrfProtectionMatcher(csrfRequestMatcher)
-			.and().addFilterAfter(csrfHeaderFilter.getFilter(), CsrfFilter.class);
-
-			http
-			.antMatcher("/api/**")
-			.authorizeRequests().anyRequest().authenticated();
+			http.csrf().disable();
+			http.antMatcher("/e/api/**").authorizeRequests().anyRequest().authenticated();
+			http.httpBasic();
+			http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		}
 	}
 

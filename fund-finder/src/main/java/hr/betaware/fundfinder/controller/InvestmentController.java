@@ -19,7 +19,7 @@ import hr.betaware.fundfinder.service.EtmService;
 import hr.betaware.fundfinder.service.InvestmentService;
 
 @RestController
-@RequestMapping(value = { "/api/v1/investment" })
+@RequestMapping(value = { "/api/v1/investment", "/e/api/v1/investment" })
 public class InvestmentController {
 
 	@Autowired

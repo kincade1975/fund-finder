@@ -24,7 +24,7 @@ import hr.betaware.fundfinder.service.ConfigurationService;
 import hr.betaware.fundfinder.service.EtmService;
 
 @RestController
-@RequestMapping(value = { "/api/v1/configuration" })
+@RequestMapping(value = { "/api/v1/configuration", "/e/api/v1/configuration" })
 public class ConfigurationController {
 
 	@Autowired

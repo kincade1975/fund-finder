@@ -16,7 +16,7 @@ import hr.betaware.fundfinder.service.CompanyService;
 import hr.betaware.fundfinder.service.EtmService;
 
 @RestController
-@RequestMapping(value = { "/api/v1/company" })
+@RequestMapping(value = { "/api/v1/company", "/e/api/v1/company" })
 public class CompanyController {
 
 	@Autowired

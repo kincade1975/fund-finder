@@ -11,13 +11,13 @@
             <li ng-show="role == 'ROLE_SUPERADMIN' || role == 'ROLE_ADMINISTRATOR' || role == 'ROLE_ADMINISTRATOR_RO'" ng-class="{active: $state.is('administrator.user_overview') || $state.is('administrator.user_show')}">
                 <a ui-sref="administrator.user_overview"><i class="fa fa-users"></i> <span class="nav-label">Korisnici</span><span class="label label-default pull-right">{{totalUsers}}</span></a>
             </li>
-            <li ui-sref-active="active" ng-show="role == 'ROLE_SUPERADMIN' || role == 'ROLE_ADMINISTRATOR' || role == 'ROLE_ADMINISTRATOR_RO'">
+            <li ng-show="role == 'ROLE_SUPERADMIN' || role == 'ROLE_ADMINISTRATOR' || role == 'ROLE_ADMINISTRATOR_RO'" ng-class="{active: $state.is('administrator.tender_overview') || $state.is('administrator.tender_edit') || $state.is('administrator.tender_statistics')}">
                 <a ui-sref="administrator.tender_overview"><i class="fa fa-star"></i> <span class="nav-label">Natječaji</span><span class="label label-default pull-right">{{totalTenders}}</span></a>
             </li>
             <li ng-show="role == 'ROLE_SUPERADMIN' || role == 'ROLE_ADMINISTRATOR' || role == 'ROLE_ADMINISTRATOR_RO'" ng-class="{active: $state.is('administrator.investment_overview') || $state.is('administrator.investment_edit')}">
                 <a ui-sref="administrator.investment_overview"><i class="fa fa-line-chart"></i> <span class="nav-label">Investicije</span><span class="label label-default pull-right">{{totalInvestments}}</span></a>
             </li>
-            <li ng-show="role == 'ROLE_SUPERADMIN' || role == 'ROLE_ADMINISTRATOR' || role == 'ROLE_ADMINISTRATOR_RO'" ng-class="{active: $state.is('administrator.article_overview') || $state.is('administrator.article_edit')}">
+            <li ng-show="role == 'ROLE_SUPERADMIN' || role == 'ROLE_ADMINISTRATOR' || role == 'ROLE_ADMINISTRATOR_RO'" ng-class="{active: $state.is('administrator.article_overview') || $state.is('administrator.article_edit') || $state.is('administrator.article_statistics')}">
                 <a ui-sref="administrator.article_overview"><i class="fa fa-university"></i> <span class="nav-label">Kako do sredstava</span><span class="label label-default pull-right">{{totalArticles}}</span></a>
             </li>
             <li ui-sref-active="active" ng-show="role == 'ROLE_SUPERADMIN' || role == 'ROLE_ADMINISTRATOR' || role == 'ROLE_ADMINISTRATOR_RO'">

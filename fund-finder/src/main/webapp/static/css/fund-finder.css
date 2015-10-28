@@ -291,3 +291,7 @@
 .custom-pointer {
 	cursor: pointer;
 }
+
+.custom-form-control[readonly] {
+    background-color: #f8f8f8;
+}

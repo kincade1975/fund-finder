@@ -57,9 +57,10 @@ angular.module('fundFinder')
 					enableSorting: false,
 					enableFiltering: false,
 					enableHiding: false,
-					width: 126,
+					width: 170,
 					cellTemplate:
 						'<div style="padding-top: 1px">' +
+						'<button ng-click="grid.appScope.showStatistics(row.entity)" class="btn-xs btn-white m-l-xs"><i class="fa fa-2x fa-bar-chart"></i></button>' +
 						'<button ng-show="row.entity.active == false" ng-disabled="grid.appScope.role == \'ROLE_ADMINISTRATOR_RO\'" ng-click="grid.appScope.activateTender(row.entity)" class="btn-xs btn-white m-l-xs"><i class="fa fa-2x fa-toggle-off"></i></button>' + 
 						'<button ng-show="row.entity.active == true" ng-disabled="grid.appScope.role == \'ROLE_ADMINISTRATOR_RO\'" ng-click="grid.appScope.deactivateTender(row.entity)" class="btn-xs btn-white m-l-xs"><i class="fa fa-2x fa-toggle-on"></i></button>' +
 						'<button ng-disabled="grid.appScope.role == \'ROLE_ADMINISTRATOR_RO\'" ng-click="grid.appScope.editTender(row.entity)" class="btn-xs btn-white m-l-xs"><i class="fa fa-2x fa-edit"></i></button>' +
@@ -150,6 +151,10 @@ angular.module('fundFinder')
 		
 		$scope.editTender = function(entity) {
 			$state.go('administrator.tender_edit', { 'id' : entity.id, 'mode' : 'edit' });
+		};
+		
+		$scope.showStatistics = function(entity) {
+			$state.go('administrator.tender_statistics', { 'id' : entity.id });
 		};
 		
 		$scope.activateTender = function(entity) {
@@ -369,5 +374,59 @@ angular.module('fundFinder')
 		$scope.tender.base64 = null;
 		$scope.tender.image = null;
 	}
+	
+})
+
+// ==============================================================================================================
+//	STATISTICS
+// ==============================================================================================================
+.controller('Administrator_TenderStatisticsCtrl', function($rootScope, $scope, $state, $stateParams, Administrator_ImpressionService) {
+	$scope.id = $stateParams.id;
+	
+	var colours = new Array();
+	colours.push("#1ab394");
+	colours.push("#f8ac59");
+	$scope.colours = colours;
+	
+	$scope.back = function() {
+		if ($rootScope.previousState) {
+			$state.go($rootScope.previousState, $rootScope.previousStateParams);
+		} else {
+			window.history.back();
+		}
+	};
+	
+	Administrator_ImpressionService.getStatisticsPeriods()
+		.success(function(data, status) {
+			$scope.statisticsPeriods = data;
+			$scope.statisticsPeriod = "LAST_7_DAYS";
+		})
+		.error(function(data, status) {
+			if (status == 403) {
+				$state.go('login');
+			} else {
+				toastr.error('Došlo je do pogreške prilikom dohvaćanja podataka');
+			}
+		});
+	
+	$scope.getImpressionStatistics = function(statisticsPeriod) {
+		Administrator_ImpressionService.getImpressionStatistics("TENDER", $stateParams.id, (statisticsPeriod) ? statisticsPeriod : "LAST_7_DAYS")
+			.success(function(data, status) {
+				$scope.impressionStatistics = data;
+			})
+			.error(function(data, status) {
+				if (status == 403) {
+					$state.go('login');
+				} else {
+					toastr.error('Došlo je do pogreške prilikom dohvaćanja podataka');
+				}
+			});
+	};
+	
+	$scope.statisticsPeriodChanged = function() {
+		$scope.getImpressionStatistics($scope.statisticsPeriod);
+	};
+	
+	$scope.getImpressionStatistics();
 	
 });

@@ -1,0 +1,77 @@
+<div class="row border-bottom white-bg">
+	<div class="col-lg-12">
+		<h1><i class="fa fa-bar-chart"></i> Statistika natječaja</h1>
+	</div>
+</div>
+
+<div class="wrapper wrapper-content">
+	
+	<div class="row">
+		<div class="col-lg-12">
+            
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="col-lg-8 form-horizontal m-t-xs m-b-sm">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" style="font-weight: normal;">Naziv natječaja</label>
+                            <div class="col-sm-9">
+                                <input type="text" readonly="readonly" class="form-control custom-form-control" value="{{impressionStatistics.name}}">                           
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="col-lg-8 form-horizontal m-t-xs m-b-sm">
+                        <div class="form-group">
+	                        <label class="col-sm-3 control-label" style="font-weight: normal;">Statistika za </label>
+	                        <div class="col-sm-9">
+                                <select chosen disable-search="true" ng-change="statisticsPeriodChanged()" ng-model="statisticsPeriod" ng-options="key as value for (key, value) in statisticsPeriods" class="form-control"></select>	                        
+	                        </div>
+                        </div>
+                    </div>
+                    
+	                <div class="col-lg-2 m-b-sm">
+	                    <div class="widget style1 navy-bg" style="margin-top: 0px; padding-top: 10px; padding-bottom: 5px;" tooltip="Ukupno pregleda">
+				            <div class="row vertical-align">
+				                <div class="col-xs-3">
+				                    <i class="fa fa-bullseye fa-2x"></i>
+				                </div>
+				                <div class="col-xs-9 text-left">
+				                    <label style="font-size: 20px">{{impressionStatistics.total}}</label>
+				                </div>
+				            </div>
+				        </div>
+	                </div>
+	                
+	                <div class="col-lg-2 m-b-sm">
+	                    <div class="widget style1 yellow-bg" style="margin-top: 0px; padding-top: 10px; padding-bottom: 5px;" tooltip="Jedinstvenih pregleda">
+	                        <div class="row vertical-align">
+	                            <div class="col-xs-3">
+	                                <i class="fa fa-user fa-2x"></i>
+	                            </div>
+	                            <div class="col-xs-9 text-left">
+                                    <label style="font-size: 20px">{{impressionStatistics.unique}}</label>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-12 m-b-md">
+                    <canvas class="chart chart-bar" chart-legend="true" chart-colours="colours" chart-data="impressionStatistics.data" chart-labels="impressionStatistics.labels" chart-series="impressionStatistics.series"></canvas>
+                </div>
+            </div>
+            
+			<hr class="custom-hr">
+			<div class="col-lg-12" style="text-align: right;">
+				<button ng-click="back()" class="btn btn-white m-r-sm"><i class="fa fa-angle-double-left"></i> Natrag</button>
+			</div>
+		</div>
+	</div>
+	
+</div>

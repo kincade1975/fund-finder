@@ -156,6 +156,21 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdlePro
             	}
             }
         })
+        .state('administrator.tender_statistics', {
+            url: "/administrator/tender-statistics/:id",
+            templateUrl: "views/administrator/tender/statistics.html",
+            controller: 'Administrator_TenderStatisticsCtrl',
+            params: { 'id' : null },
+            resolve: {
+            	loadPlugin: function ($ocLazyLoad) {
+            		return $ocLazyLoad.load({
+            			name: 'fundFinder',
+            			files: ['js/fund-finder/administrator/controller/controller_tender.js',
+            			        'js/fund-finder/administrator/service/service_impression.js']
+            		});
+            	}
+            }
+        })
         .state('administrator.investment_overview', {
             url: "/administrator/investment/overview",
             templateUrl: "views/administrator/investment/overview.html",
@@ -210,6 +225,21 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdlePro
             			name: 'fundFinder',
             			files: ['js/fund-finder/administrator/controller/controller_article.js',
             			        'js/fund-finder/administrator/service/service_article.js']
+            		});
+            	}
+            }
+        })
+        .state('administrator.article_statistics', {
+            url: "/administrator/article-statistics/:id",
+            templateUrl: "views/administrator/article/statistics.html",
+            controller: 'Administrator_ArticleStatisticsCtrl',
+            params: { 'id' : null },
+            resolve: {
+            	loadPlugin: function ($ocLazyLoad) {
+            		return $ocLazyLoad.load({
+            			name: 'fundFinder',
+            			files: ['js/fund-finder/administrator/controller/controller_article.js',
+            			        'js/fund-finder/administrator/service/service_impression.js']
             		});
             	}
             }
@@ -360,9 +390,14 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdlePro
             			        'js/fund-finder/user/service/service_opportunity.js',
             			        'js/fund-finder/administrator/service/service_tender.js',
             			        'js/fund-finder/administrator/service/service_investment.js',
+            			        'js/fund-finder/user/service/service_impression.js',
             			        'js/fund-finder/administrator/service/service_configuration.js']
             		});
             	}
+            },
+            onEnter: function($rootScope, $stateParams, User_ImpressionService) {
+                var impression = { entityType : "TENDER", entityId : $stateParams.id };
+                User_ImpressionService.setImpression(impression);
             }
         })
         .state('user.article_overview', {
@@ -389,9 +424,14 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdlePro
             		return $ocLazyLoad.load({
             			name: 'fundFinder',
             			files: ['js/fund-finder/user/controller/controller_article.js',
-            			        'js/fund-finder/user/service/service_article.js']
+            			        'js/fund-finder/user/service/service_article.js',
+            			        'js/fund-finder/user/service/service_impression.js',]
             		});
             	}
+            },
+            onEnter: function($rootScope, $stateParams, User_ImpressionService) {
+                var impression = { entityType : "ARTICLE", entityId : $stateParams.id };
+                User_ImpressionService.setImpression(impression);
             }
         })
 }

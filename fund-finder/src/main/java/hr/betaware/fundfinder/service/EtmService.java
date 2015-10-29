@@ -9,6 +9,10 @@ import javax.annotation.PreDestroy;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +28,15 @@ public class EtmService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(EtmService.class);
 
 	private static EtmMonitor etmMonitor;
+
+	@Autowired
+	private JavaMailSender mailSender;
+
+	@Value(value = "${etm.notification.enabled}")
+	private boolean notificationEnabled;
+
+	@Value(value = "${etm.notification.email}")
+	private String notificationEmail;
 
 	@PostConstruct
 	public void init() {
@@ -69,13 +82,25 @@ public class EtmService {
 	@Scheduled(cron = "${etm.reset.cron-expression}")
 	public void reset() {
 		if (etmMonitor != null) {
+			String subject = String.format("Fund Finder - Overview of measurement points for period [%s] - [%s]",
+					DateFormatUtils.format(etmMonitor.getMetaData().getLastResetTime(), "yyyy-MM-dd HH:mm:ss"),
+					DateFormatUtils.format(Calendar.getInstance().getTime(), "yyyy-MM-dd HH:mm:ss"));
 			StringWriter stringWriter = new StringWriter();
 			etmMonitor.render(new SimpleTextRenderer(stringWriter));
-			LOGGER.info("Overview of measurement points for period [{}] - [{}]\n{}",
-					DateFormatUtils.format(etmMonitor.getMetaData().getLastResetTime(), "yyyy-MM-dd HH:mm:ss"),
-					DateFormatUtils.format(Calendar.getInstance().getTime(), "yyyy-MM-dd HH:mm:ss"), stringWriter.toString());
+			LOGGER.info("{}\n{}", subject, stringWriter.toString());
+			if (notificationEnabled) {
+				sendEmail(subject, stringWriter);
+			}
 			etmMonitor.reset();
 		}
+	}
+
+	private void sendEmail(String subject, StringWriter stringWriter) {
+		SimpleMailMessage message = new SimpleMailMessage();
+		message.setTo(notificationEmail);
+		message.setSubject(subject);
+		message.setText(stringWriter.toString());
+		mailSender.send(message);
 	}
 
 }

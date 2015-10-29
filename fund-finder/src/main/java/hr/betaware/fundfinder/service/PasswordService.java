@@ -64,7 +64,6 @@ public class PasswordService {
 		LOGGER.debug("Sending forgot password email to {} - UUID: {}", email, forgotPassword.getId());
 
 		SimpleMailMessage message = new SimpleMailMessage();
-		message.setFrom("fundfinder@google.com");
 		message.setTo(email);
 		message.setSubject("Fund Finder - Resetiranje zaporke");
 		message.setText("Molimo kliknite na sljedeći link da bi resetirali vašu zaporku: " + forgotPasswordEndpoint + forgotPassword.getId() + ". Ovaj link je validan sljedećih " + uuidValidFor + " minuta.");

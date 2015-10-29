@@ -17,7 +17,7 @@ public class ImpressionStatisticsResource {
 	private Long total;
 
 	@JsonProperty("unique")
-	private Long unique;
+	private Integer unique;
 
 	@JsonProperty("labels")
 	private List<String> labels = new ArrayList<>();
@@ -44,11 +44,11 @@ public class ImpressionStatisticsResource {
 		this.total = total;
 	}
 
-	public Long getUnique() {
+	public Integer getUnique() {
 		return unique;
 	}
 
-	public void setUnique(Long unique) {
+	public void setUnique(Integer unique) {
 		this.unique = unique;
 	}
 

@@ -76,30 +76,18 @@ public class ImpressionService {
 		List<Number> lstDataTotal = new ArrayList<>();
 		List<Number> lstDataUnique = new ArrayList<>();
 
-		List<DateTime> lstDateTime = new ArrayList<>();
 		DateTime now = new DateTime();
 
-		long cntTotal = 0;
-		long cntUnique = 0;
-
 		if (statisticsPeriod == StatisticsPeriod.LAST_7_DAYS) {
-			for (int i=6; i>=0; i--) {
-				DateTime dateTime = now.minusDays(i).withTime(0, 0, 0, 0);
-				lstDateTime.add(dateTime);
-				lstLabels.add(dateDateFormat.format(dateTime.toDate()));
-
-				DateTime start = dateTime;
-				DateTime end = dateTime.withTime(23, 59, 59, 999);
-
+			// -----------------------------------------------------
+			// 	get data for whole period
+			// -----------------------------------------------------
+			{
 				// total
-				Query query = new Query();
-				query.addCriteria(Criteria.where("entity_type").is(entityType));
-				query.addCriteria(Criteria.where("entity_id").is(entityId));
-				query.addCriteria(Criteria.where("time_created").gte(start).lte(end));
+				DateTime start = now.minusDays(6).withTime(0, 0, 0, 0);
+				DateTime end = now.withTime(23, 59, 59, 999);
 
-				long cnt = mongoOperations.count(query, Impression.class);
-				lstDataTotal.add(cnt);
-				cntTotal = cntTotal + cnt;
+				result.setTotal(mongoOperations.count(createQuery(entityType, entityId, start, end), Impression.class));
 
 				// unique
 				Aggregation aggregation = newAggregation(
@@ -111,27 +99,72 @@ public class ImpressionService {
 						sort(Sort.Direction.DESC, "total"));
 
 				AggregationResults<AggregateResult> groupResults = mongoOperations.aggregate(aggregation, Impression.class, AggregateResult.class);
-				lstDataUnique.add(groupResults.getMappedResults().size());
-				cntUnique = cntUnique + groupResults.getMappedResults().size();
+				result.setUnique(groupResults.getMappedResults().size());
+			}
+
+			// -----------------------------------------------------
+			// 	get data by each time unit (day) of period
+			// -----------------------------------------------------
+			{
+				for (int i=6; i>=0; i--) {
+					DateTime dateTime = now.minusDays(i).withTime(0, 0, 0, 0);
+					lstLabels.add(dateDateFormat.format(dateTime.toDate()));
+
+					DateTime start = dateTime;
+					DateTime end = dateTime.withTime(23, 59, 59, 999);
+
+					// total
+					lstDataTotal.add(mongoOperations.count(createQuery(entityType, entityId, start, end), Impression.class));
+
+					// unique
+					Aggregation aggregation = newAggregation(
+							match(Criteria.where("entity_type").is(entityType)),
+							match(Criteria.where("entity_id").is(entityId)),
+							match(Criteria.where("time_created").gte(start).lte(end)),
+							group("userId").count().as("total"),
+							project("total").and("userId").previousOperation(),
+							sort(Sort.Direction.DESC, "total"));
+
+					AggregationResults<AggregateResult> groupResults = mongoOperations.aggregate(aggregation, Impression.class, AggregateResult.class);
+					lstDataUnique.add(groupResults.getMappedResults().size());
+				}
 			}
 		} else if (statisticsPeriod == StatisticsPeriod.LAST_6_MONTHS) {
+			// -----------------------------------------------------
+			// 	get data for whole period
+			// -----------------------------------------------------
+			{
+				// total
+				DateTime start = (now.minusMonths(5)).withDayOfMonth(1).withTime(0, 0, 0, 0);
+				DateTime end = now.plusMonths(1).withDayOfMonth(1).minusDays(1).withTime(23, 59, 59, 999);
+
+				result.setTotal(mongoOperations.count(createQuery(entityType, entityId, start, end), Impression.class));
+
+				// unique
+				Aggregation aggregation = newAggregation(
+						match(Criteria.where("entity_type").is(entityType)),
+						match(Criteria.where("entity_id").is(entityId)),
+						match(Criteria.where("time_created").gte(start).lte(end)),
+						group("userId").count().as("total"),
+						project("total").and("userId").previousOperation(),
+						sort(Sort.Direction.DESC, "total"));
+
+				AggregationResults<AggregateResult> groupResults = mongoOperations.aggregate(aggregation, Impression.class, AggregateResult.class);
+				result.setUnique(groupResults.getMappedResults().size());
+			}
+
+			// -----------------------------------------------------
+			// 	get data by each time unit (month) of period
+			// -----------------------------------------------------
 			for (int i=5; i>=0; i--) {
 				DateTime dateTime = (now.minusMonths(i)).withDayOfMonth(1).withTime(0, 0, 0, 0);
-				lstDateTime.add(dateTime);
 				lstLabels.add(monthDateFormat.format(dateTime.toDate()));
 
 				DateTime start = dateTime;
 				DateTime end = start.plusMonths(1).minusDays(1).withTime(23, 59, 59, 999);
 
 				// total
-				Query query = new Query();
-				query.addCriteria(Criteria.where("entity_type").is(entityType));
-				query.addCriteria(Criteria.where("entity_id").is(entityId));
-				query.addCriteria(Criteria.where("time_created").gte(start).lte(end));
-
-				long cnt = mongoOperations.count(query, Impression.class);
-				lstDataTotal.add(cnt);
-				cntTotal = cntTotal + cnt;
+				lstDataTotal.add(mongoOperations.count(createQuery(entityType, entityId, start, end), Impression.class));
 
 				// unique
 				Aggregation aggregation = newAggregation(
@@ -144,18 +177,23 @@ public class ImpressionService {
 
 				AggregationResults<AggregateResult> groupResults = mongoOperations.aggregate(aggregation, Impression.class, AggregateResult.class);
 				lstDataUnique.add(groupResults.getMappedResults().size());
-				cntUnique = cntUnique + groupResults.getMappedResults().size();
 			}
 		}
-
-		result.setTotal(cntTotal);
-		result.setUnique(cntUnique);
 
 		result.setLabels(lstLabels);
 		result.setSeries(lstSeries);
 		result.setData(Arrays.asList(lstDataTotal, lstDataUnique));
 
 		return result;
+	}
+
+	private Query createQuery(EntityType entityType, Integer entityId, DateTime start, DateTime end) {
+		Query query = new Query();
+		query.addCriteria(Criteria.where("entity_type").is(entityType));
+		query.addCriteria(Criteria.where("entity_id").is(entityId));
+		query.addCriteria(Criteria.where("time_created").gte(start).lte(end));
+		LOGGER.trace("Query: {}", query);
+		return query;
 	}
 
 	class AggregateResult {

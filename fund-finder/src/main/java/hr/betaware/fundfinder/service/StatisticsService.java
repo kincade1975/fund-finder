@@ -217,10 +217,16 @@ public class StatisticsService {
 
 	@SuppressWarnings("unchecked")
 	public StatisticsResource getRevenues(int limit) {
+		StatisticsResource result = new StatisticsResource(StatisticsType.REVENUES, new Date());
+
 		Query query = new Query();
 		query.addCriteria(Criteria.where("metadata").is(QuestionMetadata.STATISTICS_REVENUE));
 
 		Question question = mongoOperations.findOne(query, Question.class);
+
+		if (question == null) {
+			return result;
+		}
 
 		Map<String,Integer> counters = new LinkedHashMap<>();
 		for (Option option : question.getOptions()) {
@@ -234,8 +240,6 @@ public class StatisticsService {
 				}
 			}
 		}
-
-		StatisticsResource result = new StatisticsResource(StatisticsType.REVENUES, new Date());
 
 		if (limit == Integer.MAX_VALUE) {
 			for (String key : counters.keySet()) {

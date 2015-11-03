@@ -109,7 +109,11 @@ public class QuestionResourceAssembler extends ResourceAssemblerSupport<Question
 		} else {
 			entity.getAnswer().setValue(resource.getAnswer().getValueInternal());
 		}
-		entity.getAnswer().setValueInternal(resource.getAnswer().getValueInternal());
+
+		if (resource.getType() != QuestionType.CHECKBOX) {
+			entity.getAnswer().setValueInternal(resource.getAnswer().getValueInternal());
+		}
+
 		return entity;
 	}
 
@@ -190,8 +194,18 @@ public class QuestionResourceAssembler extends ResourceAssemblerSupport<Question
 				tmpAnswers.add(resource.getOptions().get(Integer.parseInt(entry.getKey().toString())).getValue());
 			}
 			entity.getAnswer().setValue(tmpAnswers);
+			entity.getAnswer().setValueInternal(resource.getAnswer().getValueInternal());
 		} else {
-			entity.getAnswer().setValue(resource.getAnswer().getValueInternal());
+			ArrayList<String> value = new ArrayList<>();
+			LinkedHashMap<String, Boolean> valueInternal = new LinkedHashMap<>();
+			int i = 0;
+			for (Option option : entity.getOptions()) {
+				value.add(option.getValue());
+				valueInternal.put(Integer.toString(i), Boolean.FALSE);
+				i++;
+			}
+			entity.getAnswer().setValue(value);
+			entity.getAnswer().setValueInternal(valueInternal);
 		}
 	}
 

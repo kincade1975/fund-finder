@@ -3,11 +3,14 @@ package hr.betaware.fundfinder.service;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.collections4.ListUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
@@ -32,6 +35,8 @@ import hr.betaware.fundfinder.resource.assembler.TenderResourceAssembler;
 
 @Service
 public class OpportunityService {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(OpportunityService.class);
 
 	@Autowired
 	private MongoOperations mongoOperations;
@@ -146,8 +151,36 @@ public class OpportunityService {
 								}
 							}
 						}
+					} else if (tenderQuestion.getType() == QuestionType.CHECKBOX && companyQuestion.getType() == QuestionType.RADIO) {
+						if (tenderQuestion.getLinkOperator() == LinkOperator.IN) {
+							if (tenderAnswer.getValue() == null || tenderAnswer.getValue() instanceof Set<?>) {
+								result = false;
+							}
+
+							if (companyAnswer.getValue() instanceof String && tenderAnswer.getValue() instanceof ArrayList<?>) {
+								String companyValue = (String) companyAnswer.getValue();
+
+								ArrayList<String> values = new ArrayList<>();
+
+								ArrayList<String> tenderValue = (ArrayList<String>) tenderAnswer.getValue();
+								LinkedHashMap<String, Boolean> tenderValueInternal = (LinkedHashMap<String, Boolean>) tenderAnswer.getValueInternal();
+								for (String key : tenderValueInternal.keySet()) {
+									if (tenderValueInternal.get(key) == Boolean.TRUE) {
+										values.add(tenderValue.get(Integer.parseInt(key)));
+									}
+								}
+
+								if (!values.contains(companyValue)) {
+									result = false;
+								} else {
+									result = true;
+								}
+							}
+						}
 					}
 				}
+
+				LOGGER.info("Is acceptable tender: {} - question: {} - result: {}", tender.getName(), tenderQuestion.getText(), result);
 
 				if (!result) {
 					return false;

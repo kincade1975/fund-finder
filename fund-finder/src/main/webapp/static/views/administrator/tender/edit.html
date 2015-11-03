@@ -26,10 +26,17 @@
 						<div class="p-xs custom-p-xs custom-text-editor" ng-if="question.type == 'TEXT_EDITOR'" ng-bind-html="toTrusted(question.answer.value)"></div>
 						<div class="p-xs custom-p-xs" ng-if="question.type == 'DATE'">{{question.answer.value | date : dateFormat}}</div>
 						<div class="p-xs custom-p-xs" ng-if="question.type == 'DATE_TIME'">{{question.answer.value | date : dateTimeFormat}}</div>
-						<div class="p-xs custom-p-xs" ng-if="question.type == 'CHECKBOX' || question.type == 'MULTI_SELECT' 
-								|| question.type == 'COUNTY' || question.type == 'NKD_AUX' || question.type == 'INVESTMENT'">
+						<div class="p-xs custom-p-xs" ng-if="question.type == 'MULTI_SELECT' || question.type == 'COUNTY' 
+						        || question.type == 'NKD_AUX' || question.type == 'INVESTMENT'">
 							<span ng-repeat="answer in question.answer.value">{{answer}}<br></span>
 						</div>
+						
+						<div class="p-xs custom-p-xs" ng-if="question.type == 'CHECKBOX'">
+                            <span ng-repeat="answer in question.answer.valueInternal">
+                                <span ng-if="answer == true">{{question.answer.value[$index]}}<br></span>
+                            </span>
+                        </div>
+                        
 					</div>
 				</div>
 				<div class="panel-footer" style="text-align: right;">

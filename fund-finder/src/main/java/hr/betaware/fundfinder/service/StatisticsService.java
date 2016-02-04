@@ -168,11 +168,13 @@ public class StatisticsService {
 
 		Map<Integer,Integer> counters = new HashMap<>();
 		for (User user : mongoOperations.find(query, User.class)) {
-			for (Integer investmentId : user.getInvestments()) {
-				if (counters.containsKey(investmentId)) {
-					counters.put(investmentId, counters.get(investmentId) + 1);
-				} else {
-					counters.put(investmentId, 1);
+			if (user.getInvestments() != null) {
+				for (Integer investmentId : user.getInvestments()) {
+					if (counters.containsKey(investmentId)) {
+						counters.put(investmentId, counters.get(investmentId) + 1);
+					} else {
+						counters.put(investmentId, 1);
+					}
 				}
 			}
 		}
